@@ -1,5 +1,5 @@
 import React from "react";
-import CapitalTime from "./TimeZone";
+import TimeZone from "./TimeZone";
 import Switch from "./Toggle";
 
 const Navbar = () => {
@@ -10,7 +10,7 @@ const Navbar = () => {
         <div>Full-Stack Developer</div>
       </div>
       <div className="flex items-center gap-[100px]">
-        <CapitalTime className="hidden md:flex" />
+        <TimeZone className="hidden md:flex" />
         <Switch />
       </div>
     </div>
