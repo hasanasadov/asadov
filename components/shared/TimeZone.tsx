@@ -16,7 +16,7 @@ export default function TimeZone({ className }: { className: string }) {
         setTimezone(data.timezone);
         setCountry(data.country_name);
       } catch (err) {
-        console.error("Failed to fetch geolocation data:", err);
+        console.log("Failed to fetch geolocation data:", err);
       }
     }
 
@@ -47,9 +47,8 @@ export default function TimeZone({ className }: { className: string }) {
 
   return (
     <div className={className}>
-      <span> {country || "Loading..."}</span>
-      {"  •  "}
-      <span>{localTime || "Loading..."}</span>
+      <span> {country || "Aze"} </span> {"  •  "}
+      <span>{localTime || "00:00:00"} </span>
     </div>
   );
 }
