@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function LocalClockWithCountry() {
+export default function TimeZone({ className }: { className: string }) {
   const [timezone, setTimezone] = useState("");
   const [country, setCountry] = useState("");
   const [localTime, setLocalTime] = useState("");
@@ -46,7 +46,7 @@ export default function LocalClockWithCountry() {
   }, [timezone]);
 
   return (
-    <div>
+    <div className={className}>
       <span> {country || "Loading..."}</span>
       {"  •  "}
       <span>{localTime || "Loading..."}</span>

@@ -3,17 +3,17 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="container mx-auto relative">
+    <div className="p-4 pt-1  min-h-screen flex flex-col justify-between ">
       <Navbar />
-      <div className="flex items-center justify-center w-full text-[100px] absolute top-[100px] left-0 font-bold">
-        Hasanali Asadov
+      <div className="top-[40px] flex items-center justify-center w-full text-[68px] md:text-[100px] lg:text-[130px] text-center absolute  left-0 font-bold">
+        Hasanali
       </div>
-      <div className="flex flex-col gap-4">
-        <div className="pt-32 flex flex-col lg:flex-row gap-4">
-          <div className="card lg:w-1/4 w-full">
+      <div className="pt-[40px] flex flex-col gap-4">
+        <div className=" flex flex-col md:flex-row gap-4">
+          <div className="card md:w-1/2 lg:w-1/4 w-full">
             <div>About</div>
           </div>
-          <div className="card lg:w-3/4 w-full">
+          <div className="card md:w-1/2 lg:w-3/4 w-full">
             <div>Portfolio</div>
           </div>
         </div>
@@ -22,13 +22,18 @@ export default function Home() {
             <div className="card  w-1/2 md:w-2/3">Contact</div>
             <div className="card  w-1/2 md:w-1/3 overflow-hidden">
               <div>
-                <Image src="/1.webp" fill alt="me" />
+                <Image
+                  className="object-cover"
+                  src="/hasanali.jpg"
+                  alt="me"
+                  fill
+                />
               </div>
             </div>
           </div>
-          <div className="flex w-full  lg:w-1/4 flex-row lg:flex-col gap-4">
-            <div className="card lg:!h-1/2 !w-full">cards</div>
-            <div className="card lg:!h-1/2 !w-full">resume</div>
+          <div className="flex w-full lg:w-1/4 flex-row lg:flex-col gap-4">
+            <div className="card mini lg:!h-1/2 !w-full  ">cards</div>
+            <div className="card mini lg:!h-1/2 !w-full ">resume</div>
           </div>
         </div>
       </div>
