@@ -46,8 +46,9 @@ export default function TimeZone({ className }: { className: string }) {
   }, [timezone]);
 
   return (
-    <div className={className}>
-      <span> {country || "Aze"} </span> {"  •  "}
+    <div className={`${className} flex gap-1`}>
+      <span>{country || "Aze"} </span>
+      <span className="font-bold">{"\t• \t "}</span>
       <span>{localTime || "00:00:00"} </span>
     </div>
   );

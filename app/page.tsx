@@ -1,11 +1,12 @@
 "use client";
 
 import BlurryBG from "@/components/shared/BlurryBG";
+import HoverText from "@/components/shared/HoverText";
 import ArrorUpRight from "@/components/ui/ArrorUpRight";
 import RenderIf from "@/utils/RenderIf";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
   return (
@@ -21,8 +22,12 @@ const Hero = ({ className }: { className?: string }) => {
     <div
       className={`absolute  left-0 flex items-center justify-center w-full  text-center  font-semibold ${className}`}
     >
-      <p>Hasanali </p>
-      <p className="hidden lg:inline-block">Asadov</p>
+      <div>
+        <HoverText text="Hasanali" />
+      </div>
+      <div className="hidden lg:inline-block">
+        <HoverText text="Asadov" />
+      </div>
     </div>
   );
 };
@@ -56,12 +61,21 @@ const Card = ({
   title?: string;
   path?: string;
 }) => {
+  const [hovered, setHovered] = useState(false);
+
   return (
-    <Link href={title?.toLowerCase() || "#"} className={`card  ${className} `}>
+    <Link
+      href={title?.toLowerCase() || "#"}
+      className={`card ${className}`}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <BlurryBG className="w-full h-full rounded-lg" />
       <RenderIf condition={!!title}>
         <div className="flex items-center justify-between w-full">
-          <div>{title}</div>
+          <div className="overflow-hidden">
+            <HoverText text={title || "Card"} hovered={hovered} />
+          </div>
           <ArrorUpRight />
         </div>
       </RenderIf>

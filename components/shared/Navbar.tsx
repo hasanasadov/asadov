@@ -5,6 +5,7 @@ import Switch from "./Toggle";
 import { usePathname } from "next/navigation";
 import RenderIf from "@/utils/RenderIf";
 import ArrowLeft from "../ui/ArrowLeft";
+import HoverText from "./HoverText";
 
 const Navbar = () => {
   const pathName = usePathname();
@@ -51,11 +52,14 @@ const Navbar = () => {
               window.location.href = "/";
             }
           }}
-          className="whitespace-nowrap flex items-center gap-2 cursor-pointer"
+          className="whitespace-nowrap flex items-center gap-2 cursor-pointer overflow-hidden"
         >
-          <RenderIf condition={!!isHomePage}>Hasanali Asadov</RenderIf>
+          <RenderIf condition={!!isHomePage}>
+            <HoverText text=" Hasanali Asadov" />
+          </RenderIf>
           <RenderIf condition={!isHomePage}>
-            <ArrowLeft /> Home
+            <ArrowLeft />
+            <HoverText text="Home" />
           </RenderIf>
         </div>
         <div className="whitespace-nowrap">Full-Stack Developer</div>
