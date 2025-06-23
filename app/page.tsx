@@ -1,8 +1,11 @@
+"use client";
+
 import BlurryBG from "@/components/shared/BlurryBG";
 import ArrorUpRight from "@/components/ui/ArrorUpRight";
 import RenderIf from "@/utils/RenderIf";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 
 export default function Home() {
   return (
@@ -37,8 +40,8 @@ const CardsSection = ({ className }: { className?: string }) => {
           <ImageCard />
         </div>
         <div className="flex w-full lg:w-1/4 flex-row lg:flex-col gap-4">
-          <Stack />
-          <Card className="mini lg:!h-1/2 !w-full" title="Resume" />
+          <Stack className="mini lg:!h-1/2 w-1/2 md:w-full" />
+          <Card className="mini lg:!h-1/2 w-1/2 md:w-full" title="Resume" />
         </div>
       </div>
     </div>
@@ -66,11 +69,68 @@ const Card = ({
   );
 };
 
-const Stack = () => {
+const Stack = ({ className }: { className?: string }) => {
+  const images = [
+    "/stack/A.webp",
+    "/stack/apps.webp",
+    "/stack/flower.webp",
+    "/stack/gpt.avif",
+    "/stack/notion.webp",
+    "/stack/stack.webp",
+    "/stack/o.avif",
+  ];
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+    let animationFrame: number;
+
+    const scroll = () => {
+      if (scrollContainer) {
+        (scrollContainer as HTMLElement).scrollLeft += 0.5; // Adjust speed here
+        if (
+          (scrollContainer as HTMLElement).scrollLeft >=
+          (scrollContainer as HTMLElement).scrollWidth -
+            (scrollContainer as HTMLElement).clientWidth
+        ) {
+          (scrollContainer as HTMLElement).scrollLeft = 0;
+        }
+      }
+      animationFrame = requestAnimationFrame(scroll);
+    };
+
+    animationFrame = requestAnimationFrame(scroll);
+
+    return () => cancelAnimationFrame(animationFrame);
+  }, []);
   return (
-    <div className="card mini lg:!h-1/2 !w-full">
+    <div
+      className={`card  flex !items-center !justify-center !p-0 ${className}`}
+    >
       <BlurryBG className="w-full h-full rounded-lg" />
-      <div>Stack</div>
+      <div className="absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-black via-black/40 to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-black via-black/40 to-transparent z-10 pointer-events-none" />
+
+      {/* Scrollable row */}
+      <div
+        ref={scrollRef}
+        className="flex gap-4 items-center h-full overflow-hidden no-scrollbar whitespace-nowrap "
+      >
+        {images.concat(images).map((src, index) => (
+          <div
+            key={index}
+            className="md:min-w-[80px] md:min-h-[80px] min-w-[60px] min-h-[60px] rounded-2xl p-3 md:p-4 bg-white/10 flex items-center justify-center"
+          >
+            <Image
+              className="object-contain rounded-lg "
+              width={80}
+              height={80}
+              src={src}
+              alt={`stack-${index}`}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

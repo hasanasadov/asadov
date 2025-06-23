@@ -1,17 +1,19 @@
+"use client";
 import Footer from "@/components/shared/Footer";
-import { ScrollText } from "@/components/shared/ScrollColor";
+import { ScrollText } from "@/components/shared/ScrollText";
+import { ScrollTextSmaller } from "@/components/shared/ScrollTextSmaller";
 import Image from "next/image";
 import React from "react";
 
 const AboutPage = () => {
   return (
-    <div className="md:px-8">
+    <div className="md:px-8 pt-4">
       <ScrollText
         className="text-[26px] md:text-[36px] lg:text-[48px] font-bold mb-8 mt-8"
         text="I’m Hasanali Asadov, a multi-disciplinary designer specializing in creating immersive and engaging product experiences. My work is characterized by a commitment to clarity, consistency, and attention to detail, ensuring that every project resonates authentically with its audience. 
       I have a deep appreciation for typography and its powerful role in design. Additionally, I’m an aspiring entrepreneur, driven by the desire to innovate and push creative boundaries in the industry."
       />
-      <div className="flex justify-end my-8">
+      <div className="flex md:justify-end my-8 justify-center">
         <Image
           src="/hasanali.jpg"
           alt="Hasanali Asadov"
@@ -21,7 +23,7 @@ const AboutPage = () => {
       </div>
 
       <WorkExperience />
-      <Footer /> 
+      <Footer />
     </div>
   );
 };
@@ -91,7 +93,7 @@ const WorkCard = ({
         </div>
       </div>
       <div className="md:w-1/2 text-white/50 text-left text-[14px] md:text-[16px]">
-        {text}
+        <ScrollTextSmaller text={text} />
       </div>
     </div>
   );

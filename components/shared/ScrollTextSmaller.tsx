@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
-export const ScrollText = ({
+export const ScrollTextSmaller = ({
   className,
   text,
 }: {
@@ -12,7 +12,7 @@ export const ScrollText = ({
 
   useEffect(() => {
     const onScroll = () => {
-      const scrollTop = window.scrollY;
+      const scrollTop = window.scrollY-800;
       const docHeight = document.body.scrollHeight - window.innerHeight;
       let progress = (scrollTop / docHeight) * 2 + 0.4;
       progress = Math.min(progress, 1);
@@ -32,7 +32,7 @@ export const ScrollText = ({
         <span
           key={idx}
           style={{
-            color: idx < lettersToColor ? "white" : "#333",
+            color: idx < lettersToColor ? "#999" : "#333",
             transition: "color 0.3s ease",
           }}
         >
