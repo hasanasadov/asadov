@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html>
       <body className="p-4 pt-1  min-h-screen flex flex-col justify-between ">
-        <BlurryBG />
+        <BlurryBG  />
         <Navbar />
         {children}
       </body>

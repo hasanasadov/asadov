@@ -1,20 +1,14 @@
-import Link from "next/link";
 import React from "react";
 
-const AboutPage = () => {
+const PortfolioPage = () => {
   return (
-    <div>
-      <Link
-        href={
-          "https://drive.google.com/file/d/1QqD_kx8rJI33IPNtGgwlBQE8FL3KdEui/view?usp=sharing"
-        }
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <h1 className="text-2xl font-bold mb-4">My Portfolio</h1>
-      </Link>
+    <div className="min-h-screen p-4 md:p-8">
+      <div className="text-[26px] md:text-[36px] lg:text-[48px] lg:w-8/12">
+        Dive into a few projects that represent my most fulfilling design
+        experiences
+      </div>
     </div>
   );
 };
 
-export default AboutPage;
+export default PortfolioPage;

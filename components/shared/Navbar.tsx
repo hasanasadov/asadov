@@ -6,11 +6,13 @@ import { usePathname } from "next/navigation";
 import RenderIf from "@/utils/RenderIf";
 import ArrowLeft from "../ui/ArrowLeft";
 import HoverText from "./HoverText";
+import AutoAnimate from "./AutoAnimate";
+import { useTimeZoneString } from "@/hooks/useTimeZone";
 
 const Navbar = () => {
   const pathName = usePathname();
   const isHomePage = pathName === "/";
-
+  const timeZoneStr = useTimeZoneString();
   const [showNavbar, setShowNavbar] = useState(true);
   const lastScrollY = useRef(0);
 
@@ -62,11 +64,18 @@ const Navbar = () => {
             <HoverText text="Home" />
           </RenderIf>
         </div>
-        <div className="whitespace-nowrap">Full-Stack Developer</div>
+        <div className="whitespace-nowrap">
+          <div className="hidden md:inline-block">Full-Stack Developer</div>
+          <div className="inline-block md:hidden">
+            <AutoAnimate text="Full-Stack Developer" text2={timeZoneStr} />
+          </div>
+        </div>
       </div>
       <div className="flex items-center gap-[100px]">
         <TimeZone className="hidden md:flex" />
-        <Switch />
+        <div className="min-w-12">
+          <Switch />
+        </div>
       </div>
     </div>
   );
