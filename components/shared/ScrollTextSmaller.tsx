@@ -12,7 +12,7 @@ export const ScrollTextSmaller = ({
 
   useEffect(() => {
     const onScroll = () => {
-      const scrollTop = window.scrollY-800;
+      const scrollTop = window.scrollY - 800;
       const docHeight = document.body.scrollHeight - window.innerHeight;
       let progress = (scrollTop / docHeight) * 2 + 0.4;
       progress = Math.min(progress, 1);
@@ -27,14 +27,15 @@ export const ScrollTextSmaller = ({
   const lettersToColor = Math.floor(scrollProgress * letters.length);
 
   return (
-    <p className={`${className} select-none `}>
+    <p className={`${className} select-none`}>
       {letters.map((letter, idx) => (
         <span
           key={idx}
-          style={{
-            color: idx < lettersToColor ? "#999" : "#333",
-            transition: "color 0.3s ease",
-          }}
+          className={`transition-colors duration-300 ease-in-out ${
+            idx < lettersToColor
+              ? "text-[#333] dark:text-white"
+              : "text-white dark:text-[#333]"
+          }`}
         >
           {letter}
         </span>

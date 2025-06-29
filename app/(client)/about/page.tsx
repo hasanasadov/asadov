@@ -9,7 +9,7 @@ const AboutPage = () => {
   return (
     <div className="md:px-8 pt-4">
       <ScrollText
-        className="text-[26px] md:text-[36px] lg:text-[48px] font-bold mb-8 mt-8"
+        className="text-[26px] md:text-[36px] lg:text-[48px] font-bold mb-8 mt-8 !text-red-700"
         text="I’m Hasanali Asadov, a multi-disciplinary designer specializing in creating immersive and engaging product experiences. My work is characterized by a commitment to clarity, consistency, and attention to detail, ensuring that every project resonates authentically with its audience. 
       I have a deep appreciation for typography and its powerful role in design. Additionally, I’m an aspiring entrepreneur, driven by the desire to innovate and push creative boundaries in the industry."
       />

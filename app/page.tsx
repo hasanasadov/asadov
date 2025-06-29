@@ -4,49 +4,101 @@ import BlurryBG from "@/components/shared/BlurryBG";
 import HoverText from "@/components/shared/HoverText";
 import ArrorUpRight from "@/components/ui/ArrorUpRight";
 import RenderIf from "@/utils/RenderIf";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
+  const [heroText, setHeroText] = useState("Hasanali");
   return (
-    <div>
-      <Hero className="md:top-[55px] top-[40px] text-[68px] md:text-[100px] lg:text-[130px]" />
-      <CardsSection className="pt-[20px]" />
+    <div className="relative">
+      
+      <Hero
+        heroText={heroText}
+        className="md:top-[0px] top-[40px] text-[68px] md:text-[100px] lg:text-[130px] transition-all transform-3d duration-500 ease-in-out"
+      />
+      <CardsSection setHeroText={setHeroText} className="pt-[20px]" />
     </div>
   );
 }
 
-const Hero = ({ className }: { className?: string }) => {
+const Hero = ({
+  className,
+  heroText,
+}: {
+  className?: string;
+  heroText?: string;
+}) => {
   return (
     <div
-      className={`absolute  left-0 flex items-center justify-center w-full  text-center  font-semibold ${className}`}
+      className={`absolute left-0 !bg-black flex items-center justify-center w-full text-center font-semibold ${className}`}
     >
-      <div>
-        <HoverText text="Hasanali" />
-      </div>
-      <div className="hidden lg:inline-block">
-        <HoverText text="Asadov" />
-      </div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={heroText}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 30 }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+          className="absolute w-full "
+        >
+          <div className="flex items-center justify-center gap-5">
+            <div>
+              <HoverText text={heroText || "Hasanali"} />
+            </div>
+            <RenderIf condition={!heroText}>
+              <div className="md:block hidden">
+                <HoverText text="Asadov" />
+              </div>
+            </RenderIf>
+          </div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };
 
-const CardsSection = ({ className }: { className?: string }) => {
+const CardsSection = ({
+  className,
+  setHeroText,
+}: {
+  className?: string;
+  setHeroText: (text: string) => void;
+}) => {
   return (
     <div className={`flex flex-col gap-4 ${className}`}>
       <div className=" flex flex-col md:flex-row gap-4">
-        <Card className="md:w-1/2 lg:w-1/4 w-full" title="About" />
-        <Card className="md:w-1/2 lg:w-3/4 w-full" title="Portfolio" />
+        <Card
+          setHeroText={setHeroText}
+          className="md:w-1/2 lg:w-1/4 w-full"
+          title="About"
+        />
+        <Card
+          setHeroText={setHeroText}
+          className="md:w-1/2 lg:w-3/4 w-full"
+          title="Portfolio"
+        />
       </div>
       <div className="flex flex-col lg:flex-row gap-4 w-full">
         <div className="flex w-full  lg:w-3/4 gap-4">
-          <Card className="w-1/2 md:w-2/3" title="Contact" />
-          <ImageCard />
+          <Card
+            setHeroText={setHeroText}
+            className="w-1/2 md:w-2/3"
+            title="Contact"
+          />
+          <ImageCard setHeroText={setHeroText} />
         </div>
         <div className="flex w-full lg:w-1/4 flex-row lg:flex-col gap-4">
-          <Stack className="mini lg:!h-1/2 w-1/2 md:w-full" />
-          <Card className="mini lg:!h-1/2 w-1/2 md:w-full" title="Resume" />
+          <Stack
+            setHeroText={setHeroText}
+            className="mini lg:!h-1/2 w-1/2 md:w-full"
+          />
+          <Card
+            setHeroText={setHeroText}
+            className="mini lg:!h-1/2 w-1/2 md:w-full"
+            title="Resume"
+          />
         </div>
       </div>
     </div>
@@ -56,10 +108,12 @@ const CardsSection = ({ className }: { className?: string }) => {
 const Card = ({
   className,
   title,
+  setHeroText,
 }: {
   className?: string;
   title?: string;
   path?: string;
+  setHeroText: (text: string) => void;
 }) => {
   const [hovered, setHovered] = useState(false);
 
@@ -67,13 +121,19 @@ const Card = ({
     <Link
       href={title?.toLowerCase() || "#"}
       className={`card ${className}`}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={() => {
+        setHovered(true);
+        setHeroText(title!);
+      }}
+      onMouseLeave={() => {
+        setHovered(false);
+        setHeroText("");
+      }}
     >
       <BlurryBG className="w-full h-full rounded-lg" />
       <RenderIf condition={!!title}>
         <div className="flex items-center justify-between w-full">
-          <div className="overflow-hidden">
+          <div className="overflow-hidden md:text-xl text-md">
             <HoverText text={title || "Card"} hovered={hovered} />
           </div>
           <ArrorUpRight />
@@ -83,7 +143,13 @@ const Card = ({
   );
 };
 
-const Stack = ({ className }: { className?: string }) => {
+const Stack = ({
+  className,
+  setHeroText,
+}: {
+  className?: string;
+  setHeroText: (text: string) => void;
+}) => {
   const images = [
     "/stack/A.webp",
     "/stack/apps.webp",
@@ -119,11 +185,15 @@ const Stack = ({ className }: { className?: string }) => {
   }, []);
   return (
     <div
+      onMouseEnter={() => {
+        setHeroText("Stack");
+      }}
+      onMouseLeave={() => setHeroText("")}
       className={`card  flex !items-center !justify-center !p-0 ${className}`}
     >
       <BlurryBG className="w-full h-full rounded-lg" />
-      <div className="absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-black via-black/40 to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-black via-black/40 to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 h-full w-16 bg-gradient-to-r dark:from-black from-white via-white/40 dark:via-black/40 to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l dark:from-black from-white via-white/40 dark:via-black/40 to-transparent z-10 pointer-events-none" />
 
       {/* Scrollable row */}
       <div
@@ -149,9 +219,21 @@ const Stack = ({ className }: { className?: string }) => {
   );
 };
 
-const ImageCard = ({ src }: { src?: string }) => {
+const ImageCard = ({
+  src,
+  setHeroText,
+}: {
+  src?: string;
+  setHeroText: (text: string) => void;
+}) => {
   return (
-    <div className="card  w-1/2 md:w-1/3 ">
+    <div
+      onMouseEnter={() => {
+        setHeroText("Heey!");
+      }}
+      onMouseLeave={() => setHeroText("")}
+      className="card  w-1/2 md:w-1/3 "
+    >
       <div>
         <Image
           className="object-cover"

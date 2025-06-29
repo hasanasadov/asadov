@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
-export const ScrollText
- = ({
+export const ScrollText = ({
   className,
   text,
 }: {
@@ -28,14 +27,15 @@ export const ScrollText
   const lettersToColor = Math.floor(scrollProgress * letters.length);
 
   return (
-    <p className={`${className} select-none `}>
+    <p className={`${className} select-none`}>
       {letters.map((letter, idx) => (
         <span
           key={idx}
-          style={{
-            color: idx < lettersToColor ? "white" : "#333",
-            transition: "color 0.3s ease",
-          }}
+          className={`transition-colors duration-300 ease-in-out ${
+            idx < lettersToColor
+              ? "text-[#333] dark:text-white"
+              : "text-white dark:text-[#333]"
+          }`}
         >
           {letter}
         </span>
