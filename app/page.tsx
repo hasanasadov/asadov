@@ -136,7 +136,7 @@ const Card = ({
       <BlurryBG className="w-full h-full rounded-lg " />
       <RenderIf condition={!!title}>
         <div className="flex items-center justify-between w-full">
-          <div className="overflow-hidden md:text-xl text-md font-sauce">
+          <div className="overflow-hidden md:text-xl text-md">
             <HoverText text={title || "Card"} hovered={hovered} />
           </div>
           <ArrorUpRight />
@@ -223,7 +223,6 @@ const Stack = ({
     </div>
   );
 };
-
 
 const ImageCard = ({
   src,
