@@ -13,8 +13,8 @@ export const ScrollText = ({
   useEffect(() => {
     const onScroll = () => {
       const scrollTop = window.scrollY;
-      const docHeight = document.body.scrollHeight - window.innerHeight;
-      let progress = (scrollTop / docHeight) * 2 + 0.4;
+      const docHeight = document.body.scrollHeight - window.innerHeight + 100; // Adding 100px to account for the height of the navbar
+      let progress = (scrollTop / docHeight) * 5 + 0.6;
       progress = Math.min(progress, 1);
       setScrollProgress(progress);
     };

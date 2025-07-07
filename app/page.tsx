@@ -16,9 +16,9 @@ export default function Home() {
     <div className="relative">
       <Hero
         heroText={heroText}
-        className="md:top-[0px] top-[40px] text-[68px] md:text-[100px] lg:text-[130px] transition-all transform-3d duration-500 ease-in-out"
+        className="md:top-[20px] top-[40px] text-[50px] md:text-[100px] lg:text-[130px] transition-all transform-3d duration-500 ease-in-out"
       />
-      <CardsSection setHeroText={setHeroText} className="pt-[20px]" />
+      <CardsSection setHeroText={setHeroText} className="pt-[20px] mt-8" />
     </div>
   );
 }
@@ -136,7 +136,7 @@ const Card = ({
       <BlurryBG className="w-full h-full rounded-lg " />
       <RenderIf condition={!!title}>
         <div className="flex items-center justify-between w-full">
-          <div className="overflow-hidden md:text-xl text-md">
+          <div className="overflow-hidden md:text-xl text-md font-sauce">
             <HoverText text={title || "Card"} hovered={hovered} />
           </div>
           <ArrorUpRight />
@@ -162,37 +162,35 @@ const Stack = ({
     "/stack/stack.webp",
     "/stack/o.avif",
   ];
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const scrollContainer = scrollRef.current;
-    let animationFrame: number;
+    if (!scrollContainer) return;
 
-    const scroll = () => {
-      if (scrollContainer) {
-        (scrollContainer as HTMLElement).scrollLeft += 0.5; // Adjust speed here
-        if (
-          (scrollContainer as HTMLElement).scrollLeft >=
-          (scrollContainer as HTMLElement).scrollWidth -
-            (scrollContainer as HTMLElement).clientWidth
-        ) {
-          (scrollContainer as HTMLElement).scrollLeft = 0;
-        }
+    const el = scrollContainer;
+    const speed = 1; // px per tick
+    const intervalTime = 10; // ms
+
+    const intervalId = setInterval(() => {
+      if (!el) return;
+
+      el.scrollBy({ left: speed, behavior: "auto" });
+
+      // Reset when reaching the end
+      if (el.scrollLeft >= el.scrollWidth - el.clientWidth) {
+        el.scrollLeft = 0;
       }
-      animationFrame = requestAnimationFrame(scroll);
-    };
+    }, intervalTime);
 
-    animationFrame = requestAnimationFrame(scroll);
-
-    return () => cancelAnimationFrame(animationFrame);
+    return () => clearInterval(intervalId);
   }, []);
+
   return (
     <div
-      onMouseEnter={() => {
-        setHeroText("Stack");
-      }}
+      onMouseEnter={() => setHeroText("Stack")}
       onMouseLeave={() => setHeroText("")}
-      className={`card  flex !items-center !justify-center !p-0 ${className}`}
+      className={`card relative flex !items-center !justify-center !p-0 ${className}`}
     >
       <BlurryBG className="w-full h-full rounded-lg" />
       <div className="absolute left-0 top-0 h-full w-16 bg-gradient-to-r dark:from-black from-white via-white/40 dark:via-black/40 to-transparent z-10 pointer-events-none" />
@@ -201,7 +199,11 @@ const Stack = ({
       {/* Scrollable row */}
       <div
         ref={scrollRef}
-        className="flex gap-4 items-center h-full overflow-hidden no-scrollbar whitespace-nowrap "
+        className="flex gap-4 items-center h-full overflow-hidden no-scrollbar whitespace-nowrap"
+        style={{
+          willChange: "transform",
+          transform: "translateZ(0)",
+        }}
       >
         {images.concat(images).map((src, index) => (
           <div
@@ -209,7 +211,7 @@ const Stack = ({
             className="md:min-w-[80px] md:min-h-[80px] min-w-[60px] min-h-[60px] rounded-2xl p-3 md:p-4 bg-white/10 flex items-center justify-center"
           >
             <Image
-              className="object-contain rounded-lg "
+              className="object-contain rounded-lg"
               width={80}
               height={80}
               src={src}
@@ -221,6 +223,7 @@ const Stack = ({
     </div>
   );
 };
+
 
 const ImageCard = ({
   src,

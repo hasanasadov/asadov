@@ -5,15 +5,25 @@ import { useTheme } from "next-themes";
 const Switch = () => {
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [isDark, setIsDark] = useState(false);
 
-  // Avoid hydration mismatch
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  useEffect(() => {
+    if (resolvedTheme) {
+      setIsDark(resolvedTheme === "dark");
+    }
+  }, [resolvedTheme]);
+
   if (!mounted) return null;
 
-  const isDark = resolvedTheme === "dark";
+  const handleToggle = () => {
+    const newTheme = isDark ? "light" : "dark";
+    setTheme(newTheme);
+    setIsDark(!isDark); // Optimistically update
+  };
 
   return (
     <div className="flex items-center">
@@ -21,7 +31,7 @@ const Switch = () => {
         <input
           type="checkbox"
           checked={isDark}
-          onChange={() => setTheme(isDark ? "light" : "dark")}
+          onChange={handleToggle}
           className="sr-only peer"
         />
         <div

@@ -14,7 +14,7 @@ export const ScrollTextSmaller = ({
     const onScroll = () => {
       const scrollTop = window.scrollY - 800;
       const docHeight = document.body.scrollHeight - window.innerHeight;
-      let progress = (scrollTop / docHeight) * 2 + 0.4;
+      let progress = (scrollTop / docHeight) * 2 + 0.5;
       progress = Math.min(progress, 1);
       setScrollProgress(progress);
     };
