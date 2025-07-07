@@ -13,21 +13,71 @@ const PortfolioPage = () => {
 
       <div className="space-y-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ProjectCard title="Design System Revamp" image="/hasanali.jpg" />
-          <ProjectCard title="AI Dashboard Interface" image="/hasanali.jpg" />
+          <ProjectCard
+            title="Turbo.az Clone"
+            image="/turbo.png"
+            href="hasturbo.vercel.app"
+          />
+          <ProjectCard
+            title="Sixt.com Clone"
+            image="/sixt.png"
+            href="hassixt.site"
+          />
         </div>
 
         <div>
           <ProjectCard
-            title="Brand Identity Project"
-            image="/hasanali.jpg"
+            title="Morent car"
+            image="/hasrent.png"
             className="w-full md:h-[500px]"
+            href="hasrent.vercel.app"
           />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ProjectCard title="Motion UX Toolkit" image="/hasanali.jpg" />
-          <ProjectCard title="3D Product Showcase" image="/hasanali.jpg" />
+          <ProjectCard
+            title="MyEvents App"
+            image="/myevents.png"
+            href="myevents.az"
+          />
+          <ProjectCard
+            title="ToDo App"
+            image="/hastodo.png"
+            href="hastodo.vercel.app"
+          />
+        </div>
+        <div>
+          <ProjectCard
+            title="NFT Marketplace"
+            image="/hasnft.png"
+            className="w-full md:h-[500px]"
+            href="hasnft.vercel.app"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <ProjectCard
+            title="Instagram Clone"
+            image="/hasagram.png"
+            href="hasagram.vercel.app"
+          />
+          <ProjectCard
+            title="Crypto Tracker"
+            image="/hascrypto.png"
+            href="hascrypto.vercel.app"
+          />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <ProjectCard
+            title="Neowise "
+            image="/hasneowise.png"
+            href="hasneowise.vercel.app"
+          />
+          <ProjectCard
+            title="Games"
+            image="/hasgames.png"
+            href="hasgames.vercel.app"
+          />
         </div>
       </div>
       <Footer />
@@ -39,18 +89,28 @@ type ProjectCardProps = {
   className?: string;
   title: string;
   image?: string;
+  href?: string;
   description?: string;
 };
 
 const ProjectCard = ({
   className = "",
   title,
-  image = "/hasanali.jpg",
+  href,
+  image = "/paris.jpg",
   description,
 }: ProjectCardProps) => {
   return (
     <div
-      className={`rounded-3xl bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors overflow-hidden shadow-sm ${className}`}
+      onClick={() => {
+        if (href) {
+          window.open(`https://${href}`, "_blank");
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`Open project: ${title}`}
+      className={`rounded-3xl cursor-pointer bg-black/20 dark:bg-white/20 hover:bg-black/30 dark:hover:bg-white/30 transition-colors overflow-hidden shadow-sm ${className}`}
     >
       <div className="flex flex-col h-full">
         <div className="relative w-full aspect-[4/3] overflow-hidden">
@@ -58,7 +118,7 @@ const ProjectCard = ({
             src={image}
             alt={title}
             fill
-            className="object-cover transition-transform duration-500 hover:scale-105"
+            className="object-cover transition-transform duration-500 hover:scale-[1.02]"
           />
         </div>
         <div className="px-4 py-5">

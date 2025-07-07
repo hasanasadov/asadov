@@ -10,65 +10,140 @@ const AboutPage = () => {
     <div className="md:px-8 pt-4">
       <ScrollText
         className="text-[26px] md:text-[36px] lg:text-[48px] font-bold mb-8 mt-8 !text-red-700"
-        text="I’m Hasanali Asadov, a multi-disciplinary designer specializing in creating immersive and engaging product experiences. My work is characterized by a commitment to clarity, consistency, and attention to detail, ensuring that every project resonates authentically with its audience. 
-      I have a deep appreciation for typography and its powerful role in design. Additionally, I’m an aspiring entrepreneur, driven by the desire to innovate and push creative boundaries in the industry."
+        text="I am a 20-year-old young programming developer. Alongside my personal skills, I am eager to learn about the major
+innovations required by the modern world. Therefore, I am constantly learning and developing software. I also have
+skills in web services, database management, and teamwork."
       />
       <div className="flex md:justify-end my-8 justify-center">
         <Image
-          src="/hasanali.jpg"
+          src="/barca.jpg"
           alt="Hasanali Asadov"
           width={450}
           height={450}
         />
       </div>
+      <ScrollText className="text-4xl my-10" text="Education" />
+      <EduExperience />
 
-      <WorkExperience />
+      <ScrollText className="text-4xl my-10" text="Internships" />
+      <InternExperience />
       <Footer />
     </div>
   );
 };
 
-const WorkExperience = () => {
+const EduExperience = () => {
   return (
     <div className="flex flex-col gap-12">
-      <WorkCard
-        start="2025"
+      <Card
+        start="2025/1"
+        end="2025/7"
+        title1="Angel Khanchev University"
+        title2="Bulgaria"
+        text="As a Erasmus+ student at Angel Kanchev University in Bulgaria, I had the opportunity to immerse myself in a diverse academic environment. This experience enriched my understanding of international perspectives in software engineering and allowed me to collaborate with peers from various backgrounds. I engaged in advanced coursework and projects that enhanced my technical skills and cultural awareness."
+      />
+
+      <Card
+        start="2021"
         end="Present"
-        title1="Design Director"
-        title2="Incase"
-        text="Led the creative vision and design strategy across digital and physical
-        touchpoints, overseeing a team of multidisciplinary designers.
-        Spearheaded the launch of multiple product lines and brand campaigns,
-        resulting in a 30% increase in customer engagement. Championed
-        user-centered design processes, aligning product innovation with
-        business goals and lifestyle trends."
+        title1="Baku Higher "
+        title2="Oil School"
+        text="As a student at Baku Higher Oil School, Process Automation Engineering, I have developed a strong foundation in programming and software development. My coursework has included advanced topics in automation, control systems, and data analysis, equipping me with the skills to tackle complex engineering challenges. I am actively involved in various projects that enhance my practical knowledge and prepare me for a successful career in technology."
       />
-      <WorkCard
-        start="2023"
-        end="2024"
-        title1="Design Lead"
-        title2="Grey"
-        text="Directed creative execution for global campaigns, collaborating with cross-functional teams to deliver compelling digital experiences for top-tier clients. Guided a team of designers through fast-paced projects, elevating the agency’s digital presence and winning multiple industry awards. Focused on storytelling, usability, and brand consistency across channels."
+      <Card
+        start="2024/7"
+        end="2025/4"
+        title1="Code Academy"
+        title2="Azerbaijan"
+        text="Full-Stack (Front-end) program at Code Academy, where I focused on mastering front-end technologies and frameworks. The program provided a comprehensive understanding of web development, including HTML, CSS, JavaScript, and modern libraries. Through practical projects and collaborative exercises, I developed the skills necessary to create responsive and user-friendly web applications."
       />
-      <WorkCard
-        start="2020"
-        end="2022"
-        title1="Senior Designer"
-        title2="Shopify"
-        text="Played a key role in crafting scalable design systems and improving the user experience for merchants across the platform. Partnered with product managers and engineers to launch features that enhanced onboarding and retention. Advocated for accessibility and design inclusivity, influencing platform-wide standards."
-      />
-      <WorkCard
-        start="2018"
-        end="2020"
-        title1="UX/UI Designer"
-        title2="Shrink"
-        text="Designed and optimized the core product experience for a mental health startup, contributing to a 40% increase in user retention. Conducted user research and usability testing to inform product decisions, translating insights into thoughtful interfaces. Collaborated closely with the founding team to define the brand’s visual and interaction language."
+      <Card
+        start="2024/2"
+        end="2024/11"
+        title1="Holberton School"
+        title2="Azerbaijan"
+        text="Full-Stack Developmet program at Holberton School, where I honed my skills in software engineering, web development, and system design. The curriculum emphasized hands-on projects and collaborative learning, allowing me to apply theoretical knowledge to real-world scenarios. I gained proficiency in multiple programming languages, frameworks, and tools, preparing me for a dynamic career in technology."
       />
     </div>
   );
 };
 
-const WorkCard = ({
+const InternExperience = () => {
+  return (
+    <div className="flex flex-col gap-12">
+      <Card
+        start="2024/6"
+        end="2024/7"
+        title1="SOCAR Azerbaijan"
+        title2="ITRI Full-Stack Development"
+        text="Participated in a structured internship program focusing on full-stack
+development.
+• Gained hands-on experience with modern web technologies, including front-end
+frameworks, back-end systems, and database management.
+• Collaborated on projects, building scalable and user-friendly applications."
+      />
+      <Card
+        start="2023/6"
+        end="2023/7"
+        title1="ATENAU LTD"
+        title2="Smart Home"
+        text="Smart Home Application Services • Participated in a one-month internship focusing on smart home application
+services.
+• Gained hands-on experience with IoT technologies and smart home systems.
+• Assisted in the development, testing, and deployment of smart home solutions.
+• Enhanced knowledge of automation, system integration, and user-centric design
+principles."
+      />
+      <Card
+        start="2023/6"
+        end="2023/7"
+        title1="ATENAU LTD"
+        title2="Smart Home"
+        text="Participated in a one-month internship focusing on smart home application
+services.
+• Gained hands-on experience with IoT technologies and smart home systems.
+• Assisted in the development, testing, and deployment of smart home solutions.
+• Enhanced knowledge of automation, system integration, and user-centric design
+principles."
+      />
+      <Card
+        start="2023/6"
+        end="2023/7"
+        title1="EMERSON"
+        title2="Oil and Gas Valves and Pumps"
+        text="Completed a one-month internship program focusing on oil and gas equipment,
+specifically valves and pumps.
+• Acquired knowledge about the design, functionality, and maintenance of industrial
+valves and pumps used in the oil and gas sector.
+• Gained practical exposure to operational processes and technical aspects of
+equipment management."
+      />
+      <Card
+        start="2024/6"
+        end="2024/7"
+        title1="AZERSU JEYRANBATAN"
+        title2="Process Automation"
+        text="• Completed a one-month internship focusing on process automation in water
+treatment and distribution systems.
+• Gained experience with automation technologies and control systems used in
+water management.
+• Assisted in monitoring, maintaining, and optimizing automated processes for
+efficiency and reliability."
+      />
+      <Card
+        start="2024/6"
+        end="2024/7"
+        title1="SENTRA QSC"
+        title2="Oil and Gas sector"
+        text="• Gained extensive knowledge of industry operations, including equipment
+management and project workflows.
+• Contributed to technical documentation and quality assurance processes."
+      />
+    </div>
+  );
+};
+
+const Card = ({
   start,
   end,
   title1,

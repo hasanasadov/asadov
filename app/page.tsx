@@ -3,6 +3,7 @@
 import BlurryBG from "@/components/shared/BlurryBG";
 import HoverText from "@/components/shared/HoverText";
 import ArrorUpRight from "@/components/ui/ArrorUpRight";
+import { resumeLink } from "@/constants";
 import RenderIf from "@/utils/RenderIf";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
@@ -13,7 +14,6 @@ export default function Home() {
   const [heroText, setHeroText] = useState("Hasanali");
   return (
     <div className="relative">
-      
       <Hero
         heroText={heroText}
         className="md:top-[0px] top-[40px] text-[68px] md:text-[100px] lg:text-[130px] transition-all transform-3d duration-500 ease-in-out"
@@ -119,8 +119,8 @@ const Card = ({
 
   return (
     <Link
-      href={title?.toLowerCase() || "#"}
-      className={`card ${className}`}
+      href={title == "Resume" ? resumeLink : title?.toLowerCase() || "#"}
+      className={`card  ${className}`}
       onMouseEnter={() => {
         setHovered(true);
         setHeroText(title!);
@@ -129,8 +129,11 @@ const Card = ({
         setHovered(false);
         setHeroText("");
       }}
+      {...(title === "Resume"
+        ? { target: "_blank", rel: "noopener noreferrer" }
+        : {})}
     >
-      <BlurryBG className="w-full h-full rounded-lg" />
+      <BlurryBG className="w-full h-full rounded-lg " />
       <RenderIf condition={!!title}>
         <div className="flex items-center justify-between w-full">
           <div className="overflow-hidden md:text-xl text-md">
@@ -237,7 +240,7 @@ const ImageCard = ({
       <div>
         <Image
           className="object-cover"
-          src={src || "/hasanali.jpg"}
+          src={src || "/porto.jpg"}
           alt="me"
           fill
         />
