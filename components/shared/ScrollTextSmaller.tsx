@@ -34,7 +34,7 @@ export const ScrollTextSmaller = ({
           className={`transition-colors duration-300 ease-in-out ${
             idx < lettersToColor
               ? "text-[#333] dark:text-white"
-              : "text-white dark:text-[#333]"
+              : "text-[#aaa] dark:text-[#333]"
           }`}
         >
           {letter}

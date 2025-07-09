@@ -23,6 +23,7 @@ const Switch = () => {
     const newTheme = isDark ? "light" : "dark";
     setTheme(newTheme);
     setIsDark(!isDark); // Optimistically update
+    console.log(`Theme changed to: ${newTheme}`);
   };
 
   return (

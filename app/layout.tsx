@@ -1,18 +1,7 @@
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
 import { ThemeProvider } from "next-themes";
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Hasanali Asadov - Portfolio",
@@ -26,8 +15,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html suppressHydrationWarning lang="en">
-      <body className="p-4 pt-1  min-h-screen flex flex-col justify-between ">
+    <html lang="en" suppressHydrationWarning>
+      <body className="p-4 pt-1  min-h-screen flex flex-col justify-between !bg-white !text-black dark:!bg-black dark:!text-white">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
