@@ -6,7 +6,7 @@ const Switch = () => {
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [isDark, setIsDark] = useState(false);
-
+  const [hovered, setHovered] = useState(false);
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -27,8 +27,12 @@ const Switch = () => {
   };
 
   return (
-    <div className="flex items-center">
-      <label className="relative inline-flex items-center cursor-pointer w-10 h-5">
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="flex items-center"
+    >
+      <label className="relative inline-flex items-center justify-end cursor-pointer w-10 h-5">
         <input
           type="checkbox"
           checked={isDark}
@@ -37,24 +41,26 @@ const Switch = () => {
         />
         <div
           className={`
+            ${hovered ? "w-8 h-[18px]" : "!w-0 !h-0"} "}
             w-8 h-[18px]
             bg-gray-200 dark:bg-white/[0.16]
             rounded-full
-            transition-colors
-            duration-300
+            transition-all
+            duration-400
             shadow-inner
           `}
         ></div>
         <div
           className={`
-            absolute left-[2px] top-[3px]
+            ${!hovered ? "!right-[0px] peer-checked:!left-[24px]" : ""}
+            absolute right-[2px] top-[3px]
             w-[14px] h-[14px]
             dark:bg-white bg-black
             rounded-full
             shadow
-            transition-transform
-            duration-300
-            peer-checked:left-[16px]
+            transition-all
+            duration-400
+            peer-checked:left-[10px]
             pointer-events-none
           `}
         ></div>
