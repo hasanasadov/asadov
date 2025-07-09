@@ -32,7 +32,7 @@ const Switch = () => {
       onMouseLeave={() => setHovered(false)}
       className="flex items-center"
     >
-      <label className="relative inline-flex items-center justify-end cursor-pointer w-10 h-5">
+      <label className="relative transition-all duration-500 inline-flex items-center justify-end cursor-pointer w-10 h-5">
         <input
           type="checkbox"
           checked={isDark}
@@ -46,21 +46,21 @@ const Switch = () => {
             bg-gray-200 dark:bg-white/[0.16]
             rounded-full
             transition-all
-            duration-400
+            duration-500
             shadow-inner
           `}
         ></div>
         <div
           className={`
-            ${!hovered ? "!right-[0px] peer-checked:!left-[24px]" : ""}
+            ${!hovered ? "!right-[0px] peer-checked:!right-[0px]" : ""}
             absolute right-[2px] top-[3px]
             w-[14px] h-[14px]
             dark:bg-white bg-black
             rounded-full
             shadow
             transition-all
-            duration-400
-            peer-checked:left-[10px]
+            duration-500
+            peer-checked:right-[16px]
             pointer-events-none
           `}
         ></div>
