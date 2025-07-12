@@ -3,7 +3,6 @@
 import BlurryBG from "@/components/shared/BlurryBG";
 import HoverText from "@/components/shared/HoverText";
 import ArrorUpRight from "@/components/ui/ArrorUpRight";
-import { resumeLink } from "@/constants";
 import RenderIf from "@/utils/RenderIf";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
@@ -116,7 +115,7 @@ const Card = ({
   setHeroText: (text: string) => void;
 }) => {
   const [hovered, setHovered] = useState(false);
-
+  const resumeLink = process.env.NEXT_PUBLIC_RESUME_LINK || "#";
   return (
     <Link
       href={title == "Resume" ? resumeLink : title?.toLowerCase() || "#"}
