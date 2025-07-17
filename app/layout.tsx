@@ -1,15 +1,12 @@
-import type { Metadata } from "next";
 import Navbar from "@/components/shared/Navbar";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "Hasanali Asadov - Portfolio",
-  description:
-    "Portfolio of Hasanali Asadov, a software engineer specializing in web development.",
+export const metadata = {
+  title: "Home - Hasanali Asadov",
+  description: "Welcome to Hasanali personal website",
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{

@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://asadov.site
+
+# Sitemaps
+Sitemap: https://asadov.site/sitemap.xml

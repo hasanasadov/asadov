@@ -1,9 +1,15 @@
-"use client";
 import Footer from "@/components/shared/Footer";
 import { ScrollText } from "@/components/shared/ScrollText";
 import { ScrollTextSmaller } from "@/components/shared/ScrollTextSmaller";
 import Image from "next/image";
 import React from "react";
+
+
+export const metadata = {
+  title: "About - Hasanali Asadov",
+  description: "Haqqımda səhifəsi - Hasanali Asadov portfolio.",
+};
+
 
 const AboutPage = () => {
   return (
