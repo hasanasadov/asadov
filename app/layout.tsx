@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/shared/Navbar";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function RootLayout({
           enableSystem={false}
         >
           <Navbar />
+          <Toaster richColors />
           {children}
         </ThemeProvider>
       </body>

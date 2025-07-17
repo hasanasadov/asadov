@@ -7,11 +7,36 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+
+// 🎯 Project types and budget ranges
+const projectTypes = [
+  "Multipage Website Design (Full Stack)",
+  "API Development (Integration)",
+  "Frontend Development",
+  "Backend Development",
+];
+
+const budgetRanges = ["$1k - $3k", "$3k - $5k", "$5k - $10k", "> $10k"];
+
+// 🧠 Zod schema
+const contactFormSchema = z.object({
+  fullName: z.string().min(2, "Full name is required"),
+  email: z.string().email("Invalid email address"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
+  selectedProjects: z.array(z.string()).min(1, "Select at least one project"),
+  selectedBudget: z.string().min(1, "Select a budget"),
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
 
 const AboutPage = () => {
   return (
     <div className="min-h-screen p-4 md:p-8">
-      <h1 className=" text-[26px] md:text-[36px] lg:text-[48px]  leading-tight lg:w-8/12 mb-12">
+      <h1 className="text-[26px] md:text-[36px] lg:text-[48px] leading-tight lg:w-8/12 mb-12">
         If you prefer not to fill out forms, feel free to email me directly and
         let&#39;s talk about the next big thing!
       </h1>
@@ -19,10 +44,10 @@ const AboutPage = () => {
       <div className="flex flex-col md:flex-row md:gap-24 gap-6 justify-between w-full">
         <div className="md:w-1/3 w-full">
           <div className="w-full md:w-1/2 flex flex-col md:gap-4 gap-2 text-2xl">
-            <Link href={"mailto:hasanaliasadov@gmail.com"}>
+            <Link href="mailto:hasanaliasadov@gmail.com">
               <HoverText text="hasanaliasadov@gmail.com" />
             </Link>
-            <Link href={"tel:+994502068605"}>
+            <Link href="tel:+994502068605">
               <HoverText text="+994 50 206 86 05" />
             </Link>
           </div>
@@ -36,116 +61,188 @@ const AboutPage = () => {
   );
 };
 
-const projectTypes = [
-  "Multipage Website Design",
-  "Landing Page Design",
-  "Framer Website Development",
-  "Framer Landing Page Development",
-];
-
-const budgetRanges = ["$1k – $5k", "$5k – $10k", "$10k – $20k", "> $20k"];
-
 const ContactForm = () => {
-  const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
-  const [selectedBudget, setSelectedBudget] = useState<string>("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+    reset,
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      message: "",
+      selectedProjects: [],
+      selectedBudget: "",
+    },
+  });
 
-  const toggleProject = (project: string) => {
-    setSelectedProjects((prev) =>
-      prev.includes(project)
-        ? prev.filter((p) => p !== project)
-        : [...prev, project]
-    );
+  const [loading, setLoading] = useState(false);
+  const onSubmit = async (data: ContactFormData) => {
+    setLoading(true);
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    setLoading(false);
+
+    const response = await res.json();
+    if (response.success) {
+      toast.success("Email sent successfully!");
+      toast.info("I will get back to you as soon as possible.");
+    } else {
+      toast.error("Failed to send email. Please try again later.");
+      console.error("Error details:", response.error);
+    }
+    reset();
   };
 
   return (
-    <div className="w-full shadow-inner shadow-gray-800 rounded-3xl dark:bg-white/5 bg-black/30 lg:p-10 md:p-8 p-6">
-      <form
-        className="flex flex-col gap-10"
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
+    <div className="w-full shadow-inner dark:shadow-gray-800 shadow-gray-400 rounded-3xl dark:bg-white/5 bg-black/5 lg:p-10 md:p-8 p-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10">
+        {/* Full Name */}
         <div className="flex flex-col gap-2">
           <label className="text-lg font-medium">Full Name</label>
           <Input
-            className="!p-6 bg-white/5 rounded-xl border-white/10 focus:outline-0"
-            type="text"
+            {...register("fullName")}
+            className="!p-6 bg-white/5 rounded-xl dark:border-white/10 border-black/10"
             placeholder="Your name"
           />
+          {errors.fullName && (
+            <span className="text-yellow-600 text-sm">
+              {errors.fullName.message}
+            </span>
+          )}
         </div>
 
+        {/* Email */}
         <div className="flex flex-col gap-2">
           <label className="text-lg font-medium">Email</label>
           <Input
-            className="!p-6 bg-white/5 rounded-xl border-white/10 focus:outline-0"
-            type="email"
+            {...register("email")}
+            className="!p-6 bg-white/5 rounded-xl dark:border-white/10 border-black/10"
             placeholder="Your email"
           />
+          {errors.email && (
+            <span className="text-yellow-600 text-sm">
+              {errors.email.message}
+            </span>
+          )}
         </div>
 
+        {/* Project Type and Budget */}
         <div className="flex flex-col lg:flex-row gap-10">
+          {/* Project Types */}
           <div className="flex-1">
             <p className="mb-4 text-lg">What’s Your Project About?</p>
-            <div className="flex flex-col gap-4">
-              {projectTypes.map((item) => (
-                <label
-                  key={item}
-                  className="flex items-center gap-3 cursor-pointer"
-                >
-                  <div
-                    className={`w-5 h-5 rounded-md border ${
-                      selectedProjects.includes(item)
-                        ? "bg-white border-white"
-                        : "border-white/30"
-                    } transition`}
-                    onClick={() => toggleProject(item)}
-                  />
-                  <span>{item}</span>
-                </label>
-              ))}
-            </div>
+            <Controller
+              name="selectedProjects"
+              control={control}
+              render={({ field }) => (
+                <div className="flex flex-col gap-4">
+                  {projectTypes.map((item) => {
+                    const isChecked = field.value.includes(item);
+                    return (
+                      <label
+                        key={item}
+                        className="flex items-center gap-3 cursor-pointer"
+                      >
+                        <div
+                          className={`w-5 h-5 rounded-md border ${
+                            isChecked
+                              ? "dark:bg-white bg-black dark:border-white !border-black"
+                              : "border-white/30 dark:bg-black bg-black/10"
+                          } transition`}
+                          onClick={() =>
+                            isChecked
+                              ? field.onChange(
+                                  field.value.filter((v) => v !== item)
+                                )
+                              : field.onChange([...field.value, item])
+                          }
+                        />
+                        <span>{item}</span>
+                      </label>
+                    );
+                  })}
+                  {errors.selectedProjects && (
+                    <span className="text-yellow-600 text-sm">
+                      {errors.selectedProjects.message}
+                    </span>
+                  )}
+                </div>
+              )}
+            />
           </div>
 
+          {/* Budget */}
           <div className="flex-1">
             <p className="mb-4 text-lg">Project Budget</p>
-            <div className="flex flex-col gap-4">
-              {budgetRanges.map((budget) => (
-                <label
-                  key={budget}
-                  className="flex items-center gap-3 cursor-pointer"
-                >
-                  <div
-                    className={`w-5 h-5 rounded-full border ${
-                      selectedBudget === budget
-                        ? "bg-white border-white"
-                        : "border-white/30"
-                    } transition`}
-                    onClick={() => setSelectedBudget(budget)}
-                  />
-                  <span>{budget}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-10">
-          <div className="flex-1">
-            <p className="mb-4 text-lg">Share More Details</p>
-          </div>
-          <div>
-            <Textarea
-              className="!p-6 bg-white/5 rounded-xl border-white/10 focus:outline-0 min-h-[200px]"
-              placeholder="About your project"
+            <Controller
+              name="selectedBudget"
+              control={control}
+              render={({ field }) => (
+                <div className="flex flex-col gap-4">
+                  {budgetRanges.map((budget) => (
+                    <label
+                      key={budget}
+                      className="flex items-center gap-3 cursor-pointer"
+                    >
+                      <div
+                        className={`w-5 h-5 rounded-full border ${
+                          field.value === budget
+                            ? "dark:bg-white bg-black dark:border-white !border-black"
+                            : "border-white/30 dark:bg-black bg-black/10"
+                        } transition`}
+                        onClick={() => field.onChange(budget)}
+                      />
+                      <span>{budget}</span>
+                    </label>
+                  ))}
+                  {errors.selectedBudget && (
+                    <span className="text-yellow-600 text-sm">
+                      {errors.selectedBudget.message}
+                    </span>
+                  )}
+                </div>
+              )}
             />
           </div>
         </div>
+
+        {/* Message */}
+        <div className="flex flex-col gap-6">
+          <div className="flex-1">
+            <p className="text-lg">Share More Details</p>
+          </div>
+          <div>
+            <Textarea
+              {...register("message")}
+              className="!p-6 bg-white/5 mb-3 rounded-xl dark:border-white/10 border-black/10 min-h-[200px]"
+              placeholder="About your project"
+            />
+            {errors.message && (
+              <span className="text-yellow-600 text-sm ">
+                {errors.message.message}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Submit */}
         <div>
           <Button
-            variant={"outline"}
-            className="!py-6 !px-10 text-lg bg-white/5 rounded-xl border-white/10 focus:outline-0"
+            type="submit"
+            variant="outline"
+            disabled={loading}
+            className={`!py-6 !px-10 text-lg bg-black/5 rounded-xl dark:border-white/10 border-black/10 ${
+              loading ? "cursor-not-allowed" : ""
+            } `}
           >
-            Submit
+            {loading ? "Sending..." : "Submit"}
           </Button>
         </div>
       </form>
