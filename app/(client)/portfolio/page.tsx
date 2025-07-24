@@ -1,89 +1,67 @@
-import Footer from "@/components/shared/Footer";
-import ProjectCard from "@/components/shared/ProjectCard";
-import React from "react";
+"use client";
 
-export const metadata = {
-  title: "Portfolio - Hasanali Asadov",
-  description: "Portfolio səhifəsi - Hasanali Asadov.",
-};
+import React, { useState, useMemo } from "react";
+import Footer from "@/components/shared/Footer";
+import SearchInput from "./_components/SearchInput";
+import FilterDropdown from "./_components/FilterDropDown";
+import SelectedFilters from "./_components/SelectedFilters";
+import ProjectCard from "./_components/ProjectCard";
+import { projects } from "@/constants/projects";
+
+const categories = ["Web", "Mobile", "Games"];
 
 const PortfolioPage = () => {
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const toggleCategory = (cat: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
+    );
+  };
+
+  const removeCategory = (cat: string) => {
+    setSelectedCategories((prev) => prev.filter((c) => c !== cat));
+  };
+
+  const filteredProjects = useMemo(() => {
+    return projects.filter((p) => {
+      const matchesCategory =
+        selectedCategories.length === 0 ||
+        selectedCategories.includes(p.category);
+      const matchesSearch = p.title
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [selectedCategories, searchTerm]);
+
   return (
-    <div className="min-h-screen p-4 md:p-8">
-      <h1 className="text-[26px] md:text-[36px] lg:text-[48px]  leading-tight lg:w-8/12 mb-10">
-        Dive into a few projects that represent my most fulfilling design
-        experiences
+    <div className="min-h-screen md:p-6 ">
+      <h1 className="text-5xl font-extrabold mb-10 leading-tight text-gray-900 dark:text-white">
+        Dive into my most fulfilling design experiences
       </h1>
 
-      <div className="space-y-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ProjectCard
-            title="Turbo.az Clone"
-            image="/turbo.png"
-            href="hasturbo.vercel.app"
-          />
-          <ProjectCard
-            title="Sixt.com Clone"
-            image="/sixt.png"
-            href="hassixt.site"
-          />
-        </div>
-
-        <div>
-          <ProjectCard
-            title="Morent car"
-            image="/hasrent.png"
-            className="w-full md:h-[500px]"
-            href="hasrent.vercel.app"
-          />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ProjectCard
-            title="MyEvents App"
-            image="/myevents.png"
-            href="myevents.az"
-          />
-          <ProjectCard
-            title="ToDo App"
-            image="/hastodo.png"
-            href="hastodo.vercel.app"
-          />
-        </div>
-        <div>
-          <ProjectCard
-            title="NFT Marketplace"
-            image="/hasnft.png"
-            className="w-full md:h-[500px]"
-            href="hasnft.vercel.app"
-          />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ProjectCard
-            title="Instagram Clone"
-            image="/hasagram.png"
-            href="hasagram.vercel.app"
-          />
-          <ProjectCard
-            title="Crypto Tracker"
-            image="/hascrypto.png"
-            href="hascrypto.vercel.app"
-          />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ProjectCard
-            title="Neowise "
-            image="/hasneowise.png"
-            href="hasneowise.vercel.app"
-          />
-          <ProjectCard
-            title="Games"
-            image="/hasgames.png"
-            href="hasgames.vercel.app"
-          />
-        </div>
+      <div className="fle hidden sticky top-4 z-40 bg-white dark:bg-gray-900 p-4 rounded-xl shadow-md mb-8  flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <SearchInput searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+        <FilterDropdown
+          categories={categories}
+          selectedCategories={selectedCategories}
+          onToggleCategory={toggleCategory}
+        />
       </div>
+
+      <SelectedFilters
+        selectedCategories={selectedCategories}
+        onRemoveCategory={removeCategory}
+      />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {filteredProjects?.map((project) => (
+          <ProjectCard key={project.title} project={project} />
+        ))}
+      </div>
+
       <Footer />
     </div>
   );

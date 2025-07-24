@@ -189,11 +189,11 @@ const Stack = ({
     <div
       onMouseEnter={() => setHeroText("Stack")}
       onMouseLeave={() => setHeroText("")}
-      className={`card relative flex !items-center !justify-center !p-0 ${className}`}
+      className={`card relative flex !items-center !justify-center !p-0 duration-300 transition-all ${className}`}
     >
       <BlurryBG className="w-full h-full rounded-lg" />
-      <div className="absolute left-0 top-0 h-full w-16 bg-gradient-to-r dark:from-black from-white via-white/40 dark:via-black/40 to-transparent z-10 pointer-events-none duration-300 transition-all" />
-      <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l dark:from-black from-white via-white/40 dark:via-black/40 to-transparent z-10 pointer-events-none duration-300 transition-all" />
+      <div className="absolute left-0 top-0 h-full w-16 bg-gradient-to-r dark:from-black from-white via-white/40 dark:via-black/40 to-transparent z-10 pointer-events-none duration-500 transition-colors" />
+      <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l dark:from-black from-white via-white/40 dark:via-black/40 to-transparent z-10 pointer-events-none duration-500 transition-colors" />
 
       {/* Scrollable row */}
       <div
@@ -207,7 +207,7 @@ const Stack = ({
         {images.concat(images).map((src, index) => (
           <div
             key={index}
-            className="md:min-w-[80px] md:min-h-[80px] min-w-[60px] min-h-[60px] rounded-2xl p-3 md:p-4 bg-white/10 flex items-center justify-center"
+            className="md:min-w-[80px] md:min-h-[80px] min-w-[60px] min-h-[60px] rounded-2xl p-3 md:p-4 dark:bg-white/10 bg-black/5 duration-500 transition-colors flex items-center justify-center"
           >
             <Image
               className="object-contain rounded-lg"
