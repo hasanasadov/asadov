@@ -1,4 +1,5 @@
 import Navbar from "@/components/shared/Navbar";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
 import "./globals.css";
@@ -44,6 +45,7 @@ export default function RootLayout({
         >
           <Navbar />
           <Toaster richColors />
+          <SpeedInsights />
           {children}
         </ThemeProvider>
       </body>
