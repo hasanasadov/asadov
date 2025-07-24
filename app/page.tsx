@@ -241,9 +241,11 @@ const ImageCard = ({
       <div>
         <Image
           className="object-cover"
+          objectFit="cover"
           src={src || "/porto.jpg"}
+          layout="fill"
+          priority
           alt="me"
-          fill
         />
       </div>
     </div>

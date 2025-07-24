@@ -1,15 +1,13 @@
 import Footer from "@/components/shared/Footer";
 import { ScrollText } from "@/components/shared/ScrollText";
-import { ScrollTextSmaller } from "@/components/shared/ScrollTextSmaller";
+// import { ScrollTextSmaller } from "@/components/shared/ScrollTextSmaller";
 import Image from "next/image";
 import React from "react";
-
 
 export const metadata = {
   title: "About - Hasanali Asadov",
   description: "Haqqımda səhifəsi - Hasanali Asadov portfolio.",
 };
-
 
 const AboutPage = () => {
   return (
@@ -173,8 +171,9 @@ const Card = ({
           <p>{title2}</p>
         </div>
       </div>
-      <div className="md:w-1/2 text-white/50 text-left text-[14px] md:text-[16px]">
-        <ScrollTextSmaller text={text} />
+      <div className="md:w-1/2 dark:text-white/80 text-black/80 text-left text-[14px] md:text-[16px]">
+        <p>{text}</p>
+        {/* <ScrollTextSmaller text={text} /> */}
       </div>
     </div>
   );
