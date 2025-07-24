@@ -8,10 +8,12 @@ import ArrowLeft from "../ui/ArrowLeft";
 import HoverText from "./HoverText";
 import AutoAnimate from "./AutoAnimate";
 import { useTimeZoneString } from "@/hooks/useTimeZone";
+import { PATHS } from "@/constants";
 
 const Navbar = () => {
   const pathName = usePathname();
   const isHomePage = pathName === "/";
+  const isDeatailPage = pathName.includes(`${PATHS.PORTFOLIO}/`);
   const timeZoneStr = useTimeZoneString();
   const [showNavbar, setShowNavbar] = useState(true);
   const lastScrollY = useRef(0);
@@ -50,9 +52,7 @@ const Navbar = () => {
       <div className="flex items-center gap-8 md:gap-12 lg:gap-[100px] text-[14px] md:text-[16px] ">
         <div
           onClick={() => {
-            if (!isHomePage) {
-              window.location.href = "/";
-            }
+            window.history.back();
           }}
           className="whitespace-nowrap flex items-center gap-2 cursor-pointer overflow-hidden"
         >
@@ -61,7 +61,7 @@ const Navbar = () => {
           </RenderIf>
           <RenderIf condition={!isHomePage}>
             <ArrowLeft />
-            <HoverText text="Home" />
+            <HoverText text={!isDeatailPage ? "Home" : "Portfolio"} />
           </RenderIf>
         </div>
         <div className="whitespace-nowrap">

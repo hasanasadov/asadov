@@ -23,7 +23,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
   return (
     <aside
       className="
-        md:sticky md:top-20 md:self-start flex flex-col gap-6 max-h-[calc(100vh-5rem)] md:overflow-auto md:pr-4
+        md:sticky md:top-8 md:self-start flex flex-col gap-6 max-h-[calc(100vh-5rem)] md:overflow-auto md:pr-4
         scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-thumb-rounded
         hover:scrollbar-thumb-gray-400 dark:hover:scrollbar-thumb-gray-600
       "

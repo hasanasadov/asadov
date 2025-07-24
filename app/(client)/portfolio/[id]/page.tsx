@@ -4,6 +4,7 @@ import React from "react";
 import { projects } from "@/constants/projects";
 import ProjectSidebar from "./_components/ProjectSidebar";
 import ProjectContent from "./_components/ProjectContent";
+import Footer from "@/components/shared/Footer";
 
 type ProjectDetailPageProps = {
   params: Promise<{
@@ -27,26 +28,29 @@ const ProjectDetailPage = (props: ProjectDetailPageProps) => {
   }
 
   return (
-    <main
-      className="
-        min-h-screen  px-6 py-4 
+    <>
+      <main
+        className="
+        min-h-screen  md:px-6 py-4 
         flex flex-col md:grid md:grid-cols-[320px_1fr] md:gap-x-12
       "
-    >
-      <ProjectSidebar
-        title={project.title}
-        image={project.image}
-        description={project.description}
-        technologies={project.technologies}
-        liveUrl={project.liveUrl}
-        repoUrl={project.repoUrl}
-      />
+      >
+        <ProjectSidebar
+          title={project.title}
+          image={project.image}
+          description={project.description}
+          technologies={project.technologies}
+          liveUrl={project.liveUrl}
+          repoUrl={project.repoUrl}
+        />
 
-      <ProjectContent
-        detailedDescription={project.detailedDescription}
-        codeSnippets={project.codeSnippets}
-      />
-    </main>
+        <ProjectContent
+          detailedDescription={project.detailedDescription}
+          codeSnippets={project.codeSnippets}
+        />
+      </main>
+      <Footer />
+    </>
   );
 };
 

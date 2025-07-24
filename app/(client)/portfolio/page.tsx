@@ -7,6 +7,7 @@ import FilterDropdown from "./_components/FilterDropDown";
 import SelectedFilters from "./_components/SelectedFilters";
 import ProjectCard from "./_components/ProjectCard";
 import { projects } from "@/constants/projects";
+import { ScrollToTop } from "@/components/shared/ScrollToTop";
 
 const categories = ["Web", "Mobile", "Games"];
 
@@ -38,6 +39,7 @@ const PortfolioPage = () => {
 
   return (
     <div className="min-h-screen md:p-6 ">
+      <ScrollToTop />
       <h1 className="text-5xl font-extrabold mb-10 leading-tight text-gray-900 dark:text-white">
         Dive into my most fulfilling design experiences
       </h1>

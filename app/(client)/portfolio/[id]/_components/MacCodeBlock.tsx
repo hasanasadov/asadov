@@ -175,7 +175,7 @@ const MacCodeBlock: React.FC<MacCodeBlockProps> = ({ title, code }) => {
           aria-label="Expand window"
           type="button"
           className="
-             w-max px-4 h-10 mr-4 mb-4 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900
+             w-max px-4 h-10 mr-4 mb-4 rounded-md border border-black/10 dark:border-white/10 bg-white dark:bg-white/10 z-10
             text-gray-700 dark:text-gray-300 font-semibold shadow-sm
             hover:shadow-md transition
           "
@@ -187,7 +187,7 @@ const MacCodeBlock: React.FC<MacCodeBlockProps> = ({ title, code }) => {
       {!isCollapsed && (
         <div
           className={`
-            mb-8 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm overflow-hidden max-w-full
+            mb-8 rounded-lg border border-black/10 dark:border-white/10 bg-white dark:bg-white/10 shadow-sm overflow-hidden max-w-full
             transition-all duration-300 ease-in-out
             ${isFullscreen ? "fixed inset-0 m-4 z-[1000] rounded-lg" : ""}
             ${isMinimized ? "h-12" : ""}
@@ -197,7 +197,7 @@ const MacCodeBlock: React.FC<MacCodeBlockProps> = ({ title, code }) => {
         >
           {/* Mac style top bar */}
           <div
-            className="flex items-center gap-2 px-3 py-1 bg-gray-50 dark:bg-gray-800 select-none relative"
+            className="flex items-center gap-2 px-3 !pr-1 py-1 bg-black/10 dark:bg-white/10 select-none relative"
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
           >
@@ -211,7 +211,7 @@ const MacCodeBlock: React.FC<MacCodeBlockProps> = ({ title, code }) => {
 
             {/* Başlıq */}
             <span
-              className="ml-4 text-gray-700 dark:text-gray-300 font-medium truncate select-text"
+              className="ml-4 text-black dark:text-white font-medium truncate select-text"
               title={title}
             >
               {title}
@@ -222,7 +222,7 @@ const MacCodeBlock: React.FC<MacCodeBlockProps> = ({ title, code }) => {
 
           {!isMinimized && (
             <pre
-              className="p-4 overflow-x-auto text-sm font-mono text-gray-900 dark:text-gray-100 whitespace-pre-wrap bg-white dark:bg-gray-900"
+              className="p-4 overflow-x-auto text-sm font-mono text-gray-900 dark:text-gray-100 whitespace-pre-wrap bg-white dark:bg-white/5"
               style={{
                 userSelect: "text",
                 maxHeight: isFullscreen ? "calc(100vh - 3.5rem)" : undefined,

@@ -36,7 +36,7 @@ export default Button;
       },
     ],
     liveUrl: "https://hasturbo.vercel.app",
-    repoUrl: "https://github.com/username/turboaz-clone",
+    repoUrl: "https://github.com/hasanasadov/CA_Project_TurboAz",
   },
   {
     id: 2,
@@ -63,7 +63,7 @@ const handleBooking = (data) => {
       },
     ],
     liveUrl: "https://hassixt.site",
-    repoUrl: "https://github.com/username/sixt-clone",
+    repoUrl: "https://github.com/hasanasadov/sixt-clone",
   },
   {
     id: 3,
@@ -90,7 +90,7 @@ async function fetchCars() {
       },
     ],
     liveUrl: "https://hasrent.vercel.app",
-    repoUrl: "https://github.com/username/morent-car",
+    repoUrl: "https://github.com/hasanasadov/hasrent",
   },
   {
     id: 4,
@@ -115,7 +115,7 @@ function createEvent(eventData) {
       },
     ],
     liveUrl: "https://myevents.az",
-    repoUrl: "https://github.com/username/myevents-app",
+    repoUrl: "https://github.com/hasanasadov/eventify-next",
   },
   {
     id: 5,
@@ -140,7 +140,7 @@ function addTask(task) {
       },
     ],
     liveUrl: "https://hastodo.vercel.app",
-    repoUrl: "https://github.com/username/todo-app",
+    repoUrl: "https://github.com/hasanasadov/hastodo",
   },
   {
     id: 6,
@@ -165,7 +165,7 @@ async function connectWallet() {
       },
     ],
     liveUrl: "https://hasnft.vercel.app",
-    repoUrl: "https://github.com/username/nft-marketplace",
+    repoUrl: "https://github.com/hasanasadov/hasnft",
   },
   {
     id: 7,
@@ -190,7 +190,7 @@ function uploadImage(file) {
       },
     ],
     liveUrl: "https://hasagram.vercel.app",
-    repoUrl: "https://github.com/username/instagram-clone",
+    repoUrl: "https://github.com/hasanasadov/Instagram_clone_v1",
   },
   {
     id: 8,
@@ -217,7 +217,7 @@ async function fetchPrices() {
       },
     ],
     liveUrl: "https://hascrypto.vercel.app",
-    repoUrl: "https://github.com/username/crypto-tracker",
+    repoUrl: "https://github.com/hasanasadov/hascrypto",
   },
   {
     id: 9,
@@ -244,7 +244,7 @@ async function fetchWeather(location) {
       },
     ],
     liveUrl: "https://hasneowise.vercel.app",
-    repoUrl: "https://github.com/username/neowise",
+    repoUrl: "https://github.com/hasanasadov/hasneowise",
   },
   {
     id: 10,
@@ -270,6 +270,6 @@ function gameLoop() {
       },
     ],
     liveUrl: "https://hasgames.vercel.app",
-    repoUrl: "https://github.com/username/games-collection",
+    repoUrl: "https://github.com/hasanasadov/hasgames",
   },
 ];
