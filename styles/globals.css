@@ -197,12 +197,14 @@ body {
 
 .marquee-inner {
   display: inline-block;
-  animation: marquee 20s linear infinite;
-  /* 2x genişlik – çünki eyni cümləni iki dəfə yerləşdiririk */
+  animation: marquee 15s linear infinite;
+  @media (max-width: 768px) {
+    animation: marquee 5s linear infinite;
+  }
   width: 200%;
 }
 
 .marquee-content {
   display: inline-block;
-  width: 100%; /* Hər biri yarısını tutur */
+  width: 100%;
 }

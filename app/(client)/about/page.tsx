@@ -199,7 +199,7 @@ const MarqueeText = ({
 }) => {
   return (
     <div
-      className={`marquee-wrapper  my-8 lg:text-[80px] md:text-[60px] text-[40px] ${className1}`}
+      className={`marquee-wrapper  mt-12 lg:text-[80px] md:text-[60px] text-[40px] ${className1}`}
     >
       <div className={`marquee-inner ${className2}`}>
         <div className={`marquee-content ${className3}`}>
