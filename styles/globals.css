@@ -180,3 +180,29 @@ body {
     opacity: 1;
   }
 }
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-inner {
+  display: inline-block;
+  animation: marquee 20s linear infinite;
+  /* 2x genişlik – çünki eyni cümləni iki dəfə yerləşdiririk */
+  width: 200%;
+}
+
+.marquee-content {
+  display: inline-block;
+  width: 100%; /* Hər biri yarısını tutur */
+}

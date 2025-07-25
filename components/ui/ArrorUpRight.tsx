@@ -1,8 +1,8 @@
 import React from "react";
 
-const ArrorUpRight = () => {
+const ArrorUpRight = ({ className }: { className?: string }) => {
   return (
-    <div>
+    <div className={className}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

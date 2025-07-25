@@ -138,7 +138,9 @@ const Card = ({
           <div className="overflow-hidden md:text-xl text-md">
             <HoverText text={title || "Card"} hovered={hovered} />
           </div>
-          <ArrorUpRight />
+          <ArrorUpRight
+            className={`transform duration-500 ${hovered ? "rotate-45" : ""} `}
+          />
         </div>
       </RenderIf>
     </Link>
@@ -169,7 +171,7 @@ const Stack = ({
 
     const el = scrollContainer;
     const speed = 1; // px per tick
-    const intervalTime = 10; // ms
+    const intervalTime = 20; // ms
 
     const intervalId = setInterval(() => {
       if (!el) return;

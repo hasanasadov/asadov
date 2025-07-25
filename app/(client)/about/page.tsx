@@ -1,6 +1,5 @@
 import Footer from "@/components/shared/Footer";
 import { ScrollText } from "@/components/shared/ScrollText";
-// import { ScrollTextSmaller } from "@/components/shared/ScrollTextSmaller";
 import Image from "next/image";
 import React from "react";
 
@@ -11,28 +10,38 @@ export const metadata = {
 
 const AboutPage = () => {
   return (
-    <div className="md:px-8 pt-4">
-      <ScrollText
-        className="text-[26px] md:text-[36px] lg:text-[48px] font-bold mb-8 mt-8 !text-red-700"
-        text="I am a 20-year-old young programming developer. Alongside my personal skills, I am eager to learn about the major
+    <>
+      <div className="md:px-8 pt-4">
+        <ScrollText
+          className="text-[26px] md:text-[36px] lg:text-[48px] font-bold mb-8 mt-8 !text-red-700"
+          text="I am a 21-year-old young programming developer. Alongside my personal skills, I am eager to learn about the major
 innovations required by the modern world. Therefore, I am constantly learning and developing software. I also have
-skills in web services, database management, and teamwork."
-      />
-      <div className="flex md:justify-end my-8 justify-center">
-        <Image
-          src="/myPhotos/barca.jpg"
-          alt="Hasanali Asadov"
-          width={450}
-          height={450}
+skills in web services, database management, and process automation. I am currently studying at Baku Higher Oil School."
         />
-      </div>
-      <ScrollText className="text-4xl my-10" text="Education" />
-      <EduExperience />
+        <div className="relative">
+          <MarqueeText className1="w-[200vw] absolute top-1/4 -left-1/4 rotate-[-10deg] hidden md:block z-[99]" />
+          <div className="flex md:justify-end my-8 justify-center z-[9999]">
+            <Image
+              className="z-[9999]"
+              src="/myPhotos/barca.jpg"
+              alt="Hasanali Asadov"
+              width={450}
+              height={450}
+            />
+          </div>
+        </div>
 
-      <ScrollText className="text-4xl my-10" text="Internships" />
-      <InternExperience />
-      <Footer />
-    </div>
+        <ScrollText className="text-4xl my-10" text="Education" />
+        <EduExperience />
+      </div>
+
+      <MarqueeText />
+      <div className="md:px-8 pt-4">
+        <ScrollText className="text-4xl my-10" text="Internships" />
+        <InternExperience />
+        <Footer />
+      </div>
+    </>
   );
 };
 
@@ -174,6 +183,39 @@ const Card = ({
       <div className="md:w-1/2 dark:text-white/80 text-black/80 text-left text-[14px] md:text-[16px]">
         <p>{text}</p>
         {/* <ScrollTextSmaller text={text} /> */}
+      </div>
+    </div>
+  );
+};
+
+const MarqueeText = ({
+  className1,
+  className2,
+  className3,
+}: {
+  className1?: string;
+  className2?: string;
+  className3?: string;
+}) => {
+  return (
+    <div
+      className={`marquee-wrapper  my-8 lg:text-[80px] md:text-[60px] text-[40px] ${className1}`}
+    >
+      <div className={`marquee-inner ${className2}`}>
+        <div className={`marquee-content ${className3}`}>
+          <span className="mx-4">
+            NEXT.JS ⋅ REACT ⋅ TYPESCRIPT ⋅ NODE.JS ⋅ EXPRESS ⋅ MONGODB ⋅
+            POSTGRESQL ⋅ GRAPHQL ⋅ REDUX ⋅ TAILWIND CSS ⋅ PASSPORT.JS ⋅ CLERK ⋅
+            AUTH0 ⋅ NODEMAILER ⋅ MONGOOSE ⋅
+          </span>
+        </div>
+        <div className={`marquee-content ${className3}`}>
+          <span className="mx-4">
+            NEXT.JS ⋅ REACT ⋅ TYPESCRIPT ⋅ NODE.JS ⋅ EXPRESS ⋅ MONGODB ⋅
+            POSTGRESQL ⋅ GRAPHQL ⋅ REDUX ⋅ TAILWIND CSS ⋅ PASSPORT.JS ⋅ CLERK ⋅
+            AUTH0 ⋅ NODEMAILER ⋅ MONGOOSE
+          </span>
+        </div>
       </div>
     </div>
   );
