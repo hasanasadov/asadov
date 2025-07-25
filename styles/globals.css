@@ -93,7 +93,7 @@ body {
   align-items: flex-end;
   justify-content: flex-start;
   padding: 2rem;
-  height: 320px;
+  height: 320px !important;
   border-radius: 2rem;
   cursor: pointer;
   z-index: 9999;
