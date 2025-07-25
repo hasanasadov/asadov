@@ -2,7 +2,7 @@ import Navbar from "@/components/shared/Navbar";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
-import "./globals.css";
+import "@/styles/globals.css";
 
 export const metadata = {
   title: "Home - Hasanali Asadov",

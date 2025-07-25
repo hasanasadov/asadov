@@ -19,11 +19,11 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
     <Link
       href={`${PATHS.PORTFOLIO}/${project.id}`}
-      className="group relative block rounded-xl overflow-hidden shadow-sm bg-gray-50 dark:bg-white/10 transition-transform transform hover:scale-[1.03] hover:shadow-lg cursor-pointer focus:outline-none "
+      className="group border-[1px] border-black/20 relative block rounded-xl overflow-hidden shadow-sm bg-gray-50 dark:bg-white/10 transition-transform transform hover:scale-[1.03] hover:shadow-lg cursor-pointer focus:outline-none "
       aria-label={`Open project details: ${project.title}`}
       tabIndex={0}
     >
-      <div className="relative h-52 md:h-48 w-full overflow-hidden rounded-t-2xl">
+      <div className="relative h-52 md:h-48 w-full overflow-hidden ">
         <Image
           src={project.image}
           alt={project.title}
@@ -34,7 +34,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           loading="lazy"
         />
       </div>
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-white bg-black/40 rounded-2xl pointer-events-none">
+      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-white bg-black/50 rounded-xl pointer-events-none">
         <h3 className="text-2xl font-semibold drop-shadow-lg">
           {project.title}
         </h3>

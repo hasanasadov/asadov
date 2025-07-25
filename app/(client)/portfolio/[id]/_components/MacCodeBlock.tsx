@@ -2,9 +2,17 @@
 
 import React, { useState, useEffect, useRef } from "react";
 
+type GithubProps = {
+  repo: string;
+  filePath: string;
+  branch?: string;
+};
+
 type MacCodeBlockProps = {
   title: string;
-  code: string;
+  code?: string;
+  github?: GithubProps;
+  collapsed?: boolean;
 };
 
 const copyToClipboard = (text: string) => {
@@ -29,7 +37,7 @@ const copyToClipboard = (text: string) => {
   }
 };
 
-// Qırmızı düymə (Close/Collapse)
+// --- Mac düymələri (qısa) ---
 const CloseButton = ({
   onClick,
   hovered,
@@ -51,7 +59,6 @@ const CloseButton = ({
   </button>
 );
 
-// Sarı düymə (Minimize)
 const MinimizeButton = ({
   onClick,
   hovered,
@@ -65,16 +72,10 @@ const MinimizeButton = ({
     className="w-3 h-3 rounded-full bg-yellow-400 hover:bg-yellow-500 transition relative flex items-center justify-center"
     type="button"
   >
-    {hovered && (
-      <>
-        <span className="text-white text-xs font-bold select-none absolute"></span>
-        <span className="w-2 h-[1.5px] bg-black/70 absolute"></span>
-      </>
-    )}
+    {hovered && <span className="w-2 h-[1.5px] bg-black/70 absolute"></span>}
   </button>
 );
 
-// Yaşıl düymə (Fullscreen)
 const FullscreenButton = ({
   onClick,
   hovered,
@@ -91,10 +92,7 @@ const FullscreenButton = ({
     className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition relative flex items-center justify-center group"
   >
     {hovered && (
-      <>
-        <span className="text-white absolute top-[3.22px] left-[3.22px] w-[5.5px] h-[5.5px] bg-black/50"></span>
-        <span className="w-[10px] h-[2px] bg-green-500 group-hover:bg-green-600 top-[5px] left-[0.7px] -rotate-45 absolute"></span>
-      </>
+      <span className="w-[10px] h-[2px] bg-green-500 group-hover:bg-green-600 top-[5px] left-[0.7px] -rotate-45 absolute"></span>
     )}
   </button>
 );
@@ -124,17 +122,45 @@ const CopyButton = ({
   </button>
 );
 
-const MacCodeBlock: React.FC<MacCodeBlockProps> = ({ title, code }) => {
+const MacCodeBlock: React.FC<MacCodeBlockProps> = ({
+  title,
+  code,
+  github,
+  collapsed = true,
+}) => {
   const [copied, setCopied] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(collapsed);
   const [isMinimized, setIsMinimized] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [fetchedCode, setFetchedCode] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (github) {
+      setLoading(true);
+      const fetchCode = async () => {
+        const url = `https://raw.githubusercontent.com/${github.repo}/${
+          github.branch || "main"
+        }/${github.filePath}`;
+        const res = await fetch(url);
+        if (res.ok) {
+          setFetchedCode(await res.text());
+        } else {
+          setFetchedCode("Could not fetch snippet.");
+        }
+        setLoading(false);
+      };
+      fetchCode();
+    }
+  }, [github]);
+
+  const codeToShow = github ? fetchedCode : code || "";
 
   const handleCopy = async () => {
     try {
-      await copyToClipboard(code);
+      await copyToClipboard(codeToShow || "");
       setCopied(true);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => setCopied(false), 2000);
@@ -175,7 +201,7 @@ const MacCodeBlock: React.FC<MacCodeBlockProps> = ({ title, code }) => {
           aria-label="Expand window"
           type="button"
           className="
-             w-max px-4 h-10 mr-4 mb-4 rounded-md border border-black/10 dark:border-white/10 bg-white dark:bg-white/10 z-10
+             w-max px-4 h-10 !cursor-pointer mr-4 mb-4 rounded-md border border-black/10 dark:border-white/10 bg-white dark:bg-white/10 dark:hover:bg-white/5 hover:bg-black/5 z-10
             text-gray-700 dark:text-gray-300 font-semibold shadow-sm
             hover:shadow-md transition
           "
@@ -187,17 +213,18 @@ const MacCodeBlock: React.FC<MacCodeBlockProps> = ({ title, code }) => {
       {!isCollapsed && (
         <div
           className={`
-            mb-8 rounded-lg border border-black/10 dark:border-white/10 bg-white dark:bg-white/10 shadow-sm overflow-hidden max-w-full
+            mb-8 rounded-lg border z-[9999999999999999] border-black/10 dark:border-white/10 bg-white dark:bg-white/10 shadow-sm overflow-hidden max-w-full
             transition-all duration-300 ease-in-out
             ${isFullscreen ? "fixed inset-0 m-4 z-[1000] rounded-lg" : ""}
             ${isMinimized ? "h-12" : ""}
-            ${!isMinimized ? "max-h-[calc(100vh-2rem)]" : ""}
           `}
-          style={isFullscreen ? { maxHeight: "calc(100vh - 2rem)" } : undefined}
+          style={isFullscreen ? { maxHeight: "calc(100vh + 2rem)" } : undefined}
         >
           {/* Mac style top bar */}
           <div
-            className="flex items-center gap-2 px-3 !pr-1 py-1 bg-black/10 dark:bg-white/10 select-none relative"
+            className={`flex items-center gap-2 px-3  !pr-1 py-1 bg-black/10  select-none relative
+                ${isFullscreen ? "dark:bg-slate-900" : "dark:bg-white/10"} 
+              `}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
           >
@@ -209,26 +236,32 @@ const MacCodeBlock: React.FC<MacCodeBlockProps> = ({ title, code }) => {
               isFullscreen={isFullscreen}
             />
 
-            {/* Başlıq */}
             <span
               className="ml-4 text-black dark:text-white font-medium truncate select-text"
               title={title}
             >
               {title}
             </span>
-
             <CopyButton onClick={handleCopy} copied={copied} />
           </div>
 
           {!isMinimized && (
             <pre
-              className="p-4 overflow-x-auto text-sm font-mono text-gray-900 dark:text-gray-100 whitespace-pre-wrap bg-white dark:bg-white/5"
+              className="p-4  dark:bg-black overflow-x-auto text-sm font-mono text-gray-900 dark:text-gray-100 whitespace-pre-wrap bg-white "
               style={{
                 userSelect: "text",
-                maxHeight: isFullscreen ? "calc(100vh - 3.5rem)" : undefined,
+                maxHeight: isFullscreen ? "calc(100vh - 4.5rem)" : undefined,
               }}
             >
-              <code>{code}</code>
+              {github ? (
+                loading ? (
+                  <span>Loading...</span>
+                ) : (
+                  <code>{fetchedCode}</code>
+                )
+              ) : (
+                <code>{code}</code>
+              )}
             </pre>
           )}
         </div>

@@ -2,7 +2,7 @@ export const projects = [
   {
     id: 1,
     title: "Turbo.az Clone",
-    image: "/turbo.png",
+    image: "/projects/turbo.png",
     href: "hasturbo.vercel.app",
     category: "Web",
     description: "A full Turbo.az clone built with Next.js and Tailwind.",
@@ -10,10 +10,17 @@ export const projects = [
 This project is a comprehensive clone of Turbo.az. It features responsive design,
 seamless UX, and advanced filtering options. The backend is mocked with static data.
     `,
-    technologies: ["Next.js", "TailwindCSS", "TypeScript", "React"],
+    technologies: [
+      "Next.js",
+      "TailwindCSS",
+      "TypeScript",
+      "Prisma",
+      "Stripe",
+      "Clerk",
+    ],
     codeSnippets: [
       {
-        title: "Filter Function Example",
+        title: "Product Card",
         language: "typescript",
         code: `
 const filteredProjects = projects.filter(project => {
@@ -41,15 +48,22 @@ export default Button;
   {
     id: 2,
     title: "Sixt.com Clone",
-    image: "/sixt.png",
+    image: "/projects/sixt.png",
     href: "hassixt.site",
     category: "Web",
     description: "Sixt.com clone showcasing smooth UX/UI.",
     detailedDescription: `
-This project is a detailed Sixt.com clone focused on UI precision and seamless interactions.
-Built with React and TailwindCSS.
-    `,
-    technologies: ["React", "TailwindCSS", "JavaScript"],
+      This project is a detailed Sixt.com clone focused on UI precision and seamless interactions.
+      Built with React and TailwindCSS.
+              `,
+    technologies: [
+      "React.js",
+      "TailwindCSS",
+      "TypeScript",
+      "Passport.js",
+      "NodeMailer",
+      "Stripe",
+    ],
     codeSnippets: [
       {
         title: "Booking Form Handler",
@@ -68,14 +82,21 @@ const handleBooking = (data) => {
   {
     id: 3,
     title: "Morent car",
-    image: "/hasrent.png",
+    image: "/projects/hasrent.png",
     href: "hasrent.vercel.app",
     category: "Mobile",
     description: "A car rental mobile app with clean design.",
     detailedDescription: `
 Morent car is a mobile-first car rental app with user-friendly UI and smooth booking flow.
     `,
-    technologies: ["React Native", "Expo", "TailwindCSS"],
+    technologies: [
+      "React.js",
+      "TailwindCSS",
+      "TypeScript",
+      "Passport.js",
+      "NodeMailer",
+      "Stripe",
+    ],
     codeSnippets: [
       {
         title: "Car List Fetch",
@@ -95,14 +116,20 @@ async function fetchCars() {
   {
     id: 4,
     title: "MyEvents App",
-    image: "/myevents.png",
+    image: "/projects/myevents.png",
     href: "myevents.az",
     category: "Mobile",
     description: "Event management app for mobile devices.",
     detailedDescription: `
 MyEvents is a mobile app to create, manage and share events with friends and family.
     `,
-    technologies: ["React Native", "TailwindCSS", "Firebase"],
+    technologies: [
+      "Next.js",
+      "TailwindCSS",
+      "JavaScript",
+      "Pyhton",
+      "GoogleAPI",
+    ],
     codeSnippets: [
       {
         title: "Event Creation Function",
@@ -120,23 +147,46 @@ function createEvent(eventData) {
   {
     id: 5,
     title: "ToDo App",
-    image: "/hastodo.png",
+    image: "/projects/hastodo.png",
     href: "hastodo.vercel.app",
     category: "Web",
     description: "Simple and elegant ToDo application.",
     detailedDescription: `
 A minimalist ToDo app focused on simplicity and productivity. Built with React and TailwindCSS.
     `,
-    technologies: ["React", "TailwindCSS", "JavaScript"],
+    technologies: ["React.js", "TailwindCSS", "JavaScript"],
     codeSnippets: [
       {
-        title: "Add Task Handler",
-        language: "tsx",
-        code: `
-function addTask(task) {
-  setTasks([...tasks, task]);
-}
-        `.trim(),
+        title: "ToDoList Component",
+        github: {
+          repo: "hasanasadov/hastodo",
+          filePath: "src/Comp/ToDoList.jsx",
+          branch: "main",
+        },
+      },
+      {
+        title: "ToDoHeader Component",
+        github: {
+          repo: "hasanasadov/hastodo",
+          filePath: "src/Comp/ToDoHeader.jsx",
+          branch: "main",
+        },
+      },
+      {
+        title: "ToDoFooter Component",
+        github: {
+          repo: "hasanasadov/hastodo",
+          filePath: "src/Comp/ToDoFooter.jsx",
+          branch: "main",
+        },
+      },
+      {
+        title: "ToDoEl Component",
+        github: {
+          repo: "hasanasadov/hastodo",
+          filePath: "src/Comp/ToDoEl.jsx",
+          branch: "main",
+        },
       },
     ],
     liveUrl: "https://hastodo.vercel.app",
@@ -145,14 +195,14 @@ function addTask(task) {
   {
     id: 6,
     title: "NFT Marketplace",
-    image: "/hasnft.png",
+    image: "/projects/hasnft.png",
     href: "hasnft.vercel.app",
     category: "Web",
     description: "A marketplace for NFTs with seamless UX.",
     detailedDescription: `
 NFT Marketplace platform featuring NFT browsing, buying, and selling functionalities.
     `,
-    technologies: ["Next.js", "TailwindCSS", "Web3.js"],
+    technologies: ["HTML5", "CSS", "JavaScript", "Bootstrap", "API"],
     codeSnippets: [
       {
         title: "Connect Wallet",
@@ -170,14 +220,21 @@ async function connectWallet() {
   {
     id: 7,
     title: "Instagram Clone",
-    image: "/hasagram.png",
+    image: "/projects/hasagram.png",
     href: "hasagram.vercel.app",
     category: "Mobile",
     description: "Instagram UI clone for mobile.",
     detailedDescription: `
 Instagram UI clone focusing on mobile responsiveness and user experience.
     `,
-    technologies: ["React Native", "TailwindCSS"],
+    technologies: [
+      "React Native",
+      "TailwindCSS",
+      "TypeScript",
+      "Socket.io",
+      "Passport.js",
+      "NodeMailer",
+    ],
     codeSnippets: [
       {
         title: "Image Upload",
@@ -195,14 +252,14 @@ function uploadImage(file) {
   {
     id: 8,
     title: "Crypto Tracker",
-    image: "/hascrypto.png",
+    image: "/projects/hascrypto.png",
     href: "hascrypto.vercel.app",
     category: "Web",
     description: "Track cryptocurrencies in real-time.",
     detailedDescription: `
 Crypto Tracker is a dashboard for tracking prices and changes in crypto markets in real time.
     `,
-    technologies: ["React", "TailwindCSS", "CoinGecko API"],
+    technologies: ["HTML", "CSS", "API", "JavaScript", "Bootstrap"],
     codeSnippets: [
       {
         title: "Fetch Crypto Prices",
@@ -222,14 +279,14 @@ async function fetchPrices() {
   {
     id: 9,
     title: "Neowise",
-    image: "/hasneowise.png",
+    image: "/projects/hasneowise.png",
     href: "hasneowise.vercel.app",
     category: "Web",
     description: "Weather forecasting app with beautiful UI.",
     detailedDescription: `
 Neowise is a weather forecasting app providing accurate data with a beautiful interface.
     `,
-    technologies: ["Next.js", "TailwindCSS", "OpenWeather API"],
+    technologies: ["HTML", "CSS"],
     codeSnippets: [
       {
         title: "Fetch Weather Data",
@@ -249,7 +306,7 @@ async function fetchWeather(location) {
   {
     id: 10,
     title: "Games",
-    image: "/hasgames.png",
+    image: "/projects/hasgames.png",
     href: "hasgames.vercel.app",
     category: "Games",
     description: "Fun browser games collection.",
@@ -261,6 +318,32 @@ A collection of fun browser games built using React and TailwindCSS.
       {
         title: "Game Loop Example",
         language: "javascript",
+        code: `
+function gameLoop() {
+  requestAnimationFrame(gameLoop);
+  // game logic here
+}
+        `.trim(),
+      },
+    ],
+    liveUrl: "https://hasgames.vercel.app",
+    repoUrl: "https://github.com/hasanasadov/hasgames",
+  },
+  {
+    id: 11,
+    title: "Weather",
+    image: "/projects/hasweather.png",
+    href: "hasweather.vercel.app",
+    category: "Weather",
+    description: "Real-time weather app.",
+    detailedDescription: `
+A real-time weather app built using React and TailwindCSS.
+    `,
+    technologies: ["React", "TailwindCSS", "JavaScript", "API"],
+    codeSnippets: [
+      {
+        title: "Fetch Weather Data",
+        language: "typescript",
         code: `
 function gameLoop() {
   requestAnimationFrame(gameLoop);

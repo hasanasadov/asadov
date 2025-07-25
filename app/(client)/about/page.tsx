@@ -20,7 +20,7 @@ skills in web services, database management, and teamwork."
       />
       <div className="flex md:justify-end my-8 justify-center">
         <Image
-          src="/barca.jpg"
+          src="/myPhotos/barca.jpg"
           alt="Hasanali Asadov"
           width={450}
           height={450}

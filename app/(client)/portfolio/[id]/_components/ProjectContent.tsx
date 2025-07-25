@@ -5,7 +5,12 @@ import MacCodeBlock from "./MacCodeBlock";
 
 type CodeSnippet = {
   title: string;
-  code: string;
+  code?: string;
+  github?: {
+    repo: string;
+    filePath: string;
+    branch?: string;
+  };
 };
 
 type ProjectContentProps = {
@@ -41,8 +46,14 @@ const ProjectContent: React.FC<ProjectContentProps> = ({
           <h2 className="text-2xl font-semibold mb-8 text-gray-900 dark:text-gray-100">
             Code Examples
           </h2>
-          {codeSnippets.map(({ title, code }, idx) => (
-            <MacCodeBlock key={idx} title={title} code={code} />
+          {codeSnippets.map(({ title, code, github }, idx) => (
+            <MacCodeBlock
+              key={idx}
+              title={title}
+              code={code}
+              github={github}
+              collapsed={idx != codeSnippets.length - 1}
+            />
           ))}
         </section>
       )}
