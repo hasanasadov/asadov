@@ -194,8 +194,8 @@ const Stack = ({
       className={`card relative flex !items-center !justify-center !p-0 duration-300 transition-all ${className}`}
     >
       <BlurryBG className="w-full h-full rounded-lg" />
-      <div className="absolute left-0 top-0 h-full w-16 bg-gradient-to-r dark:from-black from-white via-white/40 dark:via-black/40 to-transparent z-10 pointer-events-none duration-500 transition-colors" />
-      <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l dark:from-black from-white via-white/40 dark:via-black/40 to-transparent z-10 pointer-events-none duration-500 transition-colors" />
+      <div className="absolute left-0 top-0 h-full w-16 bg-gradient-to-r dark:from-black from-background via-white/40 dark:via-black/40 to-transparent z-10 pointer-events-none duration-500 transition-colors" />
+      <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l dark:from-black from-background via-white/40 dark:via-black/40 to-transparent z-10 pointer-events-none duration-500 transition-colors" />
 
       {/* Scrollable row */}
       <div
