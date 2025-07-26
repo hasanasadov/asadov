@@ -37,7 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="p-4 pt-1  min-h-screen flex flex-col justify-between !bg-white !text-black dark:!bg-black dark:!text-white overflow-x-hidden">
+      <body className="p-4 pt-1  min-h-screen flex flex-col justify-between bg-background !text-black dark:!bg-black dark:!text-white overflow-x-hidden">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

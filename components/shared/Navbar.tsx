@@ -41,8 +41,9 @@ const Navbar = () => {
   return (
     <div
       className={`
+        ${isHomePage ? "block" : "sticky"}
         backdrop-blur-[3px]
-        sticky top-0 left-0 w-full z-50 transition-transform duration-300
+         top-0 left-0 w-full z-50 transition-transform duration-300
         ${showNavbar ? "translate-y-0" : "-translate-y-full"}
         ${!isHomePage ? "md:px-8" : ""}
         flex items-center justify-between h-[60px] bg-transparent

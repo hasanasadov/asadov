@@ -66,8 +66,8 @@ const CardsSection = ({
   setHeroText: (text: string) => void;
 }) => {
   return (
-    <div className={`flex flex-col gap-4 ${className}`}>
-      <div className=" flex flex-col md:flex-row gap-4">
+    <div className={`flex flex-col gap-3 md:gap-4 ${className}`}>
+      <div className=" flex flex-col md:flex-row gap-3 md:gap-4">
         <Card
           setHeroText={setHeroText}
           className="md:w-1/2 lg:w-1/4 w-full"
@@ -79,8 +79,8 @@ const CardsSection = ({
           title="Portfolio"
         />
       </div>
-      <div className="flex flex-col lg:flex-row gap-4 w-full">
-        <div className="flex w-full  lg:w-3/4 gap-4">
+      <div className="flex flex-col lg:flex-row gap-3 md:gap-4 w-full">
+        <div className="flex w-full  lg:w-3/4 gap-3 md:gap-4">
           <Card
             setHeroText={setHeroText}
             className="w-1/2 md:w-2/3"
@@ -88,7 +88,7 @@ const CardsSection = ({
           />
           <ImageCard setHeroText={setHeroText} />
         </div>
-        <div className="flex w-full lg:w-1/4 flex-row lg:flex-col gap-4">
+        <div className="flex w-full lg:w-1/4 flex-row lg:flex-col gap-3 md:gap-4">
           <Stack
             setHeroText={setHeroText}
             className="mini lg:!h-1/2 w-1/2 md:w-full"
@@ -200,7 +200,7 @@ const Stack = ({
       {/* Scrollable row */}
       <div
         ref={scrollRef}
-        className="flex gap-4 items-center h-full overflow-hidden no-scrollbar whitespace-nowrap"
+        className="flex gap-3 md:gap-4 items-center h-full overflow-hidden no-scrollbar whitespace-nowrap"
         style={{
           willChange: "transform",
           transform: "translateZ(0)",
