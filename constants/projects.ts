@@ -43,7 +43,7 @@ export const projects = [
         title: "Toggle Theme button",
         github: {
           repo: "hasanasadov/asadov",
-          filePath: "components/ui/Toggle.tsx",
+          filePath: "components/shared/Toggle.tsx",
           branch: "main",
         },
       },
