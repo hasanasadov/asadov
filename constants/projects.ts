@@ -1,5 +1,57 @@
 export const projects = [
   {
+    id: 0,
+    title: "Personal Poertfolio",
+    image: "/projects/asadov.png",
+    href: "asadov.site",
+    category: "Web",
+    description: "My Personal website/portfolio about me",
+    detailedDescription: `My organised full personal information related website designed and pushed by me.`,
+    technologies: [
+      "Next.js",
+      "TailwindCSS",
+      "TypeScript",
+      "NodeMailer",
+      "Figma",
+    ],
+    codeSnippets: [
+      {
+        title: "Contact Page",
+        github: {
+          repo: "hasanasadov/asadov",
+          filePath: "app/(client)/contact/page.tsx",
+          branch: "main",
+        },
+      },
+      {
+        title: "Functional Navbar",
+        github: {
+          repo: "hasanasadov/asadov",
+          filePath: "components/shared/Navbar.tsx",
+          branch: "main",
+        },
+      },
+      {
+        title: "Hovering text animation",
+        github: {
+          repo: "hasanasadov/asadov",
+          filePath: "components/shared/HoverText.tsx",
+          branch: "main",
+        },
+      },
+      {
+        title: "Toggle Theme button",
+        github: {
+          repo: "hasanasadov/asadov",
+          filePath: "components/ui/Toggle.tsx",
+          branch: "main",
+        },
+      },
+    ],
+    liveUrl: "https://asadov.site",
+    repoUrl: "https://github.com/hasanasadov/asadov",
+  },
+  {
     id: 1,
     title: "Turbo.az Clone",
     image: "/projects/turbo.png",
