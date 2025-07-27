@@ -1,7 +1,7 @@
 export const projects = [
   {
     id: 0,
-    title: "Personal Poertfolio",
+    title: "Personal Portfolio",
     image: "/projects/asadov.png",
     href: "asadov.site",
     category: "Web",
