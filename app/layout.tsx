@@ -1,37 +1,13 @@
-import Navbar from "@/components/shared/Navbar";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { ThemeProvider } from "next-themes";
+import { metaKeywords } from "@/constants/metadata";
 import { Toaster } from "sonner";
+import CustomLayout from "@/layouts/CustomLayout";
+import Navbar from "@/components/shared/Navbar";
 import "@/styles/globals.css";
-import queryClient from "@/config/query";
-import { QueryClientProvider } from "@tanstack/react-query";
-// import CircleCursor from "@/components/shared/Cursor";
 
 export const metadata = {
   title: "Home - Hasanali Asadov",
   description: "Welcome to Hasanali personal website",
-  keywords: [
-    "Hasanali Asadov",
-    "Hasanali Asadov Portfolio",
-    "Hasanali Asadov Website",
-    "Hasanali Asadov Personal Website",
-    "Hasanali Asadov Web Developer",
-    "Hasanali Asadov Software Engineer",
-    "Hasanali Asadov Resume",
-    "Hasanali Asadov CV",
-    "Hasanali Asadov Full Stack Developer",
-    "Hasanali Asadov Frontend Developer",
-    "Hasanali Asadov Backend Developer",
-    "Hasanali Asadov Projects",
-    "Hasanali Asadov Works",
-    "Hasanali Asadov Portfolio Website",
-    "Hasanali",
-    "Asadov",
-    "Portfolio",
-    "Web Developer",
-    "Software Engineer",
-    "Personal Website",
-  ],
+  keywords: metaKeywords,
 };
 export default function RootLayout({
   children,
@@ -41,19 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="p-4 pt-1  min-h-screen flex flex-col justify-between !bg-[#f0f0f0] !text-black dark:!bg-black dark:!text-white overflow-x-hidden">
-        <QueryClientProvider client={queryClient}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem={false}
-          >
-            <Navbar />
-            <Toaster richColors />
-            {/* <CircleCursor /> */}
-            <SpeedInsights />
-            {children}
-          </ThemeProvider>
-        </QueryClientProvider>
+        <CustomLayout>
+          <Navbar />
+          <Toaster richColors />
+          {children}
+        </CustomLayout>
       </body>
     </html>
   );

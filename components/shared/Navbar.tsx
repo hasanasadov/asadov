@@ -8,7 +8,7 @@ import ArrowLeft from "../ui/ArrowLeft";
 import HoverText from "./HoverText";
 import AutoAnimate from "./AutoAnimate";
 import { useTimeZoneString } from "@/hooks/useTimeZone";
-import { PATHS } from "@/constants";
+import { PATHS } from "@/constants/paths";
 
 const Navbar = () => {
   const pathName = usePathname();
