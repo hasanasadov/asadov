@@ -48,7 +48,7 @@ skills in web services, database management, and process automation. I am curren
       </div>
 
       <MarqueeText
-        className="scale-[1.03]"
+        className="md:scale-[1.03] scale-[1.1]"
         text1={marqueeText1}
         text2={marqueeText2}
       />
