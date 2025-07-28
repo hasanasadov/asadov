@@ -6,7 +6,7 @@ import { QUERY_KEYS } from "@/constants/query-keys";
 import { useQuery } from "@tanstack/react-query";
 import { educationExperience } from "@/constants/experience";
 export const EduExperience = () => {
-  const { data, isLoading, isError } = useQuery({
+  const { data, isError } = useQuery({
     queryKey: [QUERY_KEYS.EDUCATION],
     queryFn: () => EducationGetItems(),
   });
@@ -15,7 +15,7 @@ export const EduExperience = () => {
 
   return (
     <div className="flex flex-col gap-12">
-      {(isError && !isLoading ? educationExperience : data)?.map((item) => (
+      {(!data || isError ? educationExperience : data)?.map((item) => (
         <Card
           key={item.id}
           start={
@@ -25,7 +25,7 @@ export const EduExperience = () => {
           title1={item.title1}
           title2={item.title2}
           description={item.description}
-          loading={isLoading}
+          // loading={isLoading}
         />
       ))}
     </div>

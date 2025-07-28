@@ -7,7 +7,7 @@ import { InternshipGetItems } from "@/actions/internship";
 import { internshipExperience } from "@/constants/experience";
 
 export const InternExperience = () => {
-  const { data, isLoading, isError } = useQuery({
+  const { data, isError } = useQuery({
     queryKey: [QUERY_KEYS.INTERNSHIPS],
     queryFn: () => InternshipGetItems(),
   });
@@ -16,7 +16,7 @@ export const InternExperience = () => {
 
   return (
     <div className="flex flex-col gap-12">
-      {(isError && !isLoading ? internshipExperience : data)?.map((item) => (
+      {(!data || isError ? internshipExperience : data)?.map((item) => (
         <Card
           key={item.id}
           start={
@@ -26,7 +26,7 @@ export const InternExperience = () => {
           title1={item.title1}
           title2={item.title2}
           description={item.description}
-          loading={isLoading}
+          // loading={isLoading}
         />
       ))}
     </div>
