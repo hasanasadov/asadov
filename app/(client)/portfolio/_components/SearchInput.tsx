@@ -1,11 +1,7 @@
 "use client";
 
+import { SearchInputProps } from "@/types";
 import React from "react";
-
-type SearchInputProps = {
-  searchTerm: string;
-  onSearchChange: (val: string) => void;
-};
 
 const SearchInput = ({ searchTerm, onSearchChange }: SearchInputProps) => {
   return (

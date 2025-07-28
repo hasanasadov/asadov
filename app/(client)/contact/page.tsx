@@ -11,7 +11,7 @@ export const metadata = {
 
 const AboutPage = () => {
   return (
-    <div className="min-h-screen p-4 md:p-8">
+    <div className="min-h-screen  md:p-8">
       <h1 className="text-[26px] md:text-[36px] lg:text-[48px] leading-tight lg:w-8/12 mb-12">
         If you prefer not to fill out forms, feel free to email me directly and
         let&#39;s talk about the next big thing!

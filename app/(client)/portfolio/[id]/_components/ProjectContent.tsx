@@ -2,21 +2,7 @@
 
 import React from "react";
 import MacCodeBlock from "./MacCodeBlock";
-
-type CodeSnippet = {
-  title: string;
-  code?: string;
-  github?: {
-    repo: string;
-    filePath: string;
-    branch?: string;
-  };
-};
-
-type ProjectContentProps = {
-  detailedDescription?: string;
-  codeSnippets?: CodeSnippet[];
-};
+import { ProjectContentProps } from "@/types";
 
 const ProjectContent: React.FC<ProjectContentProps> = ({
   detailedDescription,
@@ -34,7 +20,7 @@ const ProjectContent: React.FC<ProjectContentProps> = ({
     >
       {detailedDescription && (
         <section className="prose prose-indigo dark:prose-invert max-w-none mb-10 md:mb-12">
-          <h2 className="text-2xl font-semibold mb-6">Detailed Description</h2>
+          <h2 className="text-2xl font-semibold">Detailed Description</h2>
           <p className="whitespace-pre-line leading-relaxed text-gray-900 dark:text-gray-100">
             {detailedDescription}
           </p>
@@ -43,7 +29,7 @@ const ProjectContent: React.FC<ProjectContentProps> = ({
 
       {codeSnippets && (
         <section>
-          <h2 className="text-2xl font-semibold mb-8 text-gray-900 dark:text-gray-100">
+          <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">
             Code Examples
           </h2>
           {codeSnippets.map(({ title, code, github }, idx) => (

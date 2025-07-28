@@ -1,19 +1,10 @@
 "use client";
 
+import { fetchGithubCode } from "@/actions/github";
+import { QUERY_KEYS } from "@/constants/query-keys";
+import { MacCodeBlockProps } from "@/types";
+import { useQuery } from "@tanstack/react-query";
 import React, { useState, useEffect, useRef } from "react";
-
-type GithubProps = {
-  repo: string;
-  filePath: string;
-  branch?: string;
-};
-
-type MacCodeBlockProps = {
-  title: string;
-  code?: string;
-  github?: GithubProps;
-  collapsed?: boolean;
-};
 
 const copyToClipboard = (text: string) => {
   if (navigator.clipboard) {
@@ -92,7 +83,10 @@ const FullscreenButton = ({
     className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition relative flex items-center justify-center group"
   >
     {hovered && (
-      <span className="w-[10px] h-[2px] bg-green-500 group-hover:bg-green-600 top-[5px] left-[0.7px] -rotate-45 absolute"></span>
+      <div>
+        <span className="w-[6px] h-[6px] top-[3px] left-[3px] bg-black group-hover:bg-black absolute"></span>
+        <span className="w-[10px] h-[2px] bg-green-500 group-hover:bg-green-600 top-[5px] left-[1px] -rotate-45 absolute duration-75"></span>
+      </div>
     )}
   </button>
 );
@@ -133,28 +127,17 @@ const MacCodeBlock: React.FC<MacCodeBlockProps> = ({
   const [isCollapsed, setIsCollapsed] = useState(collapsed);
   const [isMinimized, setIsMinimized] = useState(false);
   const [hovered, setHovered] = useState(false);
-  const [fetchedCode, setFetchedCode] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    if (github) {
-      setLoading(true);
-      const fetchCode = async () => {
-        const url = `https://raw.githubusercontent.com/${github.repo}/${
-          github.branch || "main"
-        }/${github.filePath}`;
-        const res = await fetch(url);
-        if (res.ok) {
-          setFetchedCode(await res.text());
-        } else {
-          setFetchedCode("Could not fetch snippet.");
-        }
-        setLoading(false);
-      };
-      fetchCode();
-    }
-  }, [github]);
+  const { data: fetchedCode, isLoading } = useQuery({
+    queryKey: [QUERY_KEYS.GITHUB_CODE, github],
+    queryFn: () =>
+      fetchGithubCode(
+        github?.repo || "",
+        github?.filePath || "",
+        github?.branch || "main"
+      ),
+  });
 
   const codeToShow = github ? fetchedCode : code || "";
 
@@ -254,7 +237,7 @@ const MacCodeBlock: React.FC<MacCodeBlockProps> = ({
               }}
             >
               {github ? (
-                loading ? (
+                isLoading ? (
                   <span>Loading...</span>
                 ) : (
                   <code>{fetchedCode}</code>

@@ -9,7 +9,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 
-// 🎯 Project types and budget ranges
 const projectTypes = [
   "Multipage Website Design (Full Stack)",
   "API Development (Integration)",
@@ -19,7 +18,6 @@ const projectTypes = [
 
 const budgetRanges = ["$1k - $3k", "$3k - $5k", "$5k - $10k", "> $10k"];
 
-// 🧠 Zod schema
 const contactFormSchema = z.object({
   fullName: z.string().min(2, "Full name is required"),
   email: z.string().email("Invalid email address"),
@@ -70,9 +68,8 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="w-full shadow-inner dark:shadow-gray-800 shadow-gray-400 rounded-3xl dark:bg-white/5 bg-black/5 lg:p-10 md:p-8 p-6">
+    <div className="w-full shadow-inner dark:shadow-gray-800 shadow-gray-400 rounded-3xl dark:bg-white/5 bg-black/5 lg:p-10 md:p-8 p-6 ">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10">
-        {/* Full Name */}
         <div className="flex flex-col gap-2">
           <label className="text-lg font-medium">Full Name</label>
           <Input
@@ -87,7 +84,6 @@ const ContactForm = () => {
           )}
         </div>
 
-        {/* Email */}
         <div className="flex flex-col gap-2">
           <label className="text-lg font-medium">Email</label>
           <Input
@@ -102,9 +98,7 @@ const ContactForm = () => {
           )}
         </div>
 
-        {/* Project Type and Budget */}
         <div className="flex flex-col lg:flex-row gap-10">
-          {/* Project Types */}
           <div className="flex-1">
             <p className="mb-4 text-lg">What’s Your Project About?</p>
             <Controller
@@ -147,7 +141,6 @@ const ContactForm = () => {
             />
           </div>
 
-          {/* Budget */}
           <div className="flex-1">
             <p className="mb-4 text-lg">Project Budget</p>
             <Controller
@@ -182,7 +175,6 @@ const ContactForm = () => {
           </div>
         </div>
 
-        {/* Message */}
         <div className="flex flex-col gap-6">
           <div className="flex-1">
             <p className="text-lg">Share More Details</p>
@@ -201,7 +193,6 @@ const ContactForm = () => {
           </div>
         </div>
 
-        {/* Submit */}
         <div>
           <Button
             type="submit"

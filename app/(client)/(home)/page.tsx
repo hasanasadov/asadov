@@ -67,7 +67,7 @@ const CardsSection = ({
 }) => {
   return (
     <div className={`flex flex-col gap-3 md:gap-4 ${className}`}>
-      <div className=" flex flex-col md:flex-row gap-3 md:gap-4">
+      <div className="flex flex-col md:flex-row gap-3 md:gap-4">
         <Card
           setHeroText={setHeroText}
           className="md:w-1/2 lg:w-1/4 w-full"

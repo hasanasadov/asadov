@@ -40,7 +40,7 @@ const PortfolioPage = () => {
   return (
     <div className="min-h-screen md:p-6 ">
       <ScrollToTop />
-      <h1 className="text-5xl font-extrabold mb-10 leading-tight text-gray-900 dark:text-white">
+      <h1 className="font-extrabold mb-10 leading-tight text-gray-900 dark:text-white text-[26px] md:text-[36px] lg:text-[48px]">
         Dive into my most fulfilling design experiences
       </h1>
 

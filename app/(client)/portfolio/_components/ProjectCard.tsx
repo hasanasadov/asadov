@@ -4,16 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { PATHS } from "@/constants";
-
-type ProjectCardProps = {
-  project: {
-    id: number;
-    title: string;
-    image: string;
-    href: string;
-    description: string;
-  };
-};
+import { ProjectCardProps } from "@/types";
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
   return (

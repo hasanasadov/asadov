@@ -3,6 +3,9 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
 import "@/styles/globals.css";
+import queryClient from "@/config/query";
+import { QueryClientProvider } from "@tanstack/react-query";
+// import CircleCursor from "@/components/shared/Cursor";
 
 export const metadata = {
   title: "Home - Hasanali Asadov",
@@ -38,16 +41,19 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="p-4 pt-1  min-h-screen flex flex-col justify-between !bg-[#f0f0f0] !text-black dark:!bg-black dark:!text-white overflow-x-hidden">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem={false}
-        >
-          <Navbar />
-          <Toaster richColors />
-          <SpeedInsights />
-          {children}
-        </ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem={false}
+          >
+            <Navbar />
+            <Toaster richColors />
+            {/* <CircleCursor /> */}
+            <SpeedInsights />
+            {children}
+          </ThemeProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );

@@ -5,12 +5,7 @@ import { projects } from "@/constants/projects";
 import ProjectSidebar from "./_components/ProjectSidebar";
 import ProjectContent from "./_components/ProjectContent";
 import Footer from "@/components/shared/Footer";
-
-type ProjectDetailPageProps = {
-  params: Promise<{
-    id: string;
-  }>;
-};
+import { ProjectDetailPageProps } from "@/types";
 
 const ProjectDetailPage = (props: ProjectDetailPageProps) => {
   const params = React.use(props.params);

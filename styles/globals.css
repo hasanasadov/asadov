@@ -94,6 +94,7 @@ body {
   justify-content: flex-start;
   padding: 2rem;
   height: 320px;
+  height: 38.5vh !important;
   border-radius: 1.6rem;
   cursor: pointer;
   z-index: 9999;
@@ -108,7 +109,7 @@ body {
 
 @media (max-width: 1024px) {
   .card {
-    height: 220px;
+    height: 220px !important;
   }
 }
 

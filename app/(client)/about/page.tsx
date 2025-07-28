@@ -35,7 +35,7 @@ skills in web services, database management, and process automation. I am curren
         <EduExperience />
       </div>
 
-      <MarqueeText />
+      <MarqueeText  className1="scale-[1.01]" />
       <div className="md:px-8 pt-4">
         <ScrollText className="text-4xl my-10" text="Internships" />
         <InternExperience />

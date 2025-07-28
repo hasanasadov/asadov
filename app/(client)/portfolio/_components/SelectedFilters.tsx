@@ -1,11 +1,7 @@
 "use client";
 
+import { SelectedFiltersProps } from "@/types";
 import React from "react";
-
-type SelectedFiltersProps = {
-  selectedCategories: string[];
-  onRemoveCategory: (cat: string) => void;
-};
 
 const SelectedFilters = ({
   selectedCategories,

@@ -2,15 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-
-type ProjectSidebarProps = {
-  title: string;
-  image: string;
-  description: string;
-  technologies?: string[];
-  liveUrl?: string;
-  repoUrl?: string;
-};
+import { ProjectSidebarProps } from "@/types";
 
 const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
   title,
@@ -59,7 +51,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
             href={liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-center border border-indigo-500 text-indigo-500 rounded-md py-2 text-sm font-semibold hover:bg-indigo-50 dark:hover:bg-indigo-900 transition"
+            className="block text-center border border-orange-500 text-orange-500 rounded-md py-2 text-sm font-semibold hover:bg-orange-50 dark:hover:bg-orange-900 transition"
           >
             Live Demo
           </a>
@@ -69,7 +61,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
             href={repoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-center border border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md py-2 text-sm font-semibold hover:border-indigo-500 hover:text-indigo-500 transition"
+            className="block text-center border border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md py-2 text-sm font-semibold hover:border-orange-500 hover:text-orange-500 transition"
           >
             View Code
           </a>

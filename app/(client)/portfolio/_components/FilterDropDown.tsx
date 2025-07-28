@@ -7,12 +7,7 @@ import {
   DropdownMenuContent,
   DropdownMenuCheckboxItem,
 } from "@radix-ui/react-dropdown-menu";
-
-type FilterDropdownProps = {
-  categories: string[];
-  selectedCategories: string[];
-  onToggleCategory: (cat: string) => void;
-};
+import { FilterDropdownProps } from "@/types";
 
 const FilterDropdown = ({
   categories,
