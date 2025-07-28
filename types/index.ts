@@ -66,3 +66,25 @@ export type SelectedFiltersProps = {
   selectedCategories: string[];
   onRemoveCategory: (cat: string) => void;
 };
+
+export type InternshipModel = {
+  id: string;
+  start: Date;
+  end: Date | null;
+  title1: string;
+  title2: string | null;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type EducationModel = {
+  id: string;
+  start: Date | string;
+  end: Date | string | null;
+  title1: string;
+  title2: string | null;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
