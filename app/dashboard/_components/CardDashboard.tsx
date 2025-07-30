@@ -1,20 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { EducationUpdateItem, EducationDeleteItem } from "@/actions/education";
-import {
-  InternshipUpdateItem,
-  InternshipDeleteItem,
-} from "@/actions/internship";
 import { CardTypeDashboard } from "@/types";
 import { DescriptionSection } from "./DescriptionSection";
 import { TitleSection } from "./TitleSection";
 import { DateSection } from "./DateSection";
 import { Actions } from "./Actions";
 import { Education, Internship } from "@prisma/client";
-import { useMutation } from "@tanstack/react-query";
-import queryClient from "@/config/query";
-import { QUERY_KEYS } from "@/constants/query-keys";
+import { useDashboardMutation } from "@/hooks/useDashboardMutation";
+import {
+  formatDateInput,
+  confirmAction,
+  trimFormData,
+} from "@/utils/dashboardHelpers";
 
 type Props = {
   item: Education | Internship;
@@ -24,119 +22,80 @@ type Props = {
 export const CardDashboard = ({ item, type }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [editedTitle1, setEditedTitle1] = useState(item.title1);
-  const [editedTitle2, setEditedTitle2] = useState(item.title2 || "");
-  const [editedDescription, setEditedDescription] = useState(item.description);
-  const [editedStartDate, setEditedStartDate] = useState(
-    new Date(item.start).toISOString().slice(0, 7)
-  );
-  const [editedEndDate, setEditedEndDate] = useState(
-    item.end ? new Date(item.end).toISOString().slice(0, 7) : ""
+
+  const [formState, setFormState] = useState({
+    title1: item.title1,
+    title2: item.title2 || "",
+    description: item.description,
+    startDate: formatDateInput(new Date(item.start)),
+    endDate: item.end ? formatDateInput(new Date(item.end)) : "",
+  });
+
+  const handleChange = (field: keyof typeof formState, value: string) => {
+    setFormState((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const { updateMutation, deleteMutation } = useDashboardMutation(
+    type,
+    item.id
   );
 
   const onEdit = () => {
-    setEditedTitle1(item.title1);
-    setEditedTitle2(item.title2 || "");
-    setEditedDescription(item.description);
-    setEditedStartDate(new Date(item.start).toISOString().slice(0, 7));
-    setEditedEndDate(
-      item.end ? new Date(item.end).toISOString().slice(0, 7) : ""
-    );
+    setFormState({
+      title1: item.title1,
+      title2: item.title2 || "",
+      description: item.description,
+      startDate: formatDateInput(new Date(item.start)),
+      endDate: item.end ? formatDateInput(new Date(item.end)) : "",
+    });
     setIsEditing(true);
   };
 
   const onCancel = () => {
-    const confirmed = confirm("Are you sure you want to cancel the changes?");
-    if (!confirmed) return;
+    if (!confirmAction("Are you sure you want to cancel the changes?")) return;
     setIsEditing(false);
   };
 
-  const educationMutation = useMutation({
-    mutationFn: async () => {
-      const updatedData = {
-        title1: editedTitle1.trim(),
-        title2: editedTitle2.trim(),
-        description: editedDescription.trim(),
-        start: new Date(editedStartDate),
-        end: new Date(editedEndDate),
-      };
-      return await EducationUpdateItem(item.id, updatedData);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.EDUCATION_DASHBOARD],
-      });
-      setIsEditing(false);
-    },
-    onError: (error) => {
-      console.error("Education update failed:", error);
-    },
-  });
-
-  const internshipMutation = useMutation({
-    mutationFn: async () => {
-      const updatedData = {
-        title1: editedTitle1.trim(),
-        title2: editedTitle2.trim(),
-        description: editedDescription.trim(),
-        start: new Date(editedStartDate),
-        end: new Date(editedEndDate),
-      };
-      return await InternshipUpdateItem(item.id, updatedData);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.INTERNSHIP_DASHBOARD],
-      });
-      setIsEditing(false);
-    },
-    onError: (error) => {
-      console.error("Internship update failed:", error);
-    },
-  });
-
-  const onDelete = async () => {
-    const confirmed = confirm("Are you sure you want to delete this item?");
-    if (!confirmed) return;
-
+  const onDelete = () => {
+    if (!confirmAction("Are you sure you want to delete this item?")) return;
     setIsDeleting(true);
-    try {
-      if (type === "education") {
-        await EducationDeleteItem(item.id);
-      } else {
-        await InternshipDeleteItem(item.id);
-      }
-    } catch (error) {
-      console.error("Delete failed:", error);
-    } finally {
-      setIsDeleting(false);
-    }
+    deleteMutation.mutate(undefined, {
+      onSettled: () => setIsDeleting(false),
+    });
   };
 
   const onSubmitEdit = () => {
-    const confirmed = confirm("Do you want to save the changes?");
-    if (!confirmed) return;
+    if (!confirmAction("Do you want to save the changes?")) return;
 
-    if (type === CardTypeDashboard.Education) {
-      educationMutation.mutate();
-    } else if (type === CardTypeDashboard.Internship) {
-      internshipMutation.mutate();
-    }
+    const updatedData = trimFormData({
+      title1: formState.title1,
+      title2: formState.title2 || "",
+      description: formState.description,
+      start: formState.startDate,
+      end: formState.endDate || undefined,
+    });
+
+    updateMutation.mutate(updatedData, {
+      onSuccess: () => {
+        setIsEditing(false);
+      },
+    });
   };
 
-  const isPending = educationMutation.isPending || internshipMutation.isPending;
+  const isPending = updateMutation.isPending || deleteMutation.isPending;
+
   return (
     <div className="flex flex-col md:flex-row gap-8 relative rounded-2xl hover:shadow-inner transition-shadow duration-200 custom-button !items-start p-4">
       <div className="md:w-1/2 flex w-full md:gap-8">
         <div className="relative w-full flex flex-col gap-2">
           <DateSection
             isEditing={isEditing}
-            startDate={editedStartDate}
-            endDate={editedEndDate}
+            startDate={formState.startDate}
+            endDate={formState.endDate}
             originalStart={item.start}
             originalEnd={item.end ?? undefined}
-            setStartDate={setEditedStartDate}
-            setEndDate={setEditedEndDate}
+            setStartDate={(val) => handleChange("startDate", val)}
+            setEndDate={(val) => handleChange("endDate", val)}
           />
           <Actions
             onEdit={onEdit}
@@ -146,16 +105,15 @@ export const CardDashboard = ({ item, type }: Props) => {
             isDeleting={isDeleting}
             onDelete={onDelete}
             onSubmitEdit={onSubmitEdit}
-            // className="absolute top-2 right-2"
           />
         </div>
 
         <TitleSection
           isEditing={isEditing}
-          title1={editedTitle1}
-          title2={editedTitle2}
-          setTitle1={setEditedTitle1}
-          setTitle2={setEditedTitle2}
+          title1={formState.title1}
+          title2={formState.title2}
+          setTitle1={(val) => handleChange("title1", val)}
+          setTitle2={(val) => handleChange("title2", val)}
           originalTitle1={item.title1}
           originalTitle2={item.title2}
         />
@@ -163,8 +121,8 @@ export const CardDashboard = ({ item, type }: Props) => {
 
       <DescriptionSection
         isEditing={isEditing}
-        description={editedDescription}
-        setDescription={setEditedDescription}
+        description={formState.description}
+        setDescription={(val) => handleChange("description", val)}
       />
     </div>
   );
