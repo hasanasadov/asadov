@@ -30,7 +30,7 @@ export const DateSection = ({
             type="month"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            className="outline custom-button !px-20 !w-40 md:!w-52 text-cyan-500 bg-transparent "
+            className="outline custom-button px-4 !w-40 md:!w-52 text-cyan-500 bg-transparent "
           />
           <input
             type="month"
