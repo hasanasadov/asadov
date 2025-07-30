@@ -5,7 +5,6 @@ import { Card } from "./Card";
 import { QUERY_KEYS } from "@/constants/query-keys";
 import { useQuery } from "@tanstack/react-query";
 import { educationExperience } from "@/constants/experience";
-// import { EducationModel } from "@/types";
 export const EduExperience = () => {
   const { data, isError } = useQuery({
     queryKey: [QUERY_KEYS.EDUCATION],

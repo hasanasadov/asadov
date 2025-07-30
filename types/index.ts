@@ -88,3 +88,8 @@ export type EducationModel = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export enum CardTypeDashboard {
+  Education = "education",
+  Internship = "internship",
+}

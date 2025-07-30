@@ -2,8 +2,13 @@
 import { useEffect, useState } from "react";
 import { isAuthenticated } from "@/lib/auth";
 import PinInput from "@/components/shared/PinInput";
+import { Toaster } from "@/components/ui/sonner";
 
-export default function DashboardPage() {
+export default function DashboardPage({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [authed, setAuthed] = useState(false);
   const [inputValue, setInputValue] = useState(["", "", "", ""]);
   const correctPassword = process.env.NEXT_PUBLIC_DASHBOARD_PIN;
@@ -19,27 +24,25 @@ export default function DashboardPage() {
       setAuthed(true);
     } else {
       alert("Incorrect PIN");
-      setInputValue(["", "", "", "", ""]);
+      setInputValue(["", "", "", ""]);
     }
   };
 
   if (!authed) {
     return (
-      <main className="min-h-screen container mx-auto flex flex-col items-center justify-center ">
-        <PinInput
-          inputValue={inputValue}
-          setInputValue={setInputValue}
-          onSubmitPin={handleSubmitPin}
-        />
-      </main>
+      <>
+        <main className="container mx-auto  ">
+          <Toaster richColors />
+          <PinInput
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            onSubmitPin={handleSubmitPin}
+          />
+        </main>
+        <div />
+      </>
     );
   }
 
-  return (
-    <main className="min-h-screen p-10 ">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-      </div>
-    </main>
-  );
+  return <div>{children}</div>;
 }
