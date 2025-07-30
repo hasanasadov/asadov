@@ -10,16 +10,10 @@ import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const EduExperienceDashboard = () => {
-  const { data, isLoading, isError } = useQuery({
+  const { data, isError } = useQuery({
     queryKey: [QUERY_KEYS.EDUCATION_DASHBOARD],
     queryFn: () => EducationGetItems(),
   });
-
-  if (isLoading) {
-    toast.loading("Loading education data...", {
-      duration: 5000,
-    });
-  }
 
   if (!data && isError) {
     toast.error(

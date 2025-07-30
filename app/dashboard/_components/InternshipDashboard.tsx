@@ -10,16 +10,10 @@ import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const InternExperienceDashboard = () => {
-  const { data, isLoading, isError } = useQuery({
+  const { data, isError } = useQuery({
     queryKey: [QUERY_KEYS.INTERNSHIP_DASHBOARD],
     queryFn: () => InternshipGetItems(),
   });
-
-  if (isLoading) {
-    toast.loading("Loading internship data...", {
-      duration: 5000,
-    });
-  }
 
   if (!data && isError) {
     toast.error(
