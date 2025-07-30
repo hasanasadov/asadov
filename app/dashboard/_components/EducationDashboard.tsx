@@ -16,10 +16,12 @@ export const EduExperienceDashboard = () => {
   });
 
   if (isLoading) {
-    toast.loading("Loading education data...");
+    toast.loading("Loading education data...", {
+      duration: 5000,
+    });
   }
 
-  if (!data || isError) {
+  if (!data && isError) {
     toast.error(
       "Failed to load education data. Displaying default experience."
     );

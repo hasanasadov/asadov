@@ -16,10 +16,12 @@ export const InternExperienceDashboard = () => {
   });
 
   if (isLoading) {
-    toast.loading("Loading internship data...");
+    toast.loading("Loading internship data...", {
+      duration: 5000,
+    });
   }
 
-  if (!data || isError) {
+  if (!data && isError) {
     toast.error(
       "Failed to load education data. Displaying default experience."
     );
