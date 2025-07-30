@@ -23,7 +23,7 @@ export const DateSection = ({
   const end = originalEnd ? new Date(originalEnd) : undefined;
 
   return (
-    <div className="w-1/2 text-[14px] md:text-[16px]">
+    <div className="w-2/3 text-[14px] md:text-[16px]">
       <RenderIf condition={isEditing}>
         <div className="flex flex-col gap-2">
           <input
@@ -32,12 +32,32 @@ export const DateSection = ({
             onChange={(e) => setStartDate(e.target.value)}
             className="outline custom-button px-4 !w-40 md:!w-52 text-cyan-500 bg-transparent "
           />
-          <input
-            type="month"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            className="outline custom-button  px-4 !w-40 md:!w-52 !text-cyan-500 bg-transparent "
-          />
+          <div className="relative flex items-center gap-2 ">
+            <input
+              type="month"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              className="outline custom-button  px-4 !w-40 md:!w-52 !text-cyan-500 bg-transparent "
+            />
+            <input
+              type="checkbox"
+              className=" cursor-pointer"
+              checked={!endDate}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setEndDate("");
+                } else {
+                  setEndDate(
+                    end
+                      ? `${end.getFullYear()}-${String(
+                          end.getMonth() + 1
+                        ).padStart(2, "0")}`
+                      : ""
+                  );
+                }
+              }}
+            />
+          </div>
         </div>
       </RenderIf>
       <RenderIf condition={!isEditing}>

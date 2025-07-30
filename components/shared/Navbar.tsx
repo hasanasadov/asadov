@@ -53,7 +53,13 @@ const Navbar = () => {
       <div className="flex items-center gap-8 md:gap-12 lg:gap-[100px] text-[14px] md:text-[16px] ">
         <div
           onClick={() => {
-            window.history.back();
+            if (isDeatailPage) {
+              window.location.href = PATHS.PORTFOLIO;
+            } else if (isHomePage) {
+              return;
+            } else {
+              window.location.href = PATHS.HOME;
+            }
           }}
           className="whitespace-nowrap flex items-center gap-2 cursor-pointer overflow-hidden"
         >

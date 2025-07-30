@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useState } from "react";
 import { EducationUpdateItem, EducationDeleteItem } from "@/actions/education";
 import {
   InternshipUpdateItem,
@@ -12,6 +12,9 @@ import { TitleSection } from "./TitleSection";
 import { DateSection } from "./DateSection";
 import { Actions } from "./Actions";
 import { Education, Internship } from "@prisma/client";
+import { useMutation } from "@tanstack/react-query";
+import queryClient from "@/config/query";
+import { QUERY_KEYS } from "@/constants/query-keys";
 
 type Props = {
   item: Education | Internship;
@@ -20,9 +23,7 @@ type Props = {
 
 export const CardDashboard = ({ item, type }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [isPending, startTransition] = useTransition();
   const [isDeleting, setIsDeleting] = useState(false);
-
   const [editedTitle1, setEditedTitle1] = useState(item.title1);
   const [editedTitle2, setEditedTitle2] = useState(item.title2 || "");
   const [editedDescription, setEditedDescription] = useState(item.description);
@@ -50,6 +51,50 @@ export const CardDashboard = ({ item, type }: Props) => {
     setIsEditing(false);
   };
 
+  const educationMutation = useMutation({
+    mutationFn: async () => {
+      const updatedData = {
+        title1: editedTitle1.trim(),
+        title2: editedTitle2.trim(),
+        description: editedDescription.trim(),
+        start: new Date(editedStartDate),
+        end: new Date(editedEndDate),
+      };
+      return await EducationUpdateItem(item.id, updatedData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.EDUCATION_DASHBOARD],
+      });
+      setIsEditing(false);
+    },
+    onError: (error) => {
+      console.error("Education update failed:", error);
+    },
+  });
+
+  const internshipMutation = useMutation({
+    mutationFn: async () => {
+      const updatedData = {
+        title1: editedTitle1.trim(),
+        title2: editedTitle2.trim(),
+        description: editedDescription.trim(),
+        start: new Date(editedStartDate),
+        end: new Date(editedEndDate),
+      };
+      return await InternshipUpdateItem(item.id, updatedData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.INTERNSHIP_DASHBOARD],
+      });
+      setIsEditing(false);
+    },
+    onError: (error) => {
+      console.error("Internship update failed:", error);
+    },
+  });
+
   const onDelete = async () => {
     const confirmed = confirm("Are you sure you want to delete this item?");
     if (!confirmed) return;
@@ -68,32 +113,18 @@ export const CardDashboard = ({ item, type }: Props) => {
     }
   };
 
-  const onSubmitEdit = async () => {
+  const onSubmitEdit = () => {
     const confirmed = confirm("Do you want to save the changes?");
     if (!confirmed) return;
 
-    const updatedData = {
-      title1: editedTitle1.trim(),
-      title2: editedTitle2.trim(),
-      description: editedDescription.trim(),
-      start: new Date(editedStartDate),
-      end: editedEndDate ? new Date(editedEndDate) : undefined,
-    };
-
-    startTransition(async () => {
-      try {
-        if (type === "education") {
-          await EducationUpdateItem(item.id, updatedData);
-        } else {
-          await InternshipUpdateItem(item.id, updatedData);
-        }
-        setIsEditing(false);
-      } catch (error) {
-        console.error("Update failed:", error);
-      }
-    });
+    if (type === CardTypeDashboard.Education) {
+      educationMutation.mutate();
+    } else if (type === CardTypeDashboard.Internship) {
+      internshipMutation.mutate();
+    }
   };
 
+  const isPending = educationMutation.isPending || internshipMutation.isPending;
   return (
     <div className="flex flex-col md:flex-row gap-8 relative rounded-2xl hover:shadow-inner transition-shadow duration-200 custom-button !items-start p-4">
       <div className="md:w-1/2 flex w-full md:gap-8">

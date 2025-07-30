@@ -8,7 +8,7 @@ type Props = {
   isPending: boolean;
   isDeleting: boolean;
   onDelete: () => Promise<void>;
-  onSubmitEdit: () => Promise<void>;
+  onSubmitEdit: () => void | Promise<void>;
   className?: string;
 };
 
