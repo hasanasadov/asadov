@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { CardTypeDashboard } from "@/types";
 import { DescriptionSection } from "./DescriptionSection";
-import { TitleSection } from "../TitleSection";
+import { TitleSection } from "./TitleSection";
 import { DateSection } from "./DateSection";
 import { Actions } from "./Actions";
 import { Education, Internship } from "@prisma/client";

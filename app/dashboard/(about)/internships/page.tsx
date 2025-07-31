@@ -3,15 +3,15 @@
 import { internshipExperience } from "@/constants/experience";
 import { InternshipGetItems } from "@/actions/internship";
 import { CardTypeDashboard } from "@/types";
-import { CardDashboard } from "./common/CardDashboard";
 import { QUERY_KEYS } from "@/constants/query-keys";
 import { Internship } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { AddDashboardItem } from "./common/AddDashboardItem";
 import { useState } from "react";
+import { AddDashboardItem } from "../_components/AddDashboardItem";
+import { CardDashboard } from "../_components/CardDashboard";
 
-export const InternExperienceDashboard = () => {
+export default function InternExperienceDashboard() {
   const { data, isError } = useQuery({
     queryKey: [QUERY_KEYS.INTERNSHIP_DASHBOARD],
     queryFn: () => InternshipGetItems(),
@@ -27,7 +27,7 @@ export const InternExperienceDashboard = () => {
 
   return (
     <div className="md:px-8 pt-4">
-      <div className="text-4xl my-12 flex items-center gap-2 justify-between">
+      <div className="text-4xl mb-10 flex items-center gap-2 justify-between">
         <h1>Internships</h1>
         <AddDashboardItem
           type={CardTypeDashboard.Internship}
@@ -46,4 +46,4 @@ export const InternExperienceDashboard = () => {
       </div>
     </div>
   );
-};
+}

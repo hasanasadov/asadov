@@ -952,9 +952,7 @@ Neowise is a weather forecasting app providing accurate data with a beautiful in
     href: "hasgames.vercel.app",
     category: "Games",
     description: "Fun browser games collection.",
-    detailedDescription: `
-A collection of fun browser games built using React and TailwindCSS.
-    `,
+    detailedDescription: `A collection of fun browser games built using React and TailwindCSS.`,
     technologies: ["React", "TailwindCSS", "JavaScript"],
     codeSnippets: [
       {

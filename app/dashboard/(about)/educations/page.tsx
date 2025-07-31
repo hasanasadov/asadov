@@ -3,15 +3,15 @@
 import { educationExperience } from "@/constants/experience";
 import { EducationGetItems } from "@/actions/education";
 import { CardTypeDashboard } from "@/types";
-import { CardDashboard } from "./common/CardDashboard";
 import { QUERY_KEYS } from "@/constants/query-keys";
 import { Education } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { AddDashboardItem } from "./common/AddDashboardItem";
 import { useState } from "react";
+import { AddDashboardItem } from "../_components/AddDashboardItem";
+import { CardDashboard } from "../_components/CardDashboard";
 
-export const EduExperienceDashboard = () => {
+export default function EduExperienceDashboard() {
   const { data, isError } = useQuery({
     queryKey: [QUERY_KEYS.EDUCATION_DASHBOARD],
     queryFn: () => EducationGetItems(),
@@ -53,4 +53,4 @@ export const EduExperienceDashboard = () => {
       </div>
     </div>
   );
-};
+}

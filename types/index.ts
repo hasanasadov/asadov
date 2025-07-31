@@ -49,7 +49,7 @@ export type FilterDropdownProps = {
 
 export type ProjectCardProps = {
   project: {
-    id: number;
+    id: number | string;
     title: string;
     image: string;
     href: string;
@@ -92,4 +92,26 @@ export type EducationModel = {
 export enum CardTypeDashboard {
   Education = "education",
   Internship = "internship",
+  Project = "project",
 }
+
+export type ProjectModel = {
+  title: string;
+  image: string;
+  href?: string;
+  category: string;
+  description: string;
+  detailedDescription?: string;
+  technologies?: string[];
+  liveUrl?: string;
+  repoUrl?: string;
+};
+
+export type GithubSnippet = {
+  id: string;
+  repo: string;
+  filePath: string;
+  branch: string;
+  createdAt: Date;
+  updatedAt: Date;
+};

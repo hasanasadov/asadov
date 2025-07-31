@@ -4,4 +4,5 @@ export const QUERY_KEYS = {
   EDUCATION: "education",
   INTERNSHIP_DASHBOARD: "internshipDashboard",
   EDUCATION_DASHBOARD: "educationDashboard",
+  PROJECT_DASHBOARD: "projectDashboard",
 };

@@ -14,6 +14,7 @@ const Navbar = () => {
   const pathName = usePathname();
   const isHomePage = pathName === "/";
   const isDeatailPage = pathName.includes(`${PATHS.PORTFOLIO}/`);
+  const isDashboardsPage = pathName.includes(`${PATHS.DASHBOARD}/`);
   const timeZoneStr = useTimeZoneString();
   const [showNavbar, setShowNavbar] = useState(true);
   const lastScrollY = useRef(0);
@@ -57,6 +58,8 @@ const Navbar = () => {
               window.location.href = PATHS.PORTFOLIO;
             } else if (isHomePage) {
               return;
+            } else if (isDashboardsPage) {
+              window.history.back();
             } else {
               window.location.href = PATHS.HOME;
             }
@@ -68,7 +71,15 @@ const Navbar = () => {
           </RenderIf>
           <RenderIf condition={!isHomePage}>
             <ArrowLeft />
-            <HoverText text={!isDeatailPage ? "Home" : "Portfolio"} />
+            <HoverText
+              text={
+                isDashboardsPage
+                  ? "Dashboard"
+                  : isDeatailPage
+                  ? "Portfolio"
+                  : "Home"
+              }
+            />
           </RenderIf>
         </div>
         <div className="whitespace-nowrap">
