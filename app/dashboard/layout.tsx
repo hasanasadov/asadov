@@ -23,7 +23,6 @@ export default function DashboardPage({
     }
   }, []);
 
-  // ✅ Only run hotkeys if NOT authed
   useHotkeys(
     "0,1,2,3,4,5,6,7,8,9",
     (event) => {
@@ -45,9 +44,9 @@ export default function DashboardPage({
       });
     },
     {
-      enabled: !authed, // 🔑 key part: only listen when not authed
+      enabled: !authed,
     },
-    [inputValue, authed] // dependencies
+    [inputValue, authed]
   );
 
   const handleSubmitPin = (pin: string) => {

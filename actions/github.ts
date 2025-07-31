@@ -1,5 +1,8 @@
 "use server";
 
+import prisma from "@/lib/prisma";
+import { GithubSnippet } from "@prisma/client";
+
 export const fetchGithubCode = async (
   repo: string,
   filePath: string,
@@ -17,4 +20,38 @@ export const fetchGithubCode = async (
     console.error(error);
     return "Error fetching code snippet.";
   }
+};
+
+export const GithubSnippetGetItems = async () => {
+  return await prisma.githubSnippet.findMany();
+};
+
+export const GithubSnippetGetItem = async (id: string) => {
+  return await prisma.githubSnippet.findUnique({
+    where: { id },
+  });
+};
+
+export const GithubSnippetDeleteItem = async (id: string) => {
+  return await prisma.githubSnippet.delete({
+    where: { id },
+  });
+};
+
+export const GithubSnippetAddItem = async (
+  data: Omit<GithubSnippet, "id" | "createdAt">
+) => {
+  return await prisma.githubSnippet.create({
+    data,
+  });
+};
+
+export const GithubSnippetUpdateItem = async (
+  id: string,
+  data: Partial<Omit<GithubSnippet, "id" | "createdAt">>
+) => {
+  return await prisma.githubSnippet.update({
+    where: { id },
+    data,
+  });
 };

@@ -12,7 +12,22 @@ import {
   InternshipAddItem,
 } from "@/actions/internship";
 import { CardTypeDashboard, EducationModel, InternshipModel } from "@/types";
-import { Education, Internship } from "@prisma/client";
+import {
+  CodeSnippet,
+  Education,
+  GithubSnippet,
+  Internship,
+} from "@prisma/client";
+import {
+  GithubSnippetAddItem,
+  GithubSnippetDeleteItem,
+  GithubSnippetUpdateItem,
+} from "@/actions/github";
+import {
+  CodeSnippetAddItem,
+  CodeSnippetDeleteItem,
+  CodeSnippetUpdateItem,
+} from "@/actions/code";
 
 export const useDashboardMutation = (
   type: CardTypeDashboard,
@@ -20,20 +35,27 @@ export const useDashboardMutation = (
 ) => {
   const updateMutation = useMutation({
     mutationFn: async (
-      updatedData: Partial<Education> | Partial<Internship>
+      updatedData:
+        | Partial<Education>
+        | Partial<Internship>
+        | Partial<GithubSnippet>
+        | Partial<CodeSnippet>
     ) => {
-      if (type === CardTypeDashboard.Education) {
-        return await EducationUpdateItem(itemId, updatedData);
-      } else {
-        return await InternshipUpdateItem(itemId, updatedData);
+      switch (type) {
+        case CardTypeDashboard.Education:
+          return await EducationUpdateItem(itemId, updatedData);
+        case CardTypeDashboard.Internship:
+          return await InternshipUpdateItem(itemId, updatedData);
+        case CardTypeDashboard.GithubSnippet:
+          return await GithubSnippetUpdateItem(itemId, updatedData);
+        case CardTypeDashboard.CodeSnippet:
+          return await CodeSnippetUpdateItem(itemId, updatedData);
+        default:
+          throw new Error("Unknown dashboard card type");
       }
     },
     onSuccess: () => {
-      const queryKey =
-        type === CardTypeDashboard.Education
-          ? QUERY_KEYS.EDUCATION_DASHBOARD
-          : QUERY_KEYS.INTERNSHIP_DASHBOARD;
-
+      const queryKey = validateQueries(type);
       queryClient.invalidateQueries({ queryKey: [queryKey] });
     },
     onError: (error) => {
@@ -43,18 +65,21 @@ export const useDashboardMutation = (
 
   const deleteMutation = useMutation({
     mutationFn: async () => {
-      if (type === CardTypeDashboard.Education) {
-        return await EducationDeleteItem(itemId);
-      } else {
-        return await InternshipDeleteItem(itemId);
+      switch (type) {
+        case CardTypeDashboard.Education:
+          return await EducationDeleteItem(itemId);
+        case CardTypeDashboard.Internship:
+          return await InternshipDeleteItem(itemId);
+        case CardTypeDashboard.GithubSnippet:
+          return await GithubSnippetDeleteItem(itemId);
+        case CardTypeDashboard.CodeSnippet:
+          return await CodeSnippetDeleteItem(itemId);
+        default:
+          throw new Error("Unknown dashboard card type");
       }
     },
     onSuccess: () => {
-      const queryKey =
-        type === CardTypeDashboard.Education
-          ? QUERY_KEYS.EDUCATION_DASHBOARD
-          : QUERY_KEYS.INTERNSHIP_DASHBOARD;
-
+      const queryKey = validateQueries(type);
       queryClient.invalidateQueries({ queryKey: [queryKey] });
     },
     onError: (error) => {
@@ -63,19 +88,28 @@ export const useDashboardMutation = (
   });
 
   const createMutation = useMutation({
-    mutationFn: async (newData: Partial<Education> | Partial<Internship>) => {
-      if (type === CardTypeDashboard.Education) {
-        return await EducationAddItem(newData as EducationModel);
-      } else {
-        return await InternshipAddItem(newData as InternshipModel);
+    mutationFn: async (
+      newData:
+        | Partial<Education>
+        | Partial<Internship>
+        | Partial<GithubSnippet>
+        | Partial<CodeSnippet>
+    ) => {
+      switch (type) {
+        case CardTypeDashboard.Education:
+          return await EducationAddItem(newData as EducationModel);
+        case CardTypeDashboard.Internship:
+          return await InternshipAddItem(newData as InternshipModel);
+        case CardTypeDashboard.GithubSnippet:
+          return await GithubSnippetAddItem(newData as GithubSnippet);
+        case CardTypeDashboard.CodeSnippet:
+          return await CodeSnippetAddItem(newData as CodeSnippet);
+        default:
+          throw new Error("Unknown dashboard card type");
       }
     },
     onSuccess: () => {
-      const queryKey =
-        type === CardTypeDashboard.Education
-          ? QUERY_KEYS.EDUCATION_DASHBOARD
-          : QUERY_KEYS.INTERNSHIP_DASHBOARD;
-
+      const queryKey = validateQueries(type);
       queryClient.invalidateQueries({ queryKey: [queryKey] });
     },
     onError: (error) => {
@@ -84,4 +118,19 @@ export const useDashboardMutation = (
   });
 
   return { updateMutation, deleteMutation, createMutation };
+};
+
+const validateQueries = (type: CardTypeDashboard) => {
+  switch (type) {
+    case CardTypeDashboard.Education:
+      return QUERY_KEYS.EDUCATION_DASHBOARD;
+    case CardTypeDashboard.Internship:
+      return QUERY_KEYS.INTERNSHIP_DASHBOARD;
+    case CardTypeDashboard.GithubSnippet:
+      return QUERY_KEYS.GITHUB_SNIPPETS_DASHBOARD;
+    case CardTypeDashboard.CodeSnippet:
+      return QUERY_KEYS.CODE_SNIPPETS_DASHBOARD;
+    default:
+      throw new Error("Unknown dashboard card type");
+  }
 };

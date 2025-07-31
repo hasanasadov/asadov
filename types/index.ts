@@ -93,6 +93,8 @@ export enum CardTypeDashboard {
   Education = "education",
   Internship = "internship",
   Project = "project",
+  GithubSnippet = "githubSnippet",
+  CodeSnippet = "codeSnippet",
 }
 
 export type ProjectModel = {

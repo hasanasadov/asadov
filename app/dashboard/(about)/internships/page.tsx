@@ -19,7 +19,7 @@ export default function InternExperienceDashboard() {
 
   if (!data && isError) {
     toast.error(
-      "Failed to load education data. Displaying default experience."
+      "Failed to load internship data. Displaying default experience."
     );
   }
 
@@ -36,6 +36,13 @@ export default function InternExperienceDashboard() {
         />
       </div>
       <div className="flex flex-col gap-4">
+        {newItem && (
+          <CardDashboard
+            item={newItem}
+            type={CardTypeDashboard.Internship}
+            setNewItem={setNewItem}
+          />
+        )}
         {(!data || isError ? internshipExperience : data)?.map((item) => (
           <CardDashboard
             key={item.id}
