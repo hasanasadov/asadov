@@ -13,13 +13,7 @@ export async function InternshipGetItems() {
   }
 }
 
-export async function InternshipAddItem(data: {
-  start: Date;
-  end?: Date;
-  title1: string;
-  title2?: string;
-  description: string;
-}) {
+export async function InternshipAddItem(data: InternshipModel) {
   try {
     const item = await prisma.internship.create({ data });
     revalidatePath("/dashboard");

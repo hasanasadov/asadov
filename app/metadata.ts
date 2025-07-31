@@ -2,12 +2,12 @@ import { metaKeywords } from "@/constants/metadata";
 
 export const metadata = {
   title: "Hasanali Asadov Portfolio",
-  description: "Next.js developer portfolio saytı",
+  description: "Next.js developer portfolio website",
   keywords: metaKeywords,
   authors: [{ name: "Hasanali Asadov" }],
   openGraph: {
     title: "Hasanali Asadov Portfolio",
-    description: "Developer portfolio saytı",
+    description: "Developer portfolio website",
     url: "https://asadov.site",
     type: "website",
     images: [

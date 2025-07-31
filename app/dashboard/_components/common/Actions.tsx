@@ -3,7 +3,7 @@ import RenderIf from "@/utils/RenderIf";
 
 type Props = {
   onEdit: () => void;
-  onCancel: () => void;
+  onCancel?: () => void;
   isEditing: boolean;
   isPending: boolean;
   isDeleting: boolean;
@@ -26,13 +26,15 @@ export const Actions = ({
     <div className={`flex gap-4 ${className}`}>
       <RenderIf condition={isEditing}>
         <>
-          <Button
-            onClick={onCancel}
-            variant="custom"
-            className="text-yellow-600 hover:underline text-sm"
-          >
-            Cancel
-          </Button>
+          <RenderIf condition={!!onCancel}>
+            <Button
+              onClick={onCancel}
+              variant="custom"
+              className="text-yellow-600 hover:underline text-sm"
+            >
+              Cancel
+            </Button>
+          </RenderIf>
           <Button
             onClick={onSubmitEdit}
             disabled={isPending}

@@ -14,13 +14,7 @@ export async function EducationGetItems() {
   }
 }
 
-export async function EducationAddItem(data: {
-  start: Date;
-  end?: Date;
-  title1: string;
-  title2?: string;
-  description: string;
-}) {
+export async function EducationAddItem(data: EducationModel) {
   try {
     const newItem = await prisma.education.create({ data });
     revalidatePath("/dashboard");

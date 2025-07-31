@@ -1,12 +1,17 @@
 import { useMutation } from "@tanstack/react-query";
 import queryClient from "@/config/query";
 import { QUERY_KEYS } from "@/constants/query-keys";
-import { EducationUpdateItem, EducationDeleteItem } from "@/actions/education";
+import {
+  EducationUpdateItem,
+  EducationDeleteItem,
+  EducationAddItem,
+} from "@/actions/education";
 import {
   InternshipUpdateItem,
   InternshipDeleteItem,
+  InternshipAddItem,
 } from "@/actions/internship";
-import { CardTypeDashboard } from "@/types";
+import { CardTypeDashboard, EducationModel, InternshipModel } from "@/types";
 import { Education, Internship } from "@prisma/client";
 
 export const useDashboardMutation = (
@@ -14,7 +19,9 @@ export const useDashboardMutation = (
   itemId: string
 ) => {
   const updateMutation = useMutation({
-    mutationFn: async (updatedData: Partial<Education> | Partial<Internship>) => {
+    mutationFn: async (
+      updatedData: Partial<Education> | Partial<Internship>
+    ) => {
       if (type === CardTypeDashboard.Education) {
         return await EducationUpdateItem(itemId, updatedData);
       } else {
@@ -55,5 +62,26 @@ export const useDashboardMutation = (
     },
   });
 
-  return { updateMutation, deleteMutation };
+  const createMutation = useMutation({
+    mutationFn: async (newData: Partial<Education> | Partial<Internship>) => {
+      if (type === CardTypeDashboard.Education) {
+        return await EducationAddItem(newData as EducationModel);
+      } else {
+        return await InternshipAddItem(newData as InternshipModel);
+      }
+    },
+    onSuccess: () => {
+      const queryKey =
+        type === CardTypeDashboard.Education
+          ? QUERY_KEYS.EDUCATION_DASHBOARD
+          : QUERY_KEYS.INTERNSHIP_DASHBOARD;
+
+      queryClient.invalidateQueries({ queryKey: [queryKey] });
+    },
+    onError: (error) => {
+      console.error("Create failed:", error);
+    },
+  });
+
+  return { updateMutation, deleteMutation, createMutation };
 };

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { CardTypeDashboard } from "@/types";
 import { DescriptionSection } from "./DescriptionSection";
-import { TitleSection } from "./TitleSection";
+import { TitleSection } from "../TitleSection";
 import { DateSection } from "./DateSection";
 import { Actions } from "./Actions";
 import { Education, Internship } from "@prisma/client";
@@ -15,12 +15,14 @@ import {
 } from "@/utils/dashboardHelpers";
 
 type Props = {
-  item: Education | Internship;
+  item: (Education | Internship) & { isNew?: boolean };
   type: CardTypeDashboard;
+  setNewItem?: (item: Education | Internship | null) => void;
 };
 
-export const CardDashboard = ({ item, type }: Props) => {
-  const [isEditing, setIsEditing] = useState(false);
+export const CardDashboard = ({ item, type, setNewItem }: Props) => {
+  const isNew = item?.["isNew"] === true;
+  const [isEditing, setIsEditing] = useState(isNew);
   const [isDeleting, setIsDeleting] = useState(false);
 
   const [formState, setFormState] = useState({
@@ -35,10 +37,8 @@ export const CardDashboard = ({ item, type }: Props) => {
     setFormState((prev) => ({ ...prev, [field]: value }));
   };
 
-  const { updateMutation, deleteMutation } = useDashboardMutation(
-    type,
-    item.id
-  );
+  const { updateMutation, deleteMutation, createMutation } =
+    useDashboardMutation(type, item.id);
 
   const onEdit = () => {
     setFormState({
@@ -53,6 +53,9 @@ export const CardDashboard = ({ item, type }: Props) => {
 
   const onCancel = () => {
     if (!confirmAction("Are you sure you want to cancel the changes?")) return;
+    if (setNewItem) {
+      setNewItem(null);
+    }
     setIsEditing(false);
   };
 
@@ -67,7 +70,7 @@ export const CardDashboard = ({ item, type }: Props) => {
   const onSubmitEdit = () => {
     if (!confirmAction("Do you want to save the changes?")) return;
 
-    const updatedData = trimFormData({
+    const data = trimFormData({
       title1: formState.title1,
       title2: formState.title2 || "",
       description: formState.description,
@@ -75,14 +78,28 @@ export const CardDashboard = ({ item, type }: Props) => {
       end: formState.endDate || undefined,
     });
 
-    updateMutation.mutate(updatedData, {
-      onSuccess: () => {
-        setIsEditing(false);
-      },
-    });
+    if (isNew) {
+      createMutation.mutate(data, {
+        onSuccess: () => {
+          setIsEditing(false);
+        },
+      });
+      if (setNewItem) {
+        setNewItem(null);
+      }
+    } else {
+      updateMutation.mutate(data, {
+        onSuccess: () => {
+          setIsEditing(false);
+        },
+      });
+    }
   };
 
-  const isPending = updateMutation.isPending || deleteMutation.isPending;
+  const isPending =
+    updateMutation.isPending ||
+    deleteMutation.isPending ||
+    createMutation.isPending;
 
   return (
     <div className="flex flex-col md:flex-row gap-8 relative rounded-2xl hover:shadow-inner transition-shadow duration-200 custom-button !items-start p-4">
@@ -99,7 +116,7 @@ export const CardDashboard = ({ item, type }: Props) => {
           />
           <Actions
             onEdit={onEdit}
-            onCancel={onCancel}
+            onCancel={isNew ? undefined : onCancel}
             isEditing={isEditing}
             isPending={isPending}
             isDeleting={isDeleting}
