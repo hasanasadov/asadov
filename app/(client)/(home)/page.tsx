@@ -7,6 +7,7 @@ import RenderIf from "@/utils/RenderIf";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
@@ -164,7 +165,9 @@ const Stack = ({
     "/stack/o.avif",
   ];
   const scrollRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
+  const [clickCount, setClickCount] = useState(0);
   useEffect(() => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
@@ -187,10 +190,17 @@ const Stack = ({
     return () => clearInterval(intervalId);
   }, []);
 
+  useEffect(() => {
+    if (clickCount >= 7) {
+      router.push("/dashboard");
+      setClickCount(0); // Reset click count after redirect
+    }
+  }, [clickCount, router]);
   return (
     <div
       onMouseEnter={() => setHeroText("Stack")}
       onMouseLeave={() => setHeroText("")}
+      onClick={() => setClickCount((prev) => prev + 1)}
       className={`card relative flex !items-center !justify-center !p-0 duration-300 transition-all ${className}`}
     >
       <BlurryBG className="w-full h-full rounded-lg" />
