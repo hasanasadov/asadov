@@ -43,14 +43,10 @@ const Hero = ({
           transition={{ duration: 0.2, ease: "easeInOut" }}
           className="absolute w-full "
         >
-          <div className="flex items-center justify-center gap-5">
-            <div>
-              <HoverText text={heroText || "Hasanali"} />
-            </div>
+          <div className="flex items-center justify-center gap-5 !cursor-default">
+            <div>{heroText || "Hasanali"}</div>
             <RenderIf condition={!heroText}>
-              <div className="md:block hidden">
-                <HoverText text="Asadov" />
-              </div>
+              <div className="md:block hidden">Asadov</div>
             </RenderIf>
           </div>
         </motion.div>

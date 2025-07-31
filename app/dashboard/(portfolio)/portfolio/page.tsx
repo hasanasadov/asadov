@@ -1,40 +1,54 @@
 "use client";
 
+import { CardTypeDashboard } from "@/types";
 import { QUERY_KEYS } from "@/constants/query-keys";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { useState } from "react";
 import { ProjectGetItems } from "@/actions/project";
-import ProjectCard from "@/app/(client)/portfolio/_components/ProjectCard";
+import { Project } from "@prisma/client";
+import { AddProjectItem } from "./_components/AddProjectItem";
+import ProjectDashboardCard from "./_components/ProjectDashboardCard";
 
-export default function ProjectDashboard() {
+export default function ProjectPage() {
   const { data, isError } = useQuery({
     queryKey: [QUERY_KEYS.PROJECT_DASHBOARD],
     queryFn: () => ProjectGetItems(),
   });
 
-  console.log("ProjectDashboard data", data);
   if (!data && isError) {
-    toast.error("Failed to load project data. Displaying default projects.");
+    toast.error(
+      "Failed to load GitHub snippet data. Displaying default experience."
+    );
   }
+  console.log("Project data:", data);
 
-  //   const [newItem, setNewItem] = useState<Project | null>(null);
+  const [newItem, setNewItem] = useState<Project | null>(null);
 
   return (
-    <div className="md:px-8 pt-4">
-      <div className="text-4xl my-12 flex items-center gap-2 justify-between">
+    <div className="md:px-8 pt-4 min-h-[90vh]">
+      <div className="text-4xl mb-10 flex items-center gap-2 justify-between">
         <h1>Projects</h1>
-        {/* <AddDashboardItem type={CardTypeDashboard.Project} /> */}
+        <AddProjectItem
+          type={CardTypeDashboard.Project}
+          newItem={newItem}
+          setNewItem={setNewItem}
+        />
       </div>
       <div className="flex flex-col gap-4">
-        {/* {(!data || isError ? projects : data)?.map((item) => (
-          <CardDashboardProject
+        {newItem && (
+          <ProjectDashboardCard
+            item={newItem}
+            type={CardTypeDashboard.Project}
+            setNewItem={setNewItem}
+          />
+        )}
+        {data?.map((item) => (
+          <ProjectDashboardCard
             key={item.id}
             item={item as Project}
             type={CardTypeDashboard.Project}
           />
-        ))} */}
-        {data?.map((project) => (
-          <ProjectCard key={project.title} project={project} />
         ))}
       </div>
     </div>

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { CardTypeDashboard } from "@/types";
-import { CodeSnippet, GithubSnippet } from "@prisma/client";
+import { CodeSnippet } from "@prisma/client";
 import { useDashboardMutation } from "@/hooks/useDashboardMutation";
 import { confirmAction } from "@/utils/dashboardHelpers";
 import RenderIf from "@/utils/RenderIf";
@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/query-keys";
 import { GithubSnippetGetItems } from "@/actions/github";
-import GithubSnippetCard from "../../githubsnippets/_components/GithubSnippetCard";
+// import GithubSnippetCard from "../../githubsnippets/_components/GithubSnippetCard";
 import SelectReact from "@/components/ui/selectReact";
 
 type Props = {
@@ -195,14 +195,14 @@ export const CodeSnippetCard = ({ item, type, setNewItem }: Props) => {
           </div>
         </div>
       </div>
-      <div className="w-full p-4">
+      {/* <div className="w-full p-4">
         <RenderIf condition={!isNew && !!currentSnippet}>
           <GithubSnippetCard
             item={currentSnippet as GithubSnippet}
             type={CardTypeDashboard.GithubSnippet}
           />
         </RenderIf>
-      </div>
+      </div> */}
     </div>
   );
 };

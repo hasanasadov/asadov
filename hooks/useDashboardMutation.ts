@@ -17,6 +17,7 @@ import {
   Education,
   GithubSnippet,
   Internship,
+  Project,
 } from "@prisma/client";
 import {
   GithubSnippetAddItem,
@@ -28,6 +29,11 @@ import {
   CodeSnippetDeleteItem,
   CodeSnippetUpdateItem,
 } from "@/actions/code";
+import {
+  ProjectAddItem,
+  ProjectDeleteItem,
+  ProjectUpdateItem,
+} from "@/actions/project";
 
 export const useDashboardMutation = (
   type: CardTypeDashboard,
@@ -40,6 +46,7 @@ export const useDashboardMutation = (
         | Partial<Internship>
         | Partial<GithubSnippet>
         | Partial<CodeSnippet>
+        | Partial<Project>
     ) => {
       switch (type) {
         case CardTypeDashboard.Education:
@@ -50,6 +57,8 @@ export const useDashboardMutation = (
           return await GithubSnippetUpdateItem(itemId, updatedData);
         case CardTypeDashboard.CodeSnippet:
           return await CodeSnippetUpdateItem(itemId, updatedData);
+        case CardTypeDashboard.Project:
+          return await ProjectUpdateItem(itemId, updatedData);
         default:
           throw new Error("Unknown dashboard card type");
       }
@@ -74,6 +83,8 @@ export const useDashboardMutation = (
           return await GithubSnippetDeleteItem(itemId);
         case CardTypeDashboard.CodeSnippet:
           return await CodeSnippetDeleteItem(itemId);
+        case CardTypeDashboard.Project:
+          return await ProjectDeleteItem(itemId);
         default:
           throw new Error("Unknown dashboard card type");
       }
@@ -94,6 +105,7 @@ export const useDashboardMutation = (
         | Partial<Internship>
         | Partial<GithubSnippet>
         | Partial<CodeSnippet>
+        | Partial<Project>
     ) => {
       switch (type) {
         case CardTypeDashboard.Education:
@@ -104,6 +116,8 @@ export const useDashboardMutation = (
           return await GithubSnippetAddItem(newData as GithubSnippet);
         case CardTypeDashboard.CodeSnippet:
           return await CodeSnippetAddItem(newData as CodeSnippet);
+        case CardTypeDashboard.Project:
+          return await ProjectAddItem(newData as Project);
         default:
           throw new Error("Unknown dashboard card type");
       }
@@ -130,6 +144,8 @@ const validateQueries = (type: CardTypeDashboard) => {
       return QUERY_KEYS.GITHUB_SNIPPETS_DASHBOARD;
     case CardTypeDashboard.CodeSnippet:
       return QUERY_KEYS.CODE_SNIPPETS_DASHBOARD;
+    case CardTypeDashboard.Project:
+      return QUERY_KEYS.PROJECT_DASHBOARD;
     default:
       throw new Error("Unknown dashboard card type");
   }
