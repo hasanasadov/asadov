@@ -3,7 +3,6 @@ export const projects = [
     id: 0,
     title: "Personal Portfolio",
     image: "/projects/asadov.png",
-    href: "asadov.site",
     category: "Web",
     description: "My Personal website/portfolio about me",
     detailedDescription: `My organised full personal information related website designed and pushed by me.`,
@@ -55,7 +54,6 @@ export const projects = [
     id: 1,
     title: "Turbo.az Clone",
     image: "/projects/turbo.png",
-    href: "hasturbo.vercel.app",
     category: "Web",
     description: "A full Turbo.az clone built with Next.js and Tailwind.",
     detailedDescription: `
@@ -122,7 +120,7 @@ const ProductCard = async ({ product }: Props) => {
   return (
     <div className="relative border-red-200 border rounded-lg overflow-hidden w-full h-[240px] shadow-red-200  transition-transform transform hover:scale-[1.01] hover:shadow-red-200 shadow-md">
       <div className="relative w-full h-[150px] transition-opacity duration-500">
-        <Link href={'/products/{id}'}>
+        
           <img
             className="cursor-pointer object-cover h-full w-full transition-transform duration-500 hover:scale-110"
             src={productImg}
@@ -311,7 +309,6 @@ export default async function ProductListLayout({
     id: 2,
     title: "Sixt.com Clone",
     image: "/projects/sixt.png",
-    href: "hassixt.site",
     category: "Web",
     description: "Sixt.com clone showcasing smooth UX/UI.",
     detailedDescription: `
@@ -600,7 +597,6 @@ app.listen(PORT, () => {
     id: 3,
     title: "Morent car",
     image: "/projects/hasrent.png",
-    href: "hasrent.vercel.app",
     category: "Mobile",
     description: "A car rental mobile app with clean design.",
     detailedDescription: `
@@ -656,7 +652,6 @@ Morent car is a mobile-first car rental app with user-friendly UI and smooth boo
     id: 4,
     title: "MyEvents App",
     image: "/projects/myevents.png",
-    href: "myevents.az",
     category: "Mobile",
     description: "Event management app for mobile devices.",
     detailedDescription: `
@@ -702,7 +697,6 @@ MyEvents is a mobile app to create, manage and share events with friends and fam
     id: 5,
     title: "ToDo App",
     image: "/projects/hastodo.png",
-    href: "hastodo.vercel.app",
     category: "Web",
     description: "Simple and elegant ToDo application.",
     detailedDescription: `
@@ -750,7 +744,6 @@ A minimalist ToDo app focused on simplicity and productivity. Built with React a
     id: 6,
     title: "NFT Marketplace",
     image: "/projects/hasnft.png",
-    href: "hasnft.vercel.app",
     category: "Web",
     description: "A marketplace for NFTs with seamless UX.",
     detailedDescription: `
@@ -814,7 +807,6 @@ NFT Marketplace platform featuring NFT browsing, buying, and selling functionali
     id: 7,
     title: "Instagram Clone",
     image: "/projects/hasagram.png",
-    href: "hasagram.vercel.app",
     category: "Mobile",
     description: "Instagram UI clone for mobile.",
     detailedDescription: `
@@ -869,7 +861,6 @@ Instagram UI clone focusing on mobile responsiveness and user experience.
     id: 8,
     title: "Crypto Tracker",
     image: "/projects/hascrypto.png",
-    href: "hascrypto.vercel.app",
     category: "Web",
     description: "Track cryptocurrencies in real-time.",
     detailedDescription: `
@@ -909,7 +900,6 @@ Crypto Tracker is a dashboard for tracking prices and changes in crypto markets 
     id: 9,
     title: "Neowise",
     image: "/projects/hasneowise.png",
-    href: "hasneowise.vercel.app",
     category: "Web",
     description: "Weather forecasting app with beautiful UI.",
     detailedDescription: `
@@ -949,7 +939,6 @@ Neowise is a weather forecasting app providing accurate data with a beautiful in
     id: 10,
     title: "Games",
     image: "/projects/hasgames.png",
-    href: "hasgames.vercel.app",
     category: "Games",
     description: "Fun browser games collection.",
     detailedDescription: `A collection of fun browser games built using React and TailwindCSS.`,
@@ -995,7 +984,6 @@ Neowise is a weather forecasting app providing accurate data with a beautiful in
     id: 11,
     title: "Weather",
     image: "/projects/hasweather.png",
-    href: "hasweather.vercel.app",
     category: "Weather",
     description: "Real-time weather app.",
     detailedDescription: `

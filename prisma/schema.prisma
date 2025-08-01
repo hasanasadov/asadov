@@ -33,7 +33,6 @@ model Project {
     id                  String        @id @default(cuid())
     title               String
     image               String
-    href                String
     category            String
     description         String
     detailedDescription String

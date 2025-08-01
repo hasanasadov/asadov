@@ -1,3 +1,5 @@
+import { Project } from "@prisma/client";
+
 type GithubProps = {
   repo: string;
   filePath: string;
@@ -18,6 +20,7 @@ export type ProjectDetailPageProps = {
 };
 
 export type CodeSnippet = {
+  id?: string;
   title: string;
   code?: string;
   github?: {
@@ -52,7 +55,6 @@ export type ProjectCardProps = {
     id: number | string;
     title: string;
     image: string;
-    href: string;
     description: string;
   };
 };
@@ -116,4 +118,7 @@ export type GithubSnippet = {
   branch: string;
   createdAt: Date;
   updatedAt: Date;
+};
+export type ProjectWithSnippets = Project & {
+  codeSnippets: CodeSnippet[];
 };

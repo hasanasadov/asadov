@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import queryClient from "@/config/query";
 import { QUERY_KEYS } from "@/constants/query-keys";
+import queryClient from "@/config/query";
 import {
   EducationUpdateItem,
   EducationDeleteItem,
@@ -11,13 +11,17 @@ import {
   InternshipDeleteItem,
   InternshipAddItem,
 } from "@/actions/internship";
-import { CardTypeDashboard, EducationModel, InternshipModel } from "@/types";
+import {
+  CardTypeDashboard,
+  EducationModel,
+  InternshipModel,
+  ProjectWithSnippets,
+} from "@/types";
 import {
   CodeSnippet,
   Education,
   GithubSnippet,
   Internship,
-  Project,
 } from "@prisma/client";
 import {
   GithubSnippetAddItem,
@@ -34,6 +38,7 @@ import {
   ProjectDeleteItem,
   ProjectUpdateItem,
 } from "@/actions/project";
+import { toast } from "sonner";
 
 export const useDashboardMutation = (
   type: CardTypeDashboard,
@@ -46,7 +51,7 @@ export const useDashboardMutation = (
         | Partial<Internship>
         | Partial<GithubSnippet>
         | Partial<CodeSnippet>
-        | Partial<Project>
+        | Partial<ProjectWithSnippets>
     ) => {
       switch (type) {
         case CardTypeDashboard.Education:
@@ -66,9 +71,11 @@ export const useDashboardMutation = (
     onSuccess: () => {
       const queryKey = validateQueries(type);
       queryClient.invalidateQueries({ queryKey: [queryKey] });
+      toast.success("Updated !");
     },
     onError: (error) => {
       console.error("Update failed:", error);
+      toast.error("Update failed ! ");
     },
   });
 
@@ -92,9 +99,11 @@ export const useDashboardMutation = (
     onSuccess: () => {
       const queryKey = validateQueries(type);
       queryClient.invalidateQueries({ queryKey: [queryKey] });
+      toast.success("deleted !");
     },
     onError: (error) => {
       console.error("Delete failed:", error);
+      toast.error("Delete failed ! ");
     },
   });
 
@@ -105,7 +114,7 @@ export const useDashboardMutation = (
         | Partial<Internship>
         | Partial<GithubSnippet>
         | Partial<CodeSnippet>
-        | Partial<Project>
+        | Partial<ProjectWithSnippets>
     ) => {
       switch (type) {
         case CardTypeDashboard.Education:
@@ -117,7 +126,7 @@ export const useDashboardMutation = (
         case CardTypeDashboard.CodeSnippet:
           return await CodeSnippetAddItem(newData as CodeSnippet);
         case CardTypeDashboard.Project:
-          return await ProjectAddItem(newData as Project);
+          return await ProjectAddItem(newData as ProjectWithSnippets);
         default:
           throw new Error("Unknown dashboard card type");
       }
@@ -125,9 +134,11 @@ export const useDashboardMutation = (
     onSuccess: () => {
       const queryKey = validateQueries(type);
       queryClient.invalidateQueries({ queryKey: [queryKey] });
+      toast.success("Created !");
     },
     onError: (error) => {
       console.error("Create failed:", error);
+      toast.success("Create failed ! ");
     },
   });
 

@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
-import MacCodeBlock from "./MacCodeBlock";
 import { ProjectContentProps } from "@/types";
+import MacCodeBlock from "./MacCodeBlock";
+import React from "react";
 
 const ProjectContent: React.FC<ProjectContentProps> = ({
   detailedDescription,

@@ -1,8 +1,8 @@
 "use client";
 
+import { ProjectSidebarProps } from "@/types";
 import React from "react";
 import Image from "next/image";
-import { ProjectSidebarProps } from "@/types";
 
 const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
   title,

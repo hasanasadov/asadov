@@ -28,8 +28,9 @@ export function useTimeZoneString(): string {
 
         updateTime();
         interval = setInterval(updateTime, 1000);
-      } catch (e) {
-        setLocalTimeString("Aze • 00:00:00");
+      } catch (error) {
+        console.log(error);
+        setLocalTimeString("Baku • 00:00:00");
       }
     }
 

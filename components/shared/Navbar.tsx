@@ -1,19 +1,20 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
+import { useTimeZoneString } from "@/hooks/useTimeZone";
+import { usePathname } from "next/navigation";
+import { PATHS } from "@/constants/paths";
+import AutoAnimate from "./AutoAnimate";
+import HoverText from "./HoverText";
+import ArrowLeft from "../ui/ArrowLeft";
+import RenderIf from "@/utils/RenderIf";
 import TimeZone from "./TimeZone";
 import Switch from "./Toggle";
-import { usePathname } from "next/navigation";
-import RenderIf from "@/utils/RenderIf";
-import ArrowLeft from "../ui/ArrowLeft";
-import HoverText from "./HoverText";
-import AutoAnimate from "./AutoAnimate";
-import { useTimeZoneString } from "@/hooks/useTimeZone";
-import { PATHS } from "@/constants/paths";
 
 const Navbar = () => {
   const pathName = usePathname();
   const isHomePage = pathName === "/";
   const isDeatailPage = pathName.includes(`${PATHS.PORTFOLIO}/`);
+  const isDashboardPage = pathName.includes(PATHS.DASHBOARD);
   const isDashboardsPage = pathName.includes(`${PATHS.DASHBOARD}/`);
   const timeZoneStr = useTimeZoneString();
   const [showNavbar, setShowNavbar] = useState(true);
@@ -46,7 +47,9 @@ const Navbar = () => {
         backdrop-blur-[3px]
          top-0 left-0 w-full z-50 transition-transform duration-300
         ${showNavbar ? "translate-y-0" : "-translate-y-full"}
-        ${!isHomePage && isDashboardsPage ? "md:px-8" : ""}
+        ${!isHomePage ? "md:px-8" : ""}
+        ${isDashboardsPage ? "md:!px-8" : ""}
+        ${isDashboardPage ? "md:!px-0" : ""}
         flex items-center justify-between h-[60px] bg-transparent
       `}
       style={{ willChange: "transform", transition: "all 0.5s ease-in-out" }}

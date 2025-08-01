@@ -23,35 +23,57 @@ export const fetchGithubCode = async (
 };
 
 export const GithubSnippetGetItems = async () => {
-  return await prisma.githubSnippet.findMany();
+  try {
+    return await prisma.githubSnippet.findMany();
+  } catch (error) {
+    console.error("An error accured : ", error);
+    return [];
+  }
 };
 
 export const GithubSnippetGetItem = async (id: string) => {
-  return await prisma.githubSnippet.findUnique({
-    where: { id },
-  });
+  try {
+    return await prisma.githubSnippet.findUnique({
+      where: { id },
+    });
+  } catch (error) {
+    console.error("An error accured : ", error);
+    return null;
+  }
 };
 
 export const GithubSnippetDeleteItem = async (id: string) => {
-  return await prisma.githubSnippet.delete({
-    where: { id },
-  });
+  try {
+    return await prisma.githubSnippet.delete({
+      where: { id },
+    });
+  } catch (error) {
+    console.error("An error accured : ", error);
+  }
 };
 
 export const GithubSnippetAddItem = async (
   data: Omit<GithubSnippet, "id" | "createdAt">
 ) => {
-  return await prisma.githubSnippet.create({
-    data,
-  });
+  try {
+    return await prisma.githubSnippet.create({
+      data,
+    });
+  } catch (error) {
+    console.error("An error accured : ", error);
+  }
 };
 
 export const GithubSnippetUpdateItem = async (
   id: string,
   data: Partial<Omit<GithubSnippet, "id" | "createdAt">>
 ) => {
-  return await prisma.githubSnippet.update({
-    where: { id },
-    data,
-  });
+  try {
+    return await prisma.githubSnippet.update({
+      where: { id },
+      data,
+    });
+  } catch (error) {
+    console.error("An error accured : ", error);
+  }
 };

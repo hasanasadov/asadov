@@ -1,21 +1,20 @@
 "use client";
 
+import { educationExperience } from "@/constants/experience";
 import { EducationGetItems } from "@/actions/education";
-import { Card } from "./Card";
 import { QUERY_KEYS } from "@/constants/query-keys";
 import { useQuery } from "@tanstack/react-query";
-import { educationExperience } from "@/constants/experience";
+import { Card } from "./Card";
+
 export const EduExperience = () => {
   const { data, isError } = useQuery({
     queryKey: [QUERY_KEYS.EDUCATION],
     queryFn: () => EducationGetItems(),
   });
 
-  console.log("Education Data:", data);
-
   return (
     <div className="flex flex-col gap-12">
-      {(!data || isError ? educationExperience : data)?.map((item) => (
+      {(!data?.length || isError ? educationExperience : data)?.map((item) => (
         <Card
           key={item.id}
           start={

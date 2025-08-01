@@ -1,13 +1,13 @@
 "use client";
 
-import BlurryBG from "@/components/shared/BlurryBG";
-import HoverText from "@/components/shared/HoverText";
-import ArrorUpRight from "@/components/ui/ArrorUpRight";
-import RenderIf from "@/utils/RenderIf";
 import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+import ArrorUpRight from "@/components/ui/ArrorUpRight";
+import HoverText from "@/components/shared/HoverText";
+import BlurryBG from "@/components/shared/BlurryBG";
+import RenderIf from "@/utils/RenderIf";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 export default function Home() {
   const [heroText, setHeroText] = useState("Dashboard");

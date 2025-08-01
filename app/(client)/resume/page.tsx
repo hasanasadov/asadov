@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-const AboutPage = () => {
+const ResumePage = () => {
   return (
     <div>
       <Link
@@ -17,4 +17,4 @@ const AboutPage = () => {
   );
 };
 
-export default AboutPage;
+export default ResumePage;

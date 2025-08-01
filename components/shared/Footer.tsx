@@ -1,6 +1,6 @@
-import Link from "next/link";
-import React from "react";
 import HoverText from "./HoverText";
+import React from "react";
+import Link from "next/link";
 
 const Footer = () => {
   return (

@@ -1,10 +1,10 @@
 "use client";
 
+import { internshipExperience } from "@/constants/experience";
+import { InternshipGetItems } from "@/actions/internship";
 import { QUERY_KEYS } from "@/constants/query-keys";
 import { useQuery } from "@tanstack/react-query";
 import { Card } from "./Card";
-import { InternshipGetItems } from "@/actions/internship";
-import { internshipExperience } from "@/constants/experience";
 
 export const InternExperience = () => {
   const { data, isError } = useQuery({
@@ -16,7 +16,7 @@ export const InternExperience = () => {
 
   return (
     <div className="flex flex-col gap-12">
-      {(!data || isError ? internshipExperience : data)?.map((item) => (
+      {(!data?.length || isError ? internshipExperience : data)?.map((item) => (
         <Card
           key={item.id}
           start={

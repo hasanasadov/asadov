@@ -2,8 +2,8 @@
 
 import { CardTypeDashboard } from "@/types";
 import { GithubSnippet } from "@prisma/client";
-import { Button } from "@/components/ui/button";
 import { confirmAction } from "@/utils/dashboardHelpers";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   type: CardTypeDashboard;

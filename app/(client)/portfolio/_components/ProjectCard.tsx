@@ -1,10 +1,10 @@
 "use client";
 
+import { ProjectCardProps } from "@/types";
+import { PATHS } from "@/constants/paths";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ProjectCardProps } from "@/types";
-import { PATHS } from "@/constants/paths";
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
   return (

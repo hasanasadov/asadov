@@ -1,29 +1,27 @@
 "use client";
 
-import { CardTypeDashboard } from "@/types";
-import { QUERY_KEYS } from "@/constants/query-keys";
-import { useQuery } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { useState } from "react";
-import { ProjectGetItems } from "@/actions/project";
-import { Project } from "@prisma/client";
-import { AddProjectItem } from "./_components/AddProjectItem";
 import ProjectDashboardCard from "./_components/ProjectDashboardCard";
+import { CardTypeDashboard, ProjectWithSnippets } from "@/types";
+import { ProjectGetItems } from "@/actions/project";
+import { AddProjectItem } from "./_components/AddProjectItem";
+import { QUERY_KEYS } from "@/constants/query-keys";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { projects } from "@/constants/projects";
+import { toast } from "sonner";
 
-export default function ProjectPage() {
+export default function DashboardProjectPage() {
   const { data, isError } = useQuery({
     queryKey: [QUERY_KEYS.PROJECT_DASHBOARD],
     queryFn: () => ProjectGetItems(),
   });
 
   if (!data && isError) {
-    toast.error(
-      "Failed to load GitHub snippet data. Displaying default experience."
-    );
+    toast.error("Failed to load projects. Displaying default experience.");
   }
   console.log("Project data:", data);
 
-  const [newItem, setNewItem] = useState<Project | null>(null);
+  const [newItem, setNewItem] = useState<ProjectWithSnippets | null>(null);
 
   return (
     <div className="md:px-8 pt-4 min-h-[90vh]">
@@ -43,10 +41,10 @@ export default function ProjectPage() {
             setNewItem={setNewItem}
           />
         )}
-        {data?.map((item) => (
+        {(!data?.length || isError ? projects : data)?.map((item) => (
           <ProjectDashboardCard
             key={item.id}
-            item={item as Project}
+            item={item as ProjectWithSnippets}
             type={CardTypeDashboard.Project}
           />
         ))}

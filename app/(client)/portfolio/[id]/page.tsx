@@ -1,11 +1,11 @@
 "use client";
 
-import React from "react";
-import { projects } from "@/constants/projects";
-import ProjectSidebar from "./_components/ProjectSidebar";
-import ProjectContent from "./_components/ProjectContent";
-import Footer from "@/components/shared/Footer";
 import { ProjectDetailPageProps } from "@/types";
+import ProjectContent from "./_components/ProjectContent";
+import ProjectSidebar from "./_components/ProjectSidebar";
+import { projects } from "@/constants/projects";
+import Footer from "@/components/shared/Footer";
+import React from "react";
 
 const ProjectDetailPage = (props: ProjectDetailPageProps) => {
   const params = React.use(props.params);

@@ -1,14 +1,14 @@
 "use client";
 
-import { CardTypeDashboard } from "@/types";
-import { QUERY_KEYS } from "@/constants/query-keys";
-import { GithubSnippet } from "@prisma/client";
-import { useQuery } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { useState } from "react";
-import GithubSnippetCard from "./_components/GithubSnippetCard";
 import { GithubSnippetGetItems } from "@/actions/github";
 import { AddGithubSnippetItem } from "./_components/AddGithubSnippetItem";
+import { CardTypeDashboard } from "@/types";
+import { GithubSnippet } from "@prisma/client";
+import { QUERY_KEYS } from "@/constants/query-keys";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
+import GithubSnippetCard from "./_components/GithubSnippetCard";
 
 export default function GithubSnippetsPage() {
   const { data, isError } = useQuery({

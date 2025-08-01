@@ -3,13 +3,13 @@
 import { educationExperience } from "@/constants/experience";
 import { EducationGetItems } from "@/actions/education";
 import { CardTypeDashboard } from "@/types";
+import { AddDashboardItem } from "../_components/AddDashboardItem";
+import { CardDashboard } from "../_components/CardDashboard";
 import { QUERY_KEYS } from "@/constants/query-keys";
 import { Education } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
-import { toast } from "sonner";
 import { useState } from "react";
-import { AddDashboardItem } from "../_components/AddDashboardItem";
-import { CardDashboard } from "../_components/CardDashboard";
+import { toast } from "sonner";
 
 export default function EduExperienceDashboard() {
   const { data, isError } = useQuery({
@@ -43,13 +43,15 @@ export default function EduExperienceDashboard() {
             setNewItem={setNewItem}
           />
         )}
-        {(!data || isError ? educationExperience : data)?.map((item) => (
-          <CardDashboard
-            key={item.id}
-            item={item as Education}
-            type={CardTypeDashboard.Education}
-          />
-        ))}
+        {(!data?.length || isError ? educationExperience : data)?.map(
+          (item) => (
+            <CardDashboard
+              key={item.id}
+              item={item as Education}
+              type={CardTypeDashboard.Education}
+            />
+          )
+        )}
       </div>
     </div>
   );

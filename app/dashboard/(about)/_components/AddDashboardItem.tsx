@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Education, Internship } from "@prisma/client";
 import { CardTypeDashboard } from "@/types";
 import { confirmAction } from "@/utils/dashboardHelpers";
-import { Education, Internship } from "@prisma/client";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   type: CardTypeDashboard;

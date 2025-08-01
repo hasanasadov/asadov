@@ -1,14 +1,13 @@
 "use client";
 
-import { CardTypeDashboard } from "@/types";
-import { Project } from "@prisma/client";
-import { Button } from "@/components/ui/button";
+import { CardTypeDashboard, ProjectWithSnippets } from "@/types";
 import { confirmAction } from "@/utils/dashboardHelpers";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   type: CardTypeDashboard;
-  newItem?: Project | null;
-  setNewItem: (item: Project | null) => void;
+  newItem?: ProjectWithSnippets | null;
+  setNewItem: (item: ProjectWithSnippets | null) => void;
 };
 
 export const AddProjectItem = ({ newItem, setNewItem }: Props) => {

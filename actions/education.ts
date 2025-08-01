@@ -9,7 +9,7 @@ export async function EducationGetItems() {
   try {
     return await prisma.education.findMany({ orderBy: { start: "desc" } });
   } catch (error) {
-    console.error("Get Error:", error);
+    console.error("An error accured : ", error);
     return [];
   }
 }

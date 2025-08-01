@@ -3,13 +3,13 @@
 import { internshipExperience } from "@/constants/experience";
 import { InternshipGetItems } from "@/actions/internship";
 import { CardTypeDashboard } from "@/types";
+import { AddDashboardItem } from "../_components/AddDashboardItem";
+import { CardDashboard } from "../_components/CardDashboard";
 import { QUERY_KEYS } from "@/constants/query-keys";
 import { Internship } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
-import { toast } from "sonner";
 import { useState } from "react";
-import { AddDashboardItem } from "../_components/AddDashboardItem";
-import { CardDashboard } from "../_components/CardDashboard";
+import { toast } from "sonner";
 
 export default function InternExperienceDashboard() {
   const { data, isError } = useQuery({
@@ -43,7 +43,7 @@ export default function InternExperienceDashboard() {
             setNewItem={setNewItem}
           />
         )}
-        {(!data || isError ? internshipExperience : data)?.map((item) => (
+        {(!data?.length || isError ? internshipExperience : data)?.map((item) => (
           <CardDashboard
             key={item.id}
             item={item as Internship}

@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { isAuthenticated } from "@/lib/auth";
-import PinInput from "@/components/shared/PinInput";
-import { Toaster } from "@/components/ui/sonner";
 import { useHotkeys } from "react-hotkeys-hook";
+import { Toaster } from "@/components/ui/sonner";
+import PinInput from "@/components/shared/PinInput";
 
 export default function DashboardPage({
   children,
@@ -24,16 +24,21 @@ export default function DashboardPage({
   }, []);
 
   useHotkeys(
-    "0,1,2,3,4,5,6,7,8,9",
+    "0,1,2,3,4,5,6,7,8,9,Backspace",
     (event) => {
       const key = event.key;
+      console.log(key);
       setInputValue((prev) => {
         const next = [...prev];
         const index = next.findIndex((val) => val === "");
         if (index !== -1) {
-          next[index] = key;
+          if (key == "Backspace") {
+            next[index - 1] = "";
+          } else {
+            next[index] = key;
+          }
 
-          if (index === 3 && !isSubmitting.current) {
+          if (index === 3 && key != "Backspace" && !isSubmitting.current) {
             isSubmitting.current = true;
 
             const pin = next.join("");

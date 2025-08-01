@@ -1,8 +1,8 @@
 import ContactForm from "@/components/shared/ContactForm";
-import Footer from "@/components/shared/Footer";
 import HoverText from "@/components/shared/HoverText";
-import Link from "next/link";
+import Footer from "@/components/shared/Footer";
 import React from "react";
+import Link from "next/link";
 
 export const metadata = {
   title: "Contact - Hasanali Asadov",

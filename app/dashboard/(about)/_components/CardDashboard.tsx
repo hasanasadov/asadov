@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
-import { CardTypeDashboard } from "@/types";
+import { Education, Internship } from "@prisma/client";
+import { useDashboardMutation } from "@/hooks/useDashboardMutation";
 import { DescriptionSection } from "./DescriptionSection";
+import { CardTypeDashboard } from "@/types";
+import React, { useState } from "react";
 import { TitleSection } from "./TitleSection";
 import { DateSection } from "./DateSection";
 import { Actions } from "./Actions";
-import { Education, Internship } from "@prisma/client";
-import { useDashboardMutation } from "@/hooks/useDashboardMutation";
 import {
   formatDateInput,
   confirmAction,

@@ -1,10 +1,10 @@
 "use client";
 
+import React, { useState, useEffect, useRef } from "react";
+import { MacCodeBlockProps } from "@/types";
 import { fetchGithubCode } from "@/actions/github";
 import { QUERY_KEYS } from "@/constants/query-keys";
-import { MacCodeBlockProps } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import React, { useState, useEffect, useRef } from "react";
 
 const copyToClipboard = (text: string) => {
   if (navigator.clipboard) {

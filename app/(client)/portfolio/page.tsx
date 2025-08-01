@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import Footer from "@/components/shared/Footer";
-import SearchInput from "./_components/SearchInput";
-import FilterDropdown from "./_components/FilterDropDown";
-import SelectedFilters from "./_components/SelectedFilters";
-import ProjectCard from "./_components/ProjectCard";
-import { projects } from "@/constants/projects";
 import { ScrollToTop } from "@/components/shared/ScrollToTop";
+import { projects } from "@/constants/projects";
+import Footer from "@/components/shared/Footer";
+
+import SelectedFilters from "./_components/SelectedFilters";
+import FilterDropdown from "./_components/FilterDropDown";
+import SearchInput from "./_components/SearchInput";
+import ProjectCard from "./_components/ProjectCard";
 
 const categories = ["Web", "Mobile", "Games"];
 

@@ -1,10 +1,10 @@
-import Footer from "@/components/shared/Footer";
-import { ScrollText } from "@/components/shared/ScrollText";
-import Image from "next/image";
-import React from "react";
 import { InternExperience } from "./_components/Internship";
 import { EduExperience } from "./_components/Education";
 import { MarqueeText } from "@/components/shared/MarqueeText";
+import { ScrollText } from "@/components/shared/ScrollText";
+import Footer from "@/components/shared/Footer";
+import Image from "next/image";
+import React from "react";
 
 export const metadata = {
   title: "About - Hasanali Asadov",
@@ -21,7 +21,7 @@ const AboutPage = () => {
     <>
       <div className="md:px-8 pt-4">
         <ScrollText
-          className="text-[26px] md:text-[36px] lg:text-[48px] font-bold mb-8 mt-8 !text-red-700"
+          className="text-[26px] md:text-[36px] lg:text-[48px] font-bold mb-8 !text-red-700"
           text="I am a 21-year-old young programming developer. Alongside my personal skills, I am eager to learn about the major
 innovations required by the modern world. Therefore, I am constantly learning and developing software. I also have
 skills in web services, database management, and process automation. I am currently studying at Baku Higher Oil School."

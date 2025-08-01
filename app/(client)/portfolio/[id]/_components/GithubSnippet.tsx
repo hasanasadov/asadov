@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 type Props = {
-  repo: string; // "owner/repo"
-  filePath: string; // "src/App.tsx"
-  branch?: string; // "main"
+  repo: string;
+  filePath: string;
+  branch?: string;
 };
 
 const GithubSnippet: React.FC<Props> = ({

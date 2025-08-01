@@ -1,8 +1,8 @@
 "use client";
-
 import { Button } from "../ui/button";
-import Image from "next/image";
 import RenderIf from "@/utils/RenderIf";
+import Image from "next/image";
+
 export default function PinInput({
   inputValue,
   setInputValue,
