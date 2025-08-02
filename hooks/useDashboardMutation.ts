@@ -17,17 +17,8 @@ import {
   InternshipModel,
   ProjectWithSnippets,
 } from "@/types";
-import {
-  CodeSnippet,
-  Education,
-  GithubSnippet,
-  Internship,
-} from "@prisma/client";
-import {
-  GithubSnippetAddItem,
-  GithubSnippetDeleteItem,
-  GithubSnippetUpdateItem,
-} from "@/actions/github";
+import { CodeSnippet, Education, Internship } from "@prisma/client";
+
 import {
   CodeSnippetAddItem,
   CodeSnippetDeleteItem,
@@ -49,7 +40,6 @@ export const useDashboardMutation = (
       updatedData:
         | Partial<Education>
         | Partial<Internship>
-        | Partial<GithubSnippet>
         | Partial<CodeSnippet>
         | Partial<ProjectWithSnippets>
     ) => {
@@ -58,12 +48,13 @@ export const useDashboardMutation = (
           return await EducationUpdateItem(itemId, updatedData);
         case CardTypeDashboard.Internship:
           return await InternshipUpdateItem(itemId, updatedData);
-        case CardTypeDashboard.GithubSnippet:
-          return await GithubSnippetUpdateItem(itemId, updatedData);
         case CardTypeDashboard.CodeSnippet:
           return await CodeSnippetUpdateItem(itemId, updatedData);
         case CardTypeDashboard.Project:
-          return await ProjectUpdateItem(itemId, updatedData);
+          return await ProjectUpdateItem(
+            itemId,
+            updatedData as ProjectWithSnippets
+          );
         default:
           throw new Error("Unknown dashboard card type");
       }
@@ -86,8 +77,6 @@ export const useDashboardMutation = (
           return await EducationDeleteItem(itemId);
         case CardTypeDashboard.Internship:
           return await InternshipDeleteItem(itemId);
-        case CardTypeDashboard.GithubSnippet:
-          return await GithubSnippetDeleteItem(itemId);
         case CardTypeDashboard.CodeSnippet:
           return await CodeSnippetDeleteItem(itemId);
         case CardTypeDashboard.Project:
@@ -112,7 +101,6 @@ export const useDashboardMutation = (
       newData:
         | Partial<Education>
         | Partial<Internship>
-        | Partial<GithubSnippet>
         | Partial<CodeSnippet>
         | Partial<ProjectWithSnippets>
     ) => {
@@ -121,8 +109,6 @@ export const useDashboardMutation = (
           return await EducationAddItem(newData as EducationModel);
         case CardTypeDashboard.Internship:
           return await InternshipAddItem(newData as InternshipModel);
-        case CardTypeDashboard.GithubSnippet:
-          return await GithubSnippetAddItem(newData as GithubSnippet);
         case CardTypeDashboard.CodeSnippet:
           return await CodeSnippetAddItem(newData as CodeSnippet);
         case CardTypeDashboard.Project:
@@ -151,8 +137,6 @@ const validateQueries = (type: CardTypeDashboard) => {
       return QUERY_KEYS.EDUCATION_DASHBOARD;
     case CardTypeDashboard.Internship:
       return QUERY_KEYS.INTERNSHIP_DASHBOARD;
-    case CardTypeDashboard.GithubSnippet:
-      return QUERY_KEYS.GITHUB_SNIPPETS_DASHBOARD;
     case CardTypeDashboard.CodeSnippet:
       return QUERY_KEYS.CODE_SNIPPETS_DASHBOARD;
     case CardTypeDashboard.Project:

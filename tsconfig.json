@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "next-sitemap.config.js", "app/dashboard/(portfolio)/githubsnippets/_components/AddGithubSnippetItem.tsx."],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "next-sitemap.config.js", "components/shared/githubsnippets/_components/AddGithubSnippetItem.tsx."],
   "exclude": ["node_modules"]
 }

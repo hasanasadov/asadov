@@ -45,22 +45,13 @@ model Project {
 }
 
 model CodeSnippet {
-    id              String        @id @default(cuid())
-    title           String
-    github          GithubSnippet @relation(fields: [githubSnippetId], references: [id])
-    createdAt       DateTime      @default(now())
-    updatedAt       DateTime      @updatedAt
-    Project         Project?      @relation(fields: [projectId], references: [id])
-    projectId       String?
-    githubSnippetId String
-}
-
-model GithubSnippet {
-    id          String        @id @default(cuid())
-    repo        String
-    filePath    String
-    branch      String        @default("main")
-    createdAt   DateTime      @default(now())
-    updatedAt   DateTime      @updatedAt
-    CodeSnippet CodeSnippet[]
+    id        String   @id @default(cuid())
+    title     String
+    repo      String
+    filePath  String
+    branch    String?  @default("main")
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    Project   Project? @relation(fields: [projectId], references: [id])
+    projectId String?
 }

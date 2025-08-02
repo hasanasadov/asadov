@@ -22,11 +22,13 @@ export const AddCodeSnippetItem = ({ newItem, setNewItem }: Props) => {
       return;
     }
     const now = new Date();
-    const item = {
+    const item: CodeSnippet & { id: string; isNew?: boolean } = {
       id: Date.now().toString(),
       title: "",
+      repo: "",
+      filePath: "",
+      branch: "",
       projectId: "",
-      githubSnippetId: "",
       createdAt: now,
       updatedAt: now,
       isNew: true,

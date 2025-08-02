@@ -1,80 +1,96 @@
 "use client";
-
-import { CardTypeDashboard, ProjectWithSnippets } from "@/types";
+import React, { useState, useEffect } from "react";
+import {
+  CardTypeDashboard,
+  ProjectWithSnippets,
+  SelectOptionType,
+} from "@/types";
 import { useDashboardMutation } from "@/hooks/useDashboardMutation";
 import { CodeSnippetGetItems } from "@/actions/code";
 import Select, { MultiValue } from "react-select";
-import React, { useState } from "react";
 import { confirmAction } from "@/utils/dashboardHelpers";
 import { QUERY_KEYS } from "@/constants/query-keys";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import RenderIf from "@/utils/RenderIf";
-import Image from "next/image";
 
 type Props = {
   item: ProjectWithSnippets & { isNew?: boolean };
   type: CardTypeDashboard;
-  setNewItem?: (item: ProjectWithSnippets | null) => void;
+  setNewItem?: (v: null) => void;
 };
 
 export const ProjectDashboardCard = ({ item, type, setNewItem }: Props) => {
-  const isNew = item?.["isNew"] === true;
+  const isNew = item?.isNew === true;
   const [isEditing, setIsEditing] = useState(isNew);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const { data: codeSnippetsData, isLoading } = useQuery({
+  // Query all code snippets
+  const { data: codeSnippetsData = [], isLoading } = useQuery({
     queryKey: [QUERY_KEYS.CODE_SNIPPETS_DASHBOARD],
     queryFn: () => CodeSnippetGetItems(),
   });
 
+  // Form state
   const [formState, setFormState] = useState({
-    title: item.title || "",
-    description: item.description || "",
-    detailedDescription: item.detailedDescription || "",
-    liveUrl: item.liveUrl || "",
-    repoUrl: item.repoUrl || "",
-    category: item.category || "",
+    title: item.title ?? "",
+    description: item.description ?? "",
+    detailedDescription: item.detailedDescription ?? "",
+    codeSnippets: item.codeSnippets ?? [],
+    liveUrl: item.liveUrl ?? "",
+    repoUrl: item.repoUrl ?? "",
     technologies: Array.isArray(item.technologies)
       ? item.technologies.join(", ")
-      : item.technologies || "",
-    codeSnippets: item.codeSnippets || [],
-    image: item.image || "",
+      : item.technologies ?? "",
+    image: item.image ?? "",
+    category: item.category ?? "",
   });
+
+  useEffect(() => {
+    setFormState({
+      title: item.title ?? "",
+      description: item.description ?? "",
+      detailedDescription: item.detailedDescription ?? "",
+      codeSnippets: item.codeSnippets ?? [],
+      liveUrl: item.liveUrl ?? "",
+      repoUrl: item.repoUrl ?? "",
+      technologies: Array.isArray(item.technologies)
+        ? item.technologies.join(", ")
+        : item.technologies ?? "",
+      image: item.image ?? "",
+      category: item.category ?? "",
+    });
+  }, [item]);
 
   const handleChange = (field: keyof typeof formState, value: string) => {
     setFormState((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleCodeSnippetsChange = (
-    newValue: MultiValue<{ value?: string; label?: string }>
-  ) => {
-    const selectedIds = newValue.map(
-      (option: { value?: string; label?: string }) => option.value
-    );
-    const selectedSnippets = codeSnippetsData?.filter((snippet) =>
-      selectedIds.includes(snippet.id)
-    );
-    if (selectedSnippets) {
-      setFormState((prev) => ({
-        ...prev,
-        codeSnippets: selectedSnippets,
+  // Code snippets (multi-select) handle
+  const handleCodeSnippetsChange = (newValue: MultiValue<SelectOptionType>) => {
+    const selectedIds = newValue.map((v) => v.value);
+    // Əlavə: branch-i uyğunlaşdırırıq
+    const selectedSnippets = (codeSnippetsData || [])
+      .filter((s) => selectedIds.includes(s.id))
+      .map((s) => ({
+        ...s,
+        branch: s.branch ?? undefined, // null varsa, undefined-a çevir
       }));
-    }
+
+    setFormState((prev) => ({
+      ...prev,
+      codeSnippets: selectedSnippets,
+    }));
   };
 
   const { updateMutation, deleteMutation, createMutation } =
     useDashboardMutation(type, item.id);
 
-  const onEdit = () => {
-    setIsEditing(true);
-  };
+  const onEdit = () => setIsEditing(true);
 
   const onCancel = () => {
     if (!confirmAction("Are you sure you want to cancel the changes?")) return;
-    if (setNewItem) {
-      setNewItem(null);
-    }
+    if (setNewItem) setNewItem(null);
     setIsEditing(false);
   };
 
@@ -90,30 +106,31 @@ export const ProjectDashboardCard = ({ item, type, setNewItem }: Props) => {
     if (!confirmAction("Do you want to save the changes?")) return;
 
     const data = {
-      ...formState,
-      id: item.id,
-      isNew,
+      title: formState.title,
+      description: formState.description,
+      detailedDescription: formState.detailedDescription,
+      image: formState.image,
+      category: formState.category,
+      liveUrl: formState.liveUrl,
+      repoUrl: formState.repoUrl,
+      // split technologies by comma and trim spaces
       technologies: formState.technologies
-        .split(",")
-        .map((tech) => tech.trim())
-        .filter(Boolean),
-      codeSnippetIds: formState.codeSnippets.map((snippet) => snippet.id), // ✅ FIXED
+        ? formState.technologies.split(",").map((t) => t.trim())
+        : [],
+      // For codeSnippets: send only their IDs
+      codeSnippets: formState.codeSnippets.map((s) => ({ id: s.id })),
     };
 
     if (isNew) {
       createMutation.mutate(data, {
         onSuccess: () => {
           setIsEditing(false);
+          setNewItem?.(null);
         },
       });
-      if (setNewItem) {
-        setNewItem(null);
-      }
     } else {
       updateMutation.mutate(data, {
-        onSuccess: () => {
-          setIsEditing(false);
-        },
+        onSuccess: () => setIsEditing(false),
       });
     }
   };
@@ -123,16 +140,20 @@ export const ProjectDashboardCard = ({ item, type, setNewItem }: Props) => {
     deleteMutation.isPending ||
     createMutation.isPending;
 
-  const codeSnippetOptions =
-    codeSnippetsData?.map((snippet) => ({
-      value: snippet.id,
-      label: snippet.title,
-    })) || [];
-
-  const selectedSnippetOptions = formState.codeSnippets.map((snippet) => ({
+  // For select components
+  const selectedSnippetOptions: SelectOptionType[] = (
+    formState.codeSnippets || []
+  ).map((snippet) => ({
     value: snippet.id,
-    label: snippet.title,
+    label: snippet.title ?? "",
   }));
+
+  const codeSnippetOptions: SelectOptionType[] = (codeSnippetsData || []).map(
+    (snippet) => ({
+      value: snippet.id,
+      label: snippet.title ?? "",
+    })
+  );
 
   return (
     <div className="custom-button !grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 relative rounded-2xl hover:shadow-inner transition-shadow duration-200 items-start p-4">
@@ -147,7 +168,7 @@ export const ProjectDashboardCard = ({ item, type, setNewItem }: Props) => {
             value={formState.title}
             placeholder="Enter project title"
             onChange={(e) => handleChange("title", e.target.value)}
-            className="outline custom-button px-4 py-1 w-full text-cyan-500 bg-transparent "
+            className="outline custom-button px-4 py-1 w-full text-cyan-500 bg-transparent"
           />
         </RenderIf>
         <RenderIf condition={!isEditing}>
@@ -198,11 +219,11 @@ export const ProjectDashboardCard = ({ item, type, setNewItem }: Props) => {
       </div>
 
       {/* Code Snippets (Multi-select) */}
-      <div className="">
+      <div>
         <label className="text-gray-500 font-semibold text-sm mb-1 block">
           Code Snippets
         </label>
-        <Select
+        <Select<SelectOptionType, true>
           isMulti
           className="z-[999999]"
           isDisabled={!isEditing || isLoading}
@@ -291,15 +312,6 @@ export const ProjectDashboardCard = ({ item, type, setNewItem }: Props) => {
         </RenderIf>
         <RenderIf condition={!isEditing}>
           <p className="font-medium text-base md:text-lg">{item.image}</p>
-        </RenderIf>
-        <RenderIf condition={!isEditing}>
-          <Image
-            className="font-medium text-base md:text-lg"
-            src={item.image}
-            alt="Project Image"
-            width={100}
-            height={100}
-          />
         </RenderIf>
       </div>
 

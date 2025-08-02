@@ -32,12 +32,10 @@ const ProjectContent: React.FC<ProjectContentProps> = ({
           <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">
             Code Examples
           </h2>
-          {codeSnippets.map(({ title, code, github }, idx) => (
+          {codeSnippets.map((item, idx) => (
             <MacCodeBlock
               key={idx}
-              title={title}
-              code={code}
-              github={github}
+              item={item}
               collapsed={idx != codeSnippets.length - 1}
             />
           ))}

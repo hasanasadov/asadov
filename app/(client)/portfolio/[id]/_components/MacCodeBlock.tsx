@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { MacCodeBlockProps } from "@/types";
-import { fetchGithubCode } from "@/actions/github";
 import { QUERY_KEYS } from "@/constants/query-keys";
 import { useQuery } from "@tanstack/react-query";
+import { fetchGithubCode } from "@/actions/code";
 
 const copyToClipboard = (text: string) => {
   if (navigator.clipboard) {
@@ -117,9 +117,7 @@ const CopyButton = ({
 );
 
 const MacCodeBlock: React.FC<MacCodeBlockProps> = ({
-  title,
-  code,
-  github,
+  item,
   collapsed = true,
 }) => {
   const [copied, setCopied] = useState(false);
@@ -130,16 +128,16 @@ const MacCodeBlock: React.FC<MacCodeBlockProps> = ({
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const { data: fetchedCode, isLoading } = useQuery({
-    queryKey: [QUERY_KEYS.GITHUB_CODE, github],
+    queryKey: [QUERY_KEYS.GITHUB_CODE, item],
     queryFn: () =>
       fetchGithubCode(
-        github?.repo || "",
-        github?.filePath || "",
-        github?.branch || "main"
+        item?.repo || "",
+        item?.filePath || "",
+        item?.branch || "main"
       ),
   });
 
-  const codeToShow = github ? fetchedCode : code || "";
+  const codeToShow = item ? fetchedCode : "";
 
   const handleCopy = async () => {
     try {
@@ -189,7 +187,7 @@ const MacCodeBlock: React.FC<MacCodeBlockProps> = ({
             hover:shadow-md transition
           "
         >
-          {title}
+          {item?.title}
         </button>
       )}
 
@@ -221,9 +219,9 @@ const MacCodeBlock: React.FC<MacCodeBlockProps> = ({
 
             <span
               className="ml-4 text-black dark:text-white font-medium truncate select-text"
-              title={title}
+              title={item?.title || ""}
             >
-              {title}
+              {item?.title}
             </span>
             <CopyButton onClick={handleCopy} copied={copied} />
           </div>
@@ -236,14 +234,14 @@ const MacCodeBlock: React.FC<MacCodeBlockProps> = ({
                 maxHeight: isFullscreen ? "calc(100vh - 4.5rem)" : undefined,
               }}
             >
-              {github ? (
+              {item ? (
                 isLoading ? (
                   <span>Loading...</span>
                 ) : (
                   <code>{fetchedCode}</code>
                 )
               ) : (
-                <code>{code}</code>
+                <span className="text-gray-500">No code available</span>
               )}
             </pre>
           )}

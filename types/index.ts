@@ -1,15 +1,7 @@
 import { Project } from "@prisma/client";
 
-type GithubProps = {
-  repo: string;
-  filePath: string;
-  branch?: string;
-};
-
 export type MacCodeBlockProps = {
-  title: string;
-  code?: string;
-  github?: GithubProps;
+  item?: CodeSnippet;
   collapsed?: boolean;
 };
 
@@ -20,19 +12,16 @@ export type ProjectDetailPageProps = {
 };
 
 export type CodeSnippet = {
-  id?: string;
+  id: string;
   title: string;
-  code?: string;
-  github?: {
-    repo: string;
-    filePath: string;
-    branch?: string;
-  };
+  repo?: string;
+  filePath?: string;
+  branch?: string;
 };
 
 export type ProjectContentProps = {
   detailedDescription?: string;
-  codeSnippets?: CodeSnippet[];
+  codeSnippets: CodeSnippet[];
 };
 
 export type ProjectSidebarProps = {
@@ -95,21 +84,8 @@ export enum CardTypeDashboard {
   Education = "education",
   Internship = "internship",
   Project = "project",
-  GithubSnippet = "githubSnippet",
   CodeSnippet = "codeSnippet",
 }
-
-export type ProjectModel = {
-  title: string;
-  image: string;
-  href?: string;
-  category: string;
-  description: string;
-  detailedDescription?: string;
-  technologies?: string[];
-  liveUrl?: string;
-  repoUrl?: string;
-};
 
 export type GithubSnippet = {
   id: string;
@@ -119,6 +95,24 @@ export type GithubSnippet = {
   createdAt: Date;
   updatedAt: Date;
 };
+
 export type ProjectWithSnippets = Project & {
   codeSnippets: CodeSnippet[];
+};
+
+export type SelectOptionType = {
+  value: string;
+  label: string;
+};
+
+export type ProjectInput = {
+  title: string;
+  image: string;
+  category: string;
+  description: string;
+  detailedDescription: string;
+  technologies: string[];
+  liveUrl: string;
+  repoUrl: string;
+  codeSnippets: { id: string }[];
 };

@@ -1,12 +1,10 @@
 "use client";
-
-import { CardTypeDashboard, ProjectWithSnippets } from "@/types";
+import {  ProjectWithSnippets } from "@/types";
 import { confirmAction } from "@/utils/dashboardHelpers";
 import { Button } from "@/components/ui/button";
 
 type Props = {
-  type: CardTypeDashboard;
-  newItem?: ProjectWithSnippets | null;
+  newItem: ProjectWithSnippets | null;
   setNewItem: (item: ProjectWithSnippets | null) => void;
 };
 
@@ -21,11 +19,10 @@ export const AddProjectItem = ({ newItem, setNewItem }: Props) => {
       return;
     }
     const now = new Date();
-    const item = {
+    const item: ProjectWithSnippets & { id: string; isNew?: boolean } = {
       id: Date.now().toString(),
       title: "",
       image: "",
-      href: "",
       description: "",
       technologies: [],
       codeSnippets: [],

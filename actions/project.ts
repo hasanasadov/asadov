@@ -1,95 +1,86 @@
 "use server";
-
 import prisma from "@/lib/prisma";
-import { ProjectWithSnippets } from "@/types";
-import { Project } from "@prisma/client";
+import { ProjectInput, ProjectWithSnippets } from "@/types";
 
-export const ProjectGetItems = async () => {
+export const ProjectGetItems = async (): Promise<ProjectWithSnippets[]> => {
   try {
-    return await prisma.project.findMany({
-      include: {
-        codeSnippets: {
-          include: {
-            github: true,
-          },
-        },
-      },
+    const projects = await prisma.project.findMany({
+      include: { codeSnippets: true },
     });
+    return projects.map((project) => ({
+      ...project,
+      codeSnippets: project.codeSnippets.map((cs) => ({
+        ...cs,
+        branch: cs.branch ?? "",
+      })),
+    }));
   } catch (error) {
-    console.error("An error accured : ", error);
+    console.error("An error occurred : ", error);
     return [];
   }
 };
 
-export async function ProjectAddItem(data: ProjectWithSnippets) {
+export const ProjectAddItem = async (
+  data: ProjectInput
+): Promise<ProjectWithSnippets | null> => {
   try {
-    const newItem = await prisma.project.create({
+    const project = await prisma.project.create({
       data: {
         ...data,
         codeSnippets: {
-          connect: data.codeSnippets.map((snippet) => ({
-            id: snippet.id,
-          })),
+          connect: data.codeSnippets?.map((cs) => ({ id: cs.id })) ?? [],
         },
       },
-      include: {
-        codeSnippets: {
-          include: {
-            github: true,
-          },
-        },
-      },
+      include: { codeSnippets: true },
     });
-    return newItem;
+    return {
+      ...project,
+      codeSnippets: project.codeSnippets.map((cs) => ({
+        ...cs,
+        branch: cs.branch ?? "",
+      })),
+    };
   } catch (error) {
-    console.error("Add Error:", error);
-    return null;
-  }
-}
-
-export const ProjectUpdateItem = async (
-  id: string,
-  data: Partial<Omit<ProjectWithSnippets, "id" | "createdAt">>
-) => {
-  try {
-    return await prisma.project.update({
-      where: { id },
-      data: {
-        title: data.title,
-        description: data.description,
-        repoUrl: data.repoUrl,
-        image: data.image,
-        technologies: data.technologies,
-        liveUrl: data.liveUrl,
-        codeSnippets: {
-          connect: data.codeSnippets?.map((snippetId) => ({
-            id: snippetId.id,
-          })),
-        },
-      },
-      include: {
-        codeSnippets: {
-          include: {
-            github: true,
-          },
-        },
-      },
-    });
-  } catch (error) {
-    console.error("An error accured : ", error);
+    console.error("An error occurred: ", error);
     return null;
   }
 };
 
-export const ProjectDeleteItem = async (
-  id: string
-): Promise<Project | null> => {
+export const ProjectUpdateItem = async (
+  id: string,
+  data: ProjectInput
+): Promise<ProjectWithSnippets | null> => {
+  try {
+    const project = await prisma.project.update({
+      where: { id },
+      data: {
+        ...data,
+        codeSnippets: {
+          set: data.codeSnippets?.map((cs) => ({ id: cs.id })) ?? [],
+        },
+      },
+      include: { codeSnippets: true },
+    });
+    return {
+      ...project,
+      codeSnippets: project.codeSnippets.map((cs) => ({
+        ...cs,
+        branch: cs.branch ?? "",
+      })),
+    };
+  } catch (error) {
+    console.error("An error occurred: ", error);
+    return null;
+  }
+};
+
+export const ProjectDeleteItem = async (id: string) => {
   try {
     return await prisma.project.delete({
       where: { id },
     });
   } catch (error) {
-    console.error("An error accured : ", error);
+    console.error("An error occurred : ", error);
     return null;
   }
 };

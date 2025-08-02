@@ -22,6 +22,7 @@ export default function GithubSnippetsPage() {
     );
   }
 
+  console.log("Code Snippets Data:", data);
   const [newItem, setNewItem] = useState<CodeSnippet | null>(null);
 
   return (
