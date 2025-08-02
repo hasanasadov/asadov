@@ -88,7 +88,7 @@ export const useDashboardMutation = (
     onSuccess: () => {
       const queryKey = validateQueries(type);
       queryClient.invalidateQueries({ queryKey: [queryKey] });
-      toast.success("deleted !");
+      toast.success("Deleted ! ");
     },
     onError: (error) => {
       console.error("Delete failed:", error);

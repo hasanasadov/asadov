@@ -43,9 +43,7 @@ const Hero = ({
           className="absolute w-full "
         >
           <div className="flex items-center !cursor-default justify-center gap-5">
-            <div>
-              {heroText || "Dashboard"}
-            </div>
+            <div>{heroText || "Dashboard"}</div>
           </div>
         </motion.div>
       </AnimatePresence>
@@ -87,7 +85,7 @@ const CardsSection = ({
           <Card
             setHeroText={setHeroText}
             className="mini lg:!h-1/2 w-1/2 md:w-full"
-            title="GithubSnippets"
+            title="Error Logs"
           />
           <Card
             setHeroText={setHeroText}

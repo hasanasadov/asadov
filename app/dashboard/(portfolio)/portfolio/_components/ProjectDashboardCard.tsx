@@ -156,7 +156,7 @@ export const ProjectDashboardCard = ({ item, type, setNewItem }: Props) => {
   );
 
   return (
-    <div className="custom-button !grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 relative rounded-2xl hover:shadow-inner transition-shadow duration-200 items-start p-4">
+    <div className="custom-button !grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 relative rounded-2xl hover:shadow-inner transition-shadow duration-200 items-start p-4">
       {/* Title */}
       <div className="text-left text-sm md:text-base">
         <label className="text-gray-500 font-semibold text-sm mb-1 block">
@@ -225,9 +225,28 @@ export const ProjectDashboardCard = ({ item, type, setNewItem }: Props) => {
         </label>
         <Select<SelectOptionType, true>
           isMulti
-          className="z-[999999]"
+          className="z-[999999] text-orange-800 custom-border"
           isDisabled={!isEditing || isLoading}
           options={codeSnippetOptions}
+          styles={{
+            control: (base) => ({
+              ...base,
+              backgroundColor: "transparent",
+              borderColor: "transparent",
+              boxShadow: "none",
+              "&:hover": {
+                borderColor: "transparent",
+              },
+            }),
+            multiValue: (base) => ({
+              ...base,
+              backgroundColor: "rgba(255, 165, 0, 0.2)",
+            }),
+            multiValueLabel: (base) => ({
+              ...base,
+              color: "#FFA500",
+            }),
+          }}
           value={selectedSnippetOptions}
           onChange={handleCodeSnippetsChange}
         />
@@ -312,6 +331,13 @@ export const ProjectDashboardCard = ({ item, type, setNewItem }: Props) => {
         </RenderIf>
         <RenderIf condition={!isEditing}>
           <p className="font-medium text-base md:text-lg">{item.image}</p>
+        </RenderIf>
+        <RenderIf condition={!!item?.image}>
+          <img
+            src={item.image}
+            alt="Project"
+            className="mt-2 w-40 h-auto rounded-lg"
+          />
         </RenderIf>
       </div>
 
