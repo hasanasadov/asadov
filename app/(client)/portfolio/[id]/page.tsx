@@ -7,17 +7,20 @@ import { ProjectDetailPageProps } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/query-keys";
 import { ProjectGetItem } from "@/actions/project";
+import { toast } from "sonner";
 
 const ProjectDetailPage = (props: ProjectDetailPageProps) => {
   const params = React.use(props.params);
   const projectId = params.id;
 
-  const { data, isLoading } = useQuery({
+  const {
+    data: project,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: [QUERY_KEYS.PROJECTS, projectId],
     queryFn: () => ProjectGetItem(projectId),
   });
-
-  const project = data;
 
   if (isLoading) {
     return (
@@ -25,6 +28,9 @@ const ProjectDetailPage = (props: ProjectDetailPageProps) => {
         <h1 className="text-3xl font-semibold  animate-ping">Loading</h1>
       </div>
     );
+  }
+  if (!project && isError) {
+    toast.error("Failed to load.");
   }
 
   if (!project) {

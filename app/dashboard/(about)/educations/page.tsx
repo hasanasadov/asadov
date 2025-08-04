@@ -1,6 +1,6 @@
 "use client";
 
-import { educationExperience } from "@/constants/experience";
+// import { educationExperience } from "@/constants/experience";
 import { EducationGetItems } from "@/actions/education";
 import { CardTypeDashboard } from "@/types";
 import { AddDashboardItem } from "../_components/AddDashboardItem";
@@ -12,7 +12,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 export default function EduExperienceDashboard() {
-  const { data, isError } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: [QUERY_KEYS.EDUCATION_DASHBOARD],
     queryFn: () => EducationGetItems(),
   });
@@ -24,7 +24,13 @@ export default function EduExperienceDashboard() {
   }
 
   const [newItem, setNewItem] = useState<Education | null>(null);
-
+  if (isLoading) {
+    return (
+      <div className="min-h-[90vh] flex items-center justify-center text-center ">
+        <h1 className="text-3xl font-semibold  animate-ping">Loading</h1>
+      </div>
+    );
+  }
   return (
     <div className="md:px-8 pt-4">
       <div className="text-4xl mb-10 flex items-center gap-2 justify-between">
@@ -43,15 +49,14 @@ export default function EduExperienceDashboard() {
             setNewItem={setNewItem}
           />
         )}
-        {(!data?.length || isError ? educationExperience : data)?.map(
-          (item) => (
-            <CardDashboard
-              key={item.id}
-              item={item as Education}
-              type={CardTypeDashboard.Education}
-            />
-          )
-        )}
+        {/* {(!data?.length || isError ? educationExperience : data)?.map( */}
+        {data?.map((item) => (
+          <CardDashboard
+            key={item.id}
+            item={item as Education}
+            type={CardTypeDashboard.Education}
+          />
+        ))}
       </div>
     </div>
   );

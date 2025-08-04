@@ -12,6 +12,7 @@ import SearchInput from "./_components/SearchInput";
 import ProjectCard from "./_components/ProjectCard";
 import RenderIf from "@/utils/RenderIf";
 import Footer from "@/components/shared/Footer";
+import { toast } from "sonner";
 
 const PortfolioPage = () => {
   const [selectedCategories, setSelectedCategories] = useState<
@@ -23,15 +24,16 @@ const PortfolioPage = () => {
     queryKey: [QUERY_KEYS.PROJECTS],
     queryFn: () => ProjectGetItems(),
   });
+  if (!data && isError) {
+    toast.error("Failed to load.");
+  }
 
-  const categories = (!isLoading && !data?.length ? [] : data)?.map(
-    (d) => {
-      return {
-        value: String(d.id),
-        label: d.category,
-      };
-    }
-  );
+  const categories = (!isLoading && !data?.length ? [] : data)?.map((d) => {
+    return {
+      value: String(d.id),
+      label: d.category,
+    };
+  });
 
   findUniqueOptions(categories);
 

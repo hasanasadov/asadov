@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import CodeSnippetCard from "./_components/CodeSnippetCard";
 
 export default function GithubSnippetsPage() {
-  const { data, isError } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: [QUERY_KEYS.CODE_SNIPPETS_DASHBOARD],
     queryFn: () => CodeSnippetGetItems(),
   });
@@ -22,9 +22,14 @@ export default function GithubSnippetsPage() {
     );
   }
 
-  console.log("Code Snippets Data:", data);
   const [newItem, setNewItem] = useState<CodeSnippet | null>(null);
-
+  if (isLoading) {
+    return (
+      <div className="min-h-[90vh] flex items-center justify-center text-center ">
+        <h1 className="text-3xl font-semibold  animate-ping">Loading</h1>
+      </div>
+    );
+  }
   return (
     <div className="md:px-8 pt-4 min-h-[90vh]">
       <div className="text-4xl mb-10 flex items-center gap-2 justify-between">

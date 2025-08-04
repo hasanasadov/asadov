@@ -13,6 +13,9 @@ import { QUERY_KEYS } from "@/constants/query-keys";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import RenderIf from "@/utils/RenderIf";
+import { UploadButton } from "@/utils/uploadthing";
+import { toast } from "sonner";
+import Image from "next/image";
 
 type Props = {
   item: ProjectWithSnippets & { isNew?: boolean };
@@ -330,15 +333,54 @@ export const ProjectDashboardCard = ({ item, type, setNewItem }: Props) => {
           />
         </RenderIf>
         <RenderIf condition={!isEditing}>
-          <p className="font-medium text-base md:text-lg">{item.image}</p>
+          <p className="font-medium text-sm md:text-sm break-words">
+            {item.image}
+          </p>
         </RenderIf>
-        <RenderIf condition={!!item?.image}>
-          <img
-            src={item.image}
-            alt="Project"
-            className="mt-2 w-40 h-auto rounded-lg"
-          />
-        </RenderIf>
+        <div className="flex mt-4 justify-evenly flex-col md:flex-row  gap-5 items-center  relative ">
+          <RenderIf condition={!!formState.image}>
+            <div>
+              <Image
+                src={formState.image}
+                alt="Project"
+                width={100}
+                height={100}
+                className="bg-red-600"
+              />
+            </div>
+          </RenderIf>
+          <div className="flex gap-2">
+            <Button
+              variant="custom"
+              className="text-red-600 hover:underline text-sm "
+              onClick={() => handleChange("image", "")}
+              disabled={!isEditing}
+            >
+              x
+            </Button>
+            <UploadButton
+              className=" "
+              endpoint="imageUploader"
+              disabled={!isEditing}
+              onClientUploadComplete={(res) => {
+                handleChange("image", res[0]?.ufsUrl || "");
+                console.log("Files: ", res);
+                toast.message("Upload Completed");
+              }}
+              onUploadProgress={(progress) => {
+                console.log("Upload Progress: ", progress);
+              }}
+              appearance={{
+                button: "custom-button p-4",
+                container: "w-full",
+                allowedContent: "image",
+              }}
+              onUploadError={(error: Error) => {
+                toast.error(`ERROR! ${error.message}`);
+              }}
+            />
+          </div>
+        </div>
       </div>
 
       {/* Category */}

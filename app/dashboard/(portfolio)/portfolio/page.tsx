@@ -10,16 +10,24 @@ import { toast } from "sonner";
 // import { projects } from "@/constants/projects";
 
 export default function DashboardProjectPage() {
-  const { data, isError } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: [QUERY_KEYS.PROJECT_DASHBOARD],
     queryFn: () => ProjectGetItems(),
   });
 
   if (!data && isError) {
-    toast.error("Failed to load projects. Displaying default experience.");
+    toast.error("Failed to load projects.");
   }
 
   const [newItem, setNewItem] = useState<ProjectWithSnippets | null>(null);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-[90vh] flex items-center justify-center text-center ">
+        <h1 className="text-3xl font-semibold  animate-ping">Loading</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="md:px-8 pt-4 min-h-[90vh]">
