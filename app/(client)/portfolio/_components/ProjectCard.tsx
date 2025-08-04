@@ -11,7 +11,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
     <Link
       href={`${PATHS.PORTFOLIO}/${project.id}`}
-      className="group border-[1px] border-black/20 relative block rounded-xl overflow-hidden shadow-sm bg-gray-50 dark:bg-white/10 transition-transform transform hover:scale-[1.03] hover:shadow-lg cursor-pointer focus:outline-none "
+      className="group border-[1px] custom-border border-black/20 relative block rounded-xl overflow-hidden shadow-sm bg-gray-50 dark:bg-white/10 transition-transform transform hover:scale-[1.03] hover:shadow-lg cursor-pointer focus:outline-none "
       aria-label={`Open project details: ${project.title}`}
       tabIndex={0}
     >

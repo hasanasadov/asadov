@@ -5,6 +5,7 @@ import { MacCodeBlockProps } from "@/types";
 import { QUERY_KEYS } from "@/constants/query-keys";
 import { useQuery } from "@tanstack/react-query";
 import { fetchGithubCode } from "@/actions/code";
+import { Button } from "@/components/ui/button";
 
 const copyToClipboard = (text: string) => {
   if (navigator.clipboard) {
@@ -177,24 +178,25 @@ const MacCodeBlock: React.FC<MacCodeBlockProps> = ({
   return (
     <>
       {isCollapsed && (
-        <button
+        <Button
+          variant="custom"
           onClick={toggleCollapse}
           aria-label="Expand window"
           type="button"
           className="
-             w-max px-4 h-10 !cursor-pointer mr-4 mb-4 rounded-md border border-black/10 dark:border-white/10 bg-white dark:bg-white/10 dark:hover:bg-white/5 hover:bg-black/5 z-10
+             w-max !inline-block px-4 h-10 !cursor-pointer mr-4 mb-4 rounded-md border border-black/10 dark:border-white/10 bg-white dark:bg-white/10 dark:hover:bg-white/5 hover:bg-black/5 z-10
             text-gray-700 dark:text-gray-300 font-semibold shadow-sm
             hover:shadow-md transition
           "
         >
           {item?.title}
-        </button>
+        </Button>
       )}
 
       {!isCollapsed && (
         <div
           className={`
-            mb-8 rounded-lg border z-[9999999999999999] border-black/10 dark:border-white/10 bg-white dark:bg-white/10 shadow-sm overflow-hidden max-w-full
+            mb-8 rounded-lg border  z-[9999999999999999] border-black/10 dark:border-white/10 bg-white dark:bg-white/10 shadow-sm overflow-hidden max-w-full
             transition-all duration-300 ease-in-out
             ${isFullscreen ? "fixed inset-0 m-4 z-[1000] rounded-lg" : ""}
             ${isMinimized ? "h-12" : ""}
@@ -203,7 +205,7 @@ const MacCodeBlock: React.FC<MacCodeBlockProps> = ({
         >
           {/* Mac style top bar */}
           <div
-            className={`flex items-center gap-2 px-3  !pr-1 py-1 bg-black/10  select-none relative
+            className={`flex  items-center gap-2 px-3  !pr-1 py-1 bg-black/10  select-none relative
                 ${isFullscreen ? "dark:bg-slate-900" : "dark:bg-white/10"} 
               `}
             onMouseEnter={() => setHovered(true)}

@@ -37,7 +37,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
           {technologies.map((tech) => (
             <span
               key={tech}
-              className="bg-black/10 dark:bg-white/20 text-gray-800 dark:text-gray-300 px-3 py-1 rounded-full text-xs  font-medium select-none"
+              className="bg-black/10 custom-border dark:bg-white/20 text-gray-800 dark:text-gray-300 px-3 py-1 rounded-full text-xs  font-medium select-none"
             >
               {tech}
             </span>
@@ -51,7 +51,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
             href={liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-center border border-orange-500 text-orange-500 rounded-md py-2 text-sm font-semibold hover:bg-orange-50 dark:hover:bg-orange-900 transition"
+            className="block text-center custom-border !border !border-orange-500 !text-orange-500 rounded-md py-2 text-sm font-semibold hover:!bg-orange-50 dark:hover:!bg-orange-900 transition"
           >
             Live Demo
           </a>
@@ -61,7 +61,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
             href={repoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-center border border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md py-2 text-sm font-semibold hover:border-orange-500 hover:text-orange-500 transition"
+            className="block text-center custom-border !border !border-gray-400 dark:!border-gray-600 text-gray-700 dark:text-gray-300 rounded-md py-2 text-sm font-semibold hover:!border-orange-500 hover:!text-orange-500 transition"
           >
             View Code
           </a>
