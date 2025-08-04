@@ -1,11 +1,9 @@
 export const MarqueeText = ({
   className,
   text1,
-  text2,
 }: {
   className?: string;
   text1?: string;
-  text2?: string;
 }) => {
   return (
     <div
@@ -14,9 +12,6 @@ export const MarqueeText = ({
       <div className={`marquee-inner`}>
         <div className={`marquee-content`}>
           <span className="mx-4">{text1}</span>
-        </div>
-        <div className={`marquee-content`}>
-          <span className="mx-4">{text2}</span>
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@ export type CodeSnippet = {
   title: string;
   repo?: string;
   filePath?: string;
-  branch?: string;
+  branch?: string | null;
 };
 
 export type ProjectContentProps = {
@@ -41,7 +41,7 @@ export type FilterDropdownProps = {
 
 export type ProjectCardProps = {
   project: {
-    id: number | string;
+    id: string;
     title: string;
     image: string;
     description: string;

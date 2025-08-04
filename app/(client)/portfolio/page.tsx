@@ -1,42 +1,63 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
+import Select, { MultiValue } from "react-select";
+import { findUniqueOptions } from "@/utils";
+import { SelectOptionType } from "@/types";
+import { ProjectGetItems } from "@/actions/project";
 import { ScrollToTop } from "@/components/shared/ScrollToTop";
-import { projects } from "@/constants/projects";
-import Footer from "@/components/shared/Footer";
-
-import SelectedFilters from "./_components/SelectedFilters";
-import FilterDropdown from "./_components/FilterDropDown";
+import { QUERY_KEYS } from "@/constants/query-keys";
+import { useQuery } from "@tanstack/react-query";
 import SearchInput from "./_components/SearchInput";
 import ProjectCard from "./_components/ProjectCard";
-
-const categories = ["Web", "Mobile", "Games"];
+import RenderIf from "@/utils/RenderIf";
+import Footer from "@/components/shared/Footer";
 
 const PortfolioPage = () => {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<
+    SelectOptionType[]
+  >([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const toggleCategory = (cat: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
-    );
-  };
+  const { data, isLoading, isError } = useQuery({
+    queryKey: [QUERY_KEYS.PROJECTS],
+    queryFn: () => ProjectGetItems(),
+  });
 
-  const removeCategory = (cat: string) => {
-    setSelectedCategories((prev) => prev.filter((c) => c !== cat));
+  const categories = (!isLoading && !data?.length ? [] : data)?.map(
+    (d) => {
+      return {
+        value: String(d.id),
+        label: d.category,
+      };
+    }
+  );
+
+  findUniqueOptions(categories);
+
+  console.log("Unique Categories:", categories);
+
+  const toggleCategory = (option: MultiValue<SelectOptionType>) => {
+    const selectedIds = option.map((o) => o.value);
+    const selectedCategories = (categories || []).filter((s) =>
+      selectedIds.includes(s.value)
+    );
+    setSelectedCategories(selectedCategories);
   };
 
   const filteredProjects = useMemo(() => {
-    return projects.filter((p) => {
-      const matchesCategory =
-        selectedCategories.length === 0 ||
-        selectedCategories.includes(p.category);
-      const matchesSearch = p.title
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-      return matchesCategory && matchesSearch;
-    });
-  }, [selectedCategories, searchTerm]);
+    return (!isLoading && !isError && !!data?.length ? data : [])?.filter(
+      (p) => {
+        const matchesCategory =
+          selectedCategories.length === 0 ||
+          selectedCategories.filter((sC) => sC?.label === p.category).length;
+        const matchesSearch = p.title
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+        return matchesCategory && matchesSearch;
+      }
+    );
+  }, [selectedCategories, searchTerm, isLoading, isError, data]);
 
   return (
     <div className="min-h-screen md:p-6 ">
@@ -45,25 +66,56 @@ const PortfolioPage = () => {
         Dive into my most fulfilling design experiences
       </h1>
 
-      <div className="fle hidden sticky top-4 z-40 bg-white dark:bg-gray-900 p-4 rounded-xl shadow-md mb-8  flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div className="flex !sticky !top-4 md:!static z-40 rounded-3xl mb-8  flex-col md:flex-row md:!items-center md:justify-between gap-4">
         <SearchInput searchTerm={searchTerm} onSearchChange={setSearchTerm} />
-        <FilterDropdown
-          categories={categories}
-          selectedCategories={selectedCategories}
-          onToggleCategory={toggleCategory}
+
+        <Select<SelectOptionType, true>
+          isMulti
+          className="z-[999999] text-orange-800 custom-border md:w-2/5 w-full"
+          isDisabled={isLoading}
+          options={categories}
+          styles={{
+            control: (base) => ({
+              ...base,
+              backgroundColor: "transparent",
+              borderColor: "transparent",
+              boxShadow: "none",
+              "&:hover": {
+                borderColor: "transparent",
+              },
+            }),
+            multiValue: (base) => ({
+              ...base,
+              backgroundColor: "rgba(255, 165, 0, 0.2)",
+            }),
+            multiValueLabel: (base) => ({
+              ...base,
+              color: "#FFA500",
+            }),
+          }}
+          value={selectedCategories}
+          onChange={toggleCategory}
         />
       </div>
 
-      <SelectedFilters
-        selectedCategories={selectedCategories}
-        onRemoveCategory={removeCategory}
-      />
-
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {filteredProjects?.map((project) => (
-          <ProjectCard key={project.title} project={project} />
+          <ProjectCard key={project.id} project={project} />
         ))}
+        <RenderIf condition={isLoading}>
+          <div className="!bg-black/40 dark:!bg-white/40 custom-border animate-pulse h-[250px]"></div>
+          <div className="!bg-black/40 dark:!bg-white/40 custom-border animate-pulse h-[250px]"></div>
+          <div className="!bg-black/40 dark:!bg-white/40 custom-border animate-pulse h-[250px]"></div>
+          <div className="!bg-black/40 dark:!bg-white/40 custom-border animate-pulse h-[250px]"></div>
+        </RenderIf>
       </div>
+      <RenderIf condition={!data?.length && !isLoading}>
+        <div className="min-h-[20vh] flex items-center justify-center text-center ">
+          <h1 className="text-3xl font-semibold text-red-600 dark:text-red-400">
+            Projects not found
+          </h1>
+        </div>
+      </RenderIf>
 
       <Footer />
     </div>

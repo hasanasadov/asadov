@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
+  
   return (
     <Link
       href={`${PATHS.PORTFOLIO}/${project.id}`}

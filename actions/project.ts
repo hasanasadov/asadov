@@ -6,6 +6,7 @@ export const ProjectGetItems = async (): Promise<ProjectWithSnippets[]> => {
   try {
     const projects = await prisma.project.findMany({
       include: { codeSnippets: true },
+      orderBy: { createdAt: "asc" },
     });
     return projects.map((project) => ({
       ...project,
@@ -17,6 +18,20 @@ export const ProjectGetItems = async (): Promise<ProjectWithSnippets[]> => {
   } catch (error) {
     console.error("An error occurred : ", error);
     return [];
+  }
+};
+
+export const ProjectGetItem = async (id: string) => {
+  try {
+    return await prisma.project.findUnique({
+      where: { id },
+      include: {
+        codeSnippets: true,
+      },
+    });
+  } catch (error) {
+    console.error("An error occurred : ", error);
+    return null;
   }
 };
 

@@ -13,9 +13,7 @@ export const metadata = {
 
 const AboutPage = () => {
   const marqueeText1 =
-    "NEXT.JS ⋅ REACT ⋅ TYPESCRIPT ⋅ NODE.JS ⋅ EXPRESS ⋅ MONGODB ⋅ POSTGRESQL ⋅ GRAPHQL ⋅ REDUX ⋅ TAILWIND CSS ⋅ PASSPORT.JS ⋅ CLERK ⋅ AUTH0 ⋅ NODEMAILER ⋅ MONGOOSE ⋅ ";
-  const marqueeText2 =
-    "NEXT.JS ⋅ REACT ⋅ TYPESCRIPT ⋅ NODE.JS ⋅ EXPRESS ⋅ MONGODB ⋅ POSTGRESQL ⋅ GRAPHQL ⋅ REDUX ⋅ TAILWIND CSS ⋅ PASSPORT.JS ⋅ CLERK ⋅ AUTH0 ⋅ NODEMAILER ⋅ MONGOOSE ⋅ ";
+    "NEXT.JS ⋅ REACT ⋅ TYPESCRIPT ⋅ NODE.JS ⋅ EXPRESS ⋅ MONGODB ⋅ POSTGRESQL ⋅ GRAPHQL ⋅ REDUX ⋅ TAILWIND CSS ⋅ PASSPORT.JS ⋅ CLERK ⋅ AUTH0 ⋅ NODEMAILER ⋅ MONGOOSE ⋅ NEXT.JS ⋅ REACT ⋅ TYPESCRIPT ⋅ NODE.JS ⋅ EXPRESS ⋅ MONGODB ⋅ POSTGRESQL ⋅ GRAPHQL ⋅ REDUX ⋅ TAILWIND CSS ⋅ PASSPORT.JS ⋅ CLERK ⋅ AUTH0 ⋅ NODEMAILER ⋅ MONGOOSE ⋅ ";
 
   return (
     <>
@@ -30,7 +28,6 @@ skills in web services, database management, and process automation. I am curren
           <MarqueeText
             className="w-[200vw] absolute top-1/4 -left-1/4 rotate-[-10deg] hidden md:block z-[99]"
             text1={marqueeText1}
-            text2={marqueeText2}
           />
           <div className="flex md:justify-end my-8 justify-center z-[9999]">
             <Image
@@ -50,7 +47,6 @@ skills in web services, database management, and process automation. I am curren
       <MarqueeText
         className="md:scale-[1.03] scale-[1.1]"
         text1={marqueeText1}
-        text2={marqueeText2}
       />
       <div className="md:px-8 pt-4">
         <ScrollText className="text-4xl my-10" text="Internships" />

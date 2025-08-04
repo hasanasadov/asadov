@@ -1,9 +1,9 @@
 export const projects = [
   {
-    id: 0,
+    id: "0",
     title: "Personal Portfolio",
     image: "/projects/asadov.png",
-    category: "Web",
+    category: "Portfolio",
     description: "My Personal website/portfolio about me",
     detailedDescription: `My organised full personal information related website designed and pushed by me.`,
     technologies: [
@@ -50,7 +50,7 @@ export const projects = [
     repoUrl: "https://github.com/hasanasadov/asadov",
   },
   {
-    id: 1,
+    id: "1",
     title: "Turbo.az Clone",
     image: "/projects/turbo.png",
     category: "Web",
@@ -81,15 +81,14 @@ seamless UX, and advanced filtering options. The backend is mocked with static d
     repoUrl: "https://github.com/hasanasadov/CA_Project_TurboAz",
   },
   {
-    id: 2,
+    id: "2",
     title: "Sixt.com Clone",
     image: "/projects/sixt.png",
     category: "Web",
     description: "Sixt.com clone showcasing smooth UX/UI.",
     detailedDescription: `
       This project is a detailed Sixt.com clone focused on UI precision and seamless interactions.
-      Built with React and TailwindCSS.
-              `,
+      Built with React and TailwindCSS.`,
     technologies: [
       "React.js",
       "TailwindCSS",
@@ -109,94 +108,18 @@ seamless UX, and advanced filtering options. The backend is mocked with static d
       },
       {
         id: "0",
-        title: "Server main page",
-        code: `import express from "express";
-import passport from "passport";
-import cookieParser from "cookie-parser";
-import expressSession from "express-session";
-import cors from "cors";
+        title: "Toggle Theme button",
 
-import "./config/db";
-import "./config/auth-strategy";
-
-import authRoutes from "./routes/auth";
-import userRoutes from "./routes/user";
-import rentRoutes from "./routes/rent";
-import getPage from "./controllers/get";
-import reviewRoutes from "./routes/review";
-import favoriteRoutes from "./routes/favorite";
-import categoryRoutes from "./routes/category";
-import locationRoutes from "./routes/location";
-import reservationRoutes from "./routes/reservation";
-import stripeRoutes from "./routes/stripe";
-import webhookRoutes from "./routes/webhook";
-
-const app = express();
-app.set("trust proxy", 1);
-
-const PORT = process.env.PORT || 3000;
-const BASE_URL = process.env.BASE_URL || 'http://localhost:$ {PORT}';
-const production = process.env.NODE_ENV === "production";
-const allowedOrigins = [process.env.CLIENT_URL, "http://localhost:7777"];
-
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
-
-
-app.use(express.json());
-
-app.use(cookieParser());
-app.use(
-  expressSession({
-    secret: process.env.SESSION_SECRET!,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7,
-      secure: !!production,
-      sameSite: production ? "none" : "lax",
-      httpOnly: !!production,
-    },
-  })
-);
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use("/public", express.static("./public"));
-
-app.get("/", getPage);
-app.use("/auth", authRoutes);
-app.use("/users", userRoutes);
-app.use("/locations", locationRoutes);
-app.use("/categories", categoryRoutes);
-app.use("/rents", rentRoutes);
-app.use("/reservations", reservationRoutes);
-app.use("/reviews", reviewRoutes);
-app.use("/favorites", favoriteRoutes);
-app.use("/stripe", stripeRoutes);
-app.use("/webhook/stripe", webhookRoutes);
-
-app.listen(PORT, () => {
-  console.log('Hasanali's Server is running on $ {BASE_URL}');
-});`.trim(),
+        repo: "hasanasadov/asadov",
+        filePath: "components/shared/Toggle.tsx",
+        branch: "main",
       },
     ],
     liveUrl: "https://hassixt.site",
     repoUrl: "https://github.com/hasanasadov/sixt-clone",
   },
   {
-    id: 3,
+    id: "3",
     title: "Morent car",
     image: "/projects/hasrent.png",
     category: "Mobile",
@@ -223,7 +146,6 @@ Morent car is a mobile-first car rental app with user-friendly UI and smooth boo
       {
         id: "0",
         title: "Reset Password Dialog",
-
         repo: "hasanasadov/hasrent",
         filePath: "client/src/components/shared/dialogs/ResetPassword.tsx",
         branch: "main",
@@ -231,7 +153,6 @@ Morent car is a mobile-first car rental app with user-friendly UI and smooth boo
       {
         id: "0",
         title: "Multi Range Slider Component",
-
         repo: "hasanasadov/hasrent",
         filePath: "client/src/components/shared/multi-range-slider/index.tsx",
         branch: "main",
@@ -239,7 +160,6 @@ Morent car is a mobile-first car rental app with user-friendly UI and smooth boo
       {
         id: "0",
         title: "Detail Page",
-
         repo: "hasanasadov/hasrent",
         filePath: "client/src/pages/(business)/detail/index.tsx",
         branch: "main",
@@ -249,7 +169,7 @@ Morent car is a mobile-first car rental app with user-friendly UI and smooth boo
     repoUrl: "https://github.com/hasanasadov/hasrent",
   },
   {
-    id: 4,
+    id: "4",
     title: "MyEvents App",
     image: "/projects/myevents.png",
     category: "Mobile",
@@ -293,7 +213,7 @@ MyEvents is a mobile app to create, manage and share events with friends and fam
     repoUrl: "https://github.com/hasanasadov/eventify-next",
   },
   {
-    id: 5,
+    id: "5",
     title: "ToDo App",
     image: "/projects/hastodo.png",
     category: "Web",
@@ -339,7 +259,7 @@ A minimalist ToDo app focused on simplicity and productivity. Built with React a
     repoUrl: "https://github.com/hasanasadov/hastodo",
   },
   {
-    id: 6,
+    id: "6",
     title: "NFT Marketplace",
     image: "/projects/hasnft.png",
     category: "Web",
@@ -401,7 +321,7 @@ NFT Marketplace platform featuring NFT browsing, buying, and selling functionali
     repoUrl: "https://github.com/hasanasadov/hasnft",
   },
   {
-    id: 7,
+    id: "7",
     title: "Instagram Clone",
     image: "/projects/hasagram.png",
     category: "Mobile",
@@ -454,7 +374,7 @@ Instagram UI clone focusing on mobile responsiveness and user experience.
     repoUrl: "https://github.com/hasanasadov/Instagram_clone_v1",
   },
   {
-    id: 8,
+    id: "8",
     title: "Crypto Tracker",
     image: "/projects/hascrypto.png",
     category: "Web",
@@ -492,7 +412,7 @@ Crypto Tracker is a dashboard for tracking prices and changes in crypto markets 
     repoUrl: "https://github.com/hasanasadov/hascrypto",
   },
   {
-    id: 9,
+    id: "9",
     title: "Neowise",
     image: "/projects/hasneowise.png",
     category: "Web",
@@ -530,7 +450,7 @@ Neowise is a weather forecasting app providing accurate data with a beautiful in
     repoUrl: "https://github.com/hasanasadov/hasneowise",
   },
   {
-    id: 10,
+    id: "10",
     title: "Games",
     image: "/projects/hasgames.png",
     category: "Games",
@@ -574,10 +494,10 @@ Neowise is a weather forecasting app providing accurate data with a beautiful in
     repoUrl: "https://github.com/hasanasadov/hasgames",
   },
   {
-    id: 11,
+    id: "11",
     title: "Weather",
     image: "/projects/hasweather.png",
-    category: "Weather",
+    category: "Web",
     description: "Real-time weather app.",
     detailedDescription: `
 A real-time weather app built using React and TailwindCSS.

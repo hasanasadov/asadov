@@ -1,6 +1,6 @@
 "use client";
 
-type Option = {
+export type Option = {
   value: string;
   label: string;
 };

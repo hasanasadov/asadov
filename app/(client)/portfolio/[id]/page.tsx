@@ -1,20 +1,35 @@
 "use client";
-
-import { ProjectDetailPageProps } from "@/types";
-import ProjectContent from "./_components/ProjectContent";
-import ProjectSidebar from "./_components/ProjectSidebar";
-import { projects } from "@/constants/projects";
-import Footer from "@/components/shared/Footer";
 import React from "react";
+import ProjectSidebar from "./_components/ProjectSidebar";
+import ProjectContent from "./_components/ProjectContent";
+import Footer from "@/components/shared/Footer";
+import { ProjectDetailPageProps } from "@/types";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/query-keys";
+import { ProjectGetItem } from "@/actions/project";
 
 const ProjectDetailPage = (props: ProjectDetailPageProps) => {
   const params = React.use(props.params);
-  const projectId = Number(params.id);
-  const project = projects.find((p) => p.id === projectId);
+  const projectId = params.id;
+
+  const { data, isLoading } = useQuery({
+    queryKey: [QUERY_KEYS.PROJECTS, projectId],
+    queryFn: () => ProjectGetItem(projectId),
+  });
+
+  const project = data;
+
+  if (isLoading) {
+    return (
+      <div className="min-h-[90vh] flex items-center justify-center text-center ">
+        <h1 className="text-3xl font-semibold  animate-ping">Loading</h1>
+      </div>
+    );
+  }
 
   if (!project) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6 text-center bg-white dark:bg-gray-900">
+      <div className="min-h-[90vh] flex items-center justify-center text-center ">
         <h1 className="text-3xl font-semibold text-red-600 dark:text-red-400">
           Project not found
         </h1>

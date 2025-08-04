@@ -7,6 +7,7 @@ import { QUERY_KEYS } from "@/constants/query-keys";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
+// import { projects } from "@/constants/projects";
 
 export default function DashboardProjectPage() {
   const { data, isError } = useQuery({
@@ -34,6 +35,7 @@ export default function DashboardProjectPage() {
             setNewItem={setNewItem}
           />
         )}
+        {/* {(!data?.length || isError ? projects : data)?.map( */}
         {data?.map((item) => (
           <ProjectDashboardCard
             key={item.id}
