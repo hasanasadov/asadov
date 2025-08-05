@@ -359,7 +359,6 @@ export const ProjectDashboardCard = ({ item, type, setNewItem }: Props) => {
               x
             </Button>
             <UploadButton
-              className=" "
               endpoint="imageUploader"
               disabled={!isEditing}
               onClientUploadComplete={(res) => {
@@ -371,7 +370,7 @@ export const ProjectDashboardCard = ({ item, type, setNewItem }: Props) => {
                 console.log("Upload Progress: ", progress);
               }}
               appearance={{
-                button: "custom-button p-4",
+                button: "custom-button p-4 !text-black dark:!text-white",
                 container: "w-full",
                 allowedContent: "image",
               }}
