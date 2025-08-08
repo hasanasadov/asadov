@@ -8,21 +8,26 @@ const Footer = () => {
     <div className="mb-12">
       <div className="w-full h-px dark:bg-white/30 bg-black rounded-2xl my-8"></div>
       <div className="flex flex-col md:flex-row text-[18px] md:text-[24px] gap-6">
-        <Link href={CONTACT.GMAIL} className="w-full md:w-1/2">
-          <HoverText text="hasanaliasadov@gmail.com" />
-        </Link>
+        <div className="w-full md:w-1/2">
+          <Link href={CONTACT.GMAIL} className="w-fit">
+            <HoverText text="hasanaliasadov@gmail.com" />
+          </Link>
+        </div>
         <div className="w-full md:w-1/2 flex flex-col md:gap-4 gap-2">
-          <Link href={CONTACT.INSTAGRAM}>
+          <Link className="w-fit" href={CONTACT.INSTAGRAM}>
             <HoverText text="Instagram" />
           </Link>
-          <Link href={CONTACT.LINKEDIN}>
+          <Link className="w-fit" href={CONTACT.LINKEDIN}>
             <HoverText text="LinkedIn" />
           </Link>
-          <Link href={CONTACT.GITHUB}>
+          <Link className="w-fit" href={CONTACT.GITHUB}>
             <HoverText text="GitHub" />
           </Link>
-          <Link href={CONTACT.WHATSAPP}>
+          <Link className="w-fit" href={CONTACT.WHATSAPP}>
             <HoverText text="Whatsapp" />
+          </Link>
+          <Link className="w-fit" href={CONTACT.PHONE}>
+            <HoverText text="Phone" />
           </Link>
         </div>
       </div>
