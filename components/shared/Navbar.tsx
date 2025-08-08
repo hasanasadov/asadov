@@ -9,6 +9,7 @@ import ArrowLeft from "../ui/ArrowLeft";
 import RenderIf from "@/utils/RenderIf";
 import TimeZone from "./TimeZone";
 import Switch from "./Toggle";
+import Link from "next/link";
 
 const Navbar = () => {
   const pathName = usePathname();
@@ -55,18 +56,25 @@ const Navbar = () => {
       style={{ willChange: "transform", transition: "all 0.5s ease-in-out" }}
     >
       <div className="flex items-center gap-8 md:gap-12 lg:gap-[100px] text-[14px] md:text-[16px] ">
-        <div
-          onClick={() => {
-            if (isDeatailPage) {
-              window.location.href = PATHS.PORTFOLIO;
-            } else if (isHomePage) {
-              return;
-            } else if (isDashboardsPage) {
-              window.history.back();
-            } else {
-              window.location.href = PATHS.HOME;
-            }
-          }}
+        <Link
+          href={`${
+            isDeatailPage
+              ? PATHS.PORTFOLIO
+              : isDashboardsPage
+              ? PATHS.DASHBOARD
+              : PATHS.HOME
+          }`}
+          // onClick={() => {
+          //   if (isDeatailPage) {
+          //     window.location.href = PATHS.PORTFOLIO;
+          //   } else if (isHomePage) {
+          //     return;
+          //   } else if (isDashboardsPage) {
+          //     window.history.back();
+          //   } else {
+          //     window.location.href = PATHS.HOME;
+          //   }
+          // }}
           className="whitespace-nowrap flex items-center gap-2 cursor-pointer overflow-hidden"
         >
           <RenderIf condition={!!isHomePage}>
@@ -84,7 +92,7 @@ const Navbar = () => {
               }
             />
           </RenderIf>
-        </div>
+        </Link>
         <div className="whitespace-nowrap">
           <div className="hidden md:inline-block">Full-Stack Developer</div>
           <div className="inline-block md:hidden">

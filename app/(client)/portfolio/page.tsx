@@ -8,6 +8,7 @@ import { ProjectGetItems } from "@/actions/project";
 import { ScrollToTop } from "@/components/shared/ScrollToTop";
 import { QUERY_KEYS } from "@/constants/query-keys";
 import { useQuery } from "@tanstack/react-query";
+import { motion } from "framer-motion";
 import SearchInput from "./_components/SearchInput";
 import ProjectCard from "./_components/ProjectCard";
 import RenderIf from "@/utils/RenderIf";
@@ -64,7 +65,12 @@ const PortfolioPage = () => {
   }, [selectedCategories, searchTerm, isLoading, isError, data]);
 
   return (
-    <div className="min-h-screen md:p-6 ">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+      className="min-h-screen md:p-6 "
+    >
       <ScrollToTop />
       <h1 className="font-extrabold mb-10 leading-tight text-gray-900 dark:text-white text-[26px] md:text-[36px] lg:text-[48px]">
         {PortfolioPageHeroText}
@@ -122,7 +128,7 @@ const PortfolioPage = () => {
       </RenderIf>
 
       <Footer />
-    </div>
+    </motion.div>
   );
 };
 

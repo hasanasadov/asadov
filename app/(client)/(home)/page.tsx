@@ -13,13 +13,18 @@ import Link from "next/link";
 export default function Home() {
   const [heroText, setHeroText] = useState("Hasanali");
   return (
-    <div className="relative">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+      className="relative"
+    >
       <Hero
         heroText={heroText}
-        className="md:top-[20px] top-[40px] text-[50px] md:text-[100px] lg:text-[130px] transition-all transform-3d duration-500 ease-in-out"
+        className="md:top-[20px] top-[0px] text-[50px] md:text-[100px] lg:text-[130px] transition-all transform-3d duration-500 ease-in-out"
       />
       <CardsSection setHeroText={setHeroText} className="pt-[20px] mt-8" />
-    </div>
+    </motion.div>
   );
 }
 

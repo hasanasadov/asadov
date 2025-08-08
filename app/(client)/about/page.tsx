@@ -1,15 +1,18 @@
+"use client";
+
 import { InternExperience } from "./_components/Internship";
 import { EduExperience } from "./_components/Education";
 import { MarqueeText } from "@/components/shared/MarqueeText";
 import { ScrollText } from "@/components/shared/ScrollText";
+import { motion } from "framer-motion";
 import Footer from "@/components/shared/Footer";
 import Image from "next/image";
 import React from "react";
 
-export const metadata = {
-  title: "About - Hasanali Asadov",
-  description: "Haqqımda səhifəsi - Hasanali Asadov portfolio.",
-};
+// export const metadata = {
+//   title: "About - Hasanali Asadov",
+//   description: "Haqqımda səhifəsi - Hasanali Asadov portfolio.",
+// };
 
 const AboutPage = () => {
   const AboutPageHeroText =
@@ -18,7 +21,11 @@ const AboutPage = () => {
     "NEXT.JS ⋅ REACT ⋅ TYPESCRIPT ⋅ NODE.JS ⋅ EXPRESS ⋅ MONGODB ⋅ POSTGRESQL ⋅ GRAPHQL ⋅ REDUX ⋅ TAILWIND CSS ⋅ PASSPORT.JS ⋅ CLERK ⋅ AUTH0 ⋅ NODEMAILER ⋅ MONGOOSE ⋅ NEXT.JS ⋅ REACT ⋅ TYPESCRIPT ⋅ NODE.JS ⋅ EXPRESS ⋅ MONGODB ⋅ POSTGRESQL ⋅ GRAPHQL ⋅ REDUX ⋅ TAILWIND CSS ⋅ PASSPORT.JS ⋅ CLERK ⋅ AUTH0 ⋅ NODEMAILER ⋅ MONGOOSE ⋅ ";
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+    >
       <div className="md:px-8 pt-4">
         <ScrollText
           className="text-[26px] md:text-[36px] lg:text-[48px] font-bold mb-8 !text-red-700"
@@ -53,7 +60,7 @@ const AboutPage = () => {
         <InternExperience />
         <Footer />
       </div>
-    </>
+    </motion.div>
   );
 };
 

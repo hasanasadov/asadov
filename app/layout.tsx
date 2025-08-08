@@ -5,7 +5,7 @@ import Navbar from "@/components/shared/Navbar";
 import "@/styles/globals.css";
 
 export const metadata = {
-  title: "Home - Hasanali Asadov",
+  title: "Portfolio - Hasanali Asadov",
   description: "Welcome to Hasanali personal website",
   keywords: metaKeywords,
 };
