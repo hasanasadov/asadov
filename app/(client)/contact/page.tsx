@@ -3,6 +3,7 @@ import HoverText from "@/components/shared/HoverText";
 import Footer from "@/components/shared/Footer";
 import React from "react";
 import Link from "next/link";
+import { CONTACT } from "@/constants/contact";
 
 export const metadata = {
   title: "Contact - Hasanali Asadov",
@@ -10,20 +11,22 @@ export const metadata = {
 };
 
 const AboutPage = () => {
+  const AboutPageHeroText =
+    "If you prefer not to fill out forms, feel free to email me directly and let's talk about the next big thing!";
+
   return (
     <div className="min-h-screen  md:p-8">
       <h1 className="text-[26px] md:text-[36px] lg:text-[48px] leading-tight lg:w-8/12 mb-12">
-        If you prefer not to fill out forms, feel free to email me directly and
-        let&#39;s talk about the next big thing!
+        {AboutPageHeroText}
       </h1>
 
       <div className="flex flex-col md:flex-row md:gap-24 gap-6 justify-between w-full">
         <div className="md:w-1/3 w-full">
           <div className="w-full md:w-1/2 flex flex-col md:gap-4 gap-2 text-2xl">
-            <Link href="mailto:hasanaliasadov@gmail.com">
+            <Link href={CONTACT.GMAIL}>
               <HoverText text="hasanaliasadov@gmail.com" />
             </Link>
-            <Link href="tel:+994502068605">
+            <Link href={CONTACT.PHONE}>
               <HoverText text="+994 50 206 86 05" />
             </Link>
           </div>

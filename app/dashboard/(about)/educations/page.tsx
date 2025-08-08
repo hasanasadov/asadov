@@ -32,7 +32,7 @@ export default function EduExperienceDashboard() {
     );
   }
   return (
-    <div className="md:px-8 pt-4">
+    <div className="md:px-8 pt-4 min-h-[90vh]">
       <div className="text-4xl mb-10 flex items-center gap-2 justify-between">
         <h1>Education</h1>
         <AddDashboardItem

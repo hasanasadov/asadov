@@ -12,6 +12,8 @@ export const metadata = {
 };
 
 const AboutPage = () => {
+  const AboutPageHeroText =
+    "I am a 21-year-old young programming developer. Alongside my personal skills, I am eager to learn about the major innovations required by the modern world. Therefore, I am constantly learning and developing software. I also have skills in web services, database management, and process automation. I am currently studying at Baku Higher Oil School.";
   const marqueeText1 =
     "NEXT.JS ⋅ REACT ⋅ TYPESCRIPT ⋅ NODE.JS ⋅ EXPRESS ⋅ MONGODB ⋅ POSTGRESQL ⋅ GRAPHQL ⋅ REDUX ⋅ TAILWIND CSS ⋅ PASSPORT.JS ⋅ CLERK ⋅ AUTH0 ⋅ NODEMAILER ⋅ MONGOOSE ⋅ NEXT.JS ⋅ REACT ⋅ TYPESCRIPT ⋅ NODE.JS ⋅ EXPRESS ⋅ MONGODB ⋅ POSTGRESQL ⋅ GRAPHQL ⋅ REDUX ⋅ TAILWIND CSS ⋅ PASSPORT.JS ⋅ CLERK ⋅ AUTH0 ⋅ NODEMAILER ⋅ MONGOOSE ⋅ ";
 
@@ -20,9 +22,7 @@ const AboutPage = () => {
       <div className="md:px-8 pt-4">
         <ScrollText
           className="text-[26px] md:text-[36px] lg:text-[48px] font-bold mb-8 !text-red-700"
-          text="I am a 21-year-old young programming developer. Alongside my personal skills, I am eager to learn about the major
-innovations required by the modern world. Therefore, I am constantly learning and developing software. I also have
-skills in web services, database management, and process automation. I am currently studying at Baku Higher Oil School."
+          text={AboutPageHeroText}
         />
         <div className="relative">
           <MarqueeText

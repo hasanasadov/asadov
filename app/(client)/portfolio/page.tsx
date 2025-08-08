@@ -18,6 +18,8 @@ const PortfolioPage = () => {
   const [selectedCategories, setSelectedCategories] = useState<
     SelectOptionType[]
   >([]);
+  const PortfolioPageHeroText =
+    "Dive into my most fulfilling design experiences";
   const [searchTerm, setSearchTerm] = useState("");
 
   const { data, isLoading, isError } = useQuery({
@@ -65,7 +67,7 @@ const PortfolioPage = () => {
     <div className="min-h-screen md:p-6 ">
       <ScrollToTop />
       <h1 className="font-extrabold mb-10 leading-tight text-gray-900 dark:text-white text-[26px] md:text-[36px] lg:text-[48px]">
-        Dive into my most fulfilling design experiences
+        {PortfolioPageHeroText}
       </h1>
 
       <div className="flex !sticky !top-4 md:!static z-40 rounded-3xl mb-8  flex-col md:flex-row md:!items-center md:justify-between gap-4">
