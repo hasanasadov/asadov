@@ -3,30 +3,61 @@
 import { useForm, Controller } from "react-hook-form";
 import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
 import { z } from "zod";
+import { toast } from "sonner";
+import { motion } from "framer-motion";
+import { Send, Loader2, AlertCircle } from "lucide-react";
 
+// --- Schema & Constants ---
 const projectTypes = [
-  "Multipage Website Design (Full Stack)",
-  "API Development (Integration)",
-  "Frontend Development",
-  "Backend Development",
+  "Full Stack Development",
+  "API Integration",
+  "Frontend Architecture",
+  "Backend Systems",
+  "UI/UX Implementation",
+  "Performance Optimization",
+  "Consultation & Strategy",
+
+  "Maintenance & Support",
 ];
 
-const budgetRanges = ["$1k - $3k", "$3k - $5k", "$5k - $10k", "> $10k"];
+const budgetRanges = ["$0.5k - $1k", "$1k - $2k", "$2k - $3k", "> $3k"];
 
 const contactFormSchema = z.object({
-  fullName: z.string().min(2, "Full name is required"),
+  fullName: z.string().min(2, "Name is required"),
   email: z.string().email("Invalid email address"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
-  selectedProjects: z.array(z.string()).min(1, "Select at least one project"),
-  selectedBudget: z.string().min(1, "Select a budget"),
+  message: z.string().min(10, "Please provide more details (10+ chars)"),
+  selectedProjects: z.array(z.string()).min(1, "Select at least one service"),
+  selectedBudget: z.string().min(1, "Select a budget range"),
 });
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
+
+// --- Helper Components ---
+
+const FormLabel = ({ children }: { children: React.ReactNode }) => (
+  <label className="block text-xs font-mono uppercase tracking-widest text-zinc-500 mb-2">
+    {children}
+  </label>
+);
+
+const ErrorMessage = ({ message }: { message?: string }) => {
+  if (!message) return null;
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -5 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="flex items-center gap-1.5 mt-2 text-red-500"
+    >
+      <AlertCircle className="w-3 h-3" />
+      <span className="text-[10px] font-medium uppercase tracking-wide">
+        {message}
+      </span>
+    </motion.div>
+  );
+};
+
+// --- Main Component ---
 
 const ContactForm = () => {
   const {
@@ -47,166 +78,176 @@ const ContactForm = () => {
   });
 
   const [loading, setLoading] = useState(false);
+
   const onSubmit = async (data: ContactFormData) => {
     setLoading(true);
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    setLoading(false);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-    const response = await res.json();
-    if (response.success) {
-      toast.success("Email sent successfully!");
-      toast.info("I will get back to you as soon as possible.");
-    } else {
-      toast.error("Failed to send email. Please try again later.");
-      console.error("Error details:", response.error);
+      const response = await res.json();
+
+      if (response.success) {
+        toast.success("Message transmitted.");
+        reset();
+      } else {
+        toast.error("Transmission failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting contact form:", error);
+      toast.error("Network error.");
+    } finally {
+      setLoading(false);
     }
-    reset();
   };
 
+  // Shared Input Styles
+  const inputClasses =
+    "w-full bg-transparent border-b border-zinc-200 dark:border-white/10 px-0 py-3 text-base text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-300 dark:placeholder:text-zinc-700 focus:outline-none focus:border-zinc-900 dark:focus:border-white transition-colors duration-300";
+
   return (
-    <div className="w-full shadow-inner dark:shadow-gray-800 shadow-gray-400 rounded-3xl dark:bg-white/5 bg-black/5 lg:p-10 md:p-8 p-6 ">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10">
-        <div className="flex flex-col gap-2">
-          <label className="text-lg font-medium">Full Name</label>
-          <Input
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10">
+      {/* 1. Personal Details */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6">
+        <div className="group">
+          <FormLabel>Identity</FormLabel>
+          <input
             {...register("fullName")}
-            className="!p-6 bg-white/5 rounded-xl dark:border-white/10 border-black/10"
-            placeholder="Your name"
+            placeholder="John Doe"
+            className={inputClasses}
           />
-          {errors.fullName && (
-            <span className="text-yellow-600 text-sm">
-              {errors.fullName.message}
-            </span>
-          )}
+          <ErrorMessage message={errors.fullName?.message} />
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label className="text-lg font-medium">Email</label>
-          <Input
+        <div className="group">
+          <FormLabel>Coordinates</FormLabel>
+          <input
             {...register("email")}
-            className="!p-6 bg-white/5 rounded-xl dark:border-white/10 border-black/10"
-            placeholder="Your email"
+            placeholder="john@company.com"
+            className={inputClasses}
           />
-          {errors.email && (
-            <span className="text-yellow-600 text-sm">
-              {errors.email.message}
-            </span>
+          <ErrorMessage message={errors.email?.message} />
+        </div>
+      </div>
+
+      {/* 2. Project Selection (Tags) */}
+      <div>
+        <FormLabel>Service Required</FormLabel>
+        <Controller
+          name="selectedProjects"
+          control={control}
+          render={({ field }) => (
+            <div className="flex flex-wrap gap-2 mt-3">
+              {projectTypes.map((item) => {
+                const isSelected = field.value.includes(item);
+                return (
+                  <button
+                    key={item}
+                    type="button"
+                    onClick={() =>
+                      isSelected
+                        ? field.onChange(field.value.filter((v) => v !== item))
+                        : field.onChange([...field.value, item])
+                    }
+                    className={`
+                      px-4 py-2 rounded-lg text-sm transition-all duration-300 border
+                      ${
+                        isSelected
+                          ? "bg-zinc-900 dark:bg-white text-white dark:text-black border-zinc-900 dark:border-white"
+                          : "bg-transparent text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-white/10 hover:border-zinc-400 dark:hover:border-white/30"
+                      }
+                    `}
+                  >
+                    {item}
+                  </button>
+                );
+              })}
+            </div>
           )}
-        </div>
+        />
+        <ErrorMessage message={errors.selectedProjects?.message} />
+      </div>
 
-        <div className="flex flex-col lg:flex-row gap-10">
-          <div className="flex-1">
-            <p className="mb-4 text-lg">What’s Your Project About?</p>
-            <Controller
-              name="selectedProjects"
-              control={control}
-              render={({ field }) => (
-                <div className="flex flex-col gap-4">
-                  {projectTypes.map((item) => {
-                    const isChecked = field.value.includes(item);
-                    return (
-                      <label
-                        key={item}
-                        className="flex items-center gap-3 cursor-pointer"
-                      >
-                        <div
-                          className={`w-5 h-5 rounded-md border ${
-                            isChecked
-                              ? "dark:bg-white bg-black dark:border-white !border-black"
-                              : "border-white/30 dark:bg-black bg-black/10"
-                          } transition`}
-                          onClick={() =>
-                            isChecked
-                              ? field.onChange(
-                                  field.value.filter((v) => v !== item)
-                                )
-                              : field.onChange([...field.value, item])
-                          }
-                        />
-                        <span>{item}</span>
-                      </label>
-                    );
-                  })}
-                  {errors.selectedProjects && (
-                    <span className="text-yellow-600 text-sm">
-                      {errors.selectedProjects.message}
-                    </span>
-                  )}
-                </div>
-              )}
-            />
-          </div>
+      {/* 3. Budget Selection (Segments) */}
+      <div>
+        <FormLabel>Investment Range</FormLabel>
+        <Controller
+          name="selectedBudget"
+          control={control}
+          render={({ field }) => (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3">
+              {budgetRanges.map((budget) => {
+                const isSelected = field.value === budget;
+                return (
+                  <button
+                    key={budget}
+                    type="button"
+                    onClick={() => field.onChange(budget)}
+                    className={`
+                      px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 border text-center
+                      ${
+                        isSelected
+                          ? "bg-zinc-900 dark:bg-white text-white dark:text-black border-zinc-900 dark:border-white shadow-md"
+                          : "bg-transparent text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-white/10 hover:bg-zinc-50 dark:hover:bg-white/5"
+                      }
+                    `}
+                  >
+                    {budget}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        />
+        <ErrorMessage message={errors.selectedBudget?.message} />
+      </div>
 
-          <div className="flex-1">
-            <p className="mb-4 text-lg">Project Budget</p>
-            <Controller
-              name="selectedBudget"
-              control={control}
-              render={({ field }) => (
-                <div className="flex flex-col gap-4">
-                  {budgetRanges.map((budget) => (
-                    <label
-                      key={budget}
-                      className="flex items-center gap-3 cursor-pointer"
-                    >
-                      <div
-                        className={`w-5 h-5 rounded-full border ${
-                          field.value === budget
-                            ? "dark:bg-white bg-black dark:border-white !border-black"
-                            : "border-white/30 dark:bg-black bg-black/10"
-                        } transition`}
-                        onClick={() => field.onChange(budget)}
-                      />
-                      <span>{budget}</span>
-                    </label>
-                  ))}
-                  {errors.selectedBudget && (
-                    <span className="text-yellow-600 text-sm">
-                      {errors.selectedBudget.message}
-                    </span>
-                  )}
-                </div>
-              )}
-            />
-          </div>
+      {/* 4. Message Area */}
+      <div>
+        <FormLabel>Project Brief</FormLabel>
+        <textarea
+          {...register("message")}
+          placeholder="Describe your project goals, timeline, and any specific requirements..."
+          className={`${inputClasses} min-h-[120px] resize-none`}
+        />
+        <div className="flex justify-between items-start mt-2">
+          <ErrorMessage message={errors.message?.message} />
+          <span className="text-[10px] text-zinc-300 dark:text-zinc-700 uppercase tracking-widest">
+            Markdown Supported
+          </span>
         </div>
+      </div>
 
-        <div className="flex flex-col gap-6">
-          <div className="flex-1">
-            <p className="text-lg">Share More Details</p>
-          </div>
-          <div>
-            <Textarea
-              {...register("message")}
-              className="!p-6 bg-white/5 mb-3 rounded-xl dark:border-white/10 border-black/10 min-h-[200px]"
-              placeholder="About your project"
-            />
-            {errors.message && (
-              <span className="text-yellow-600 text-sm ">
-                {errors.message.message}
-              </span>
-            )}
-          </div>
-        </div>
-
-        <div>
-          <Button
-            type="submit"
-            variant="outline"
-            disabled={loading}
-            className={`!py-6 !px-10 text-lg bg-black/5 rounded-xl dark:border-white/10 border-black/10 ${
-              loading ? "cursor-not-allowed" : ""
-            } `}
-          >
-            {loading ? "Sending..." : "Submit"}
-          </Button>
-        </div>
-      </form>
-    </div>
+      {/* 5. Submit Button */}
+      <div className="pt-4">
+        <button
+          type="submit"
+          disabled={loading}
+          className={`
+            group w-full md:w-auto flex items-center justify-center gap-3 px-8 py-4 
+            bg-zinc-900 dark:bg-white text-white dark:text-black 
+            rounded-xl font-medium text-sm uppercase tracking-wider 
+            transition-all duration-300 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed
+            shadow-lg hover:shadow-xl
+          `}
+        >
+          {loading ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <span>Processing...</span>
+            </>
+          ) : (
+            <>
+              <span>Send Inquiry</span>
+              <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+            </>
+          )}
+        </button>
+      </div>
+    </form>
   );
 };
 

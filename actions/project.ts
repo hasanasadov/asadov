@@ -22,7 +22,7 @@ export const ProjectGetItems = async (): Promise<ProjectWithSnippets[]> => {
 };
 export const getInfiniteProjects = async ({
   pageParam = 0,
-  limit = 9, // Loads 9 items per scroll
+  limit = 6,
   search = "",
 }) => {
   try {
@@ -33,16 +33,15 @@ export const getInfiniteProjects = async ({
       whereClause.title = { contains: search, mode: "insensitive" };
     }
 
-    // specific query for infinite scroll
     const projects = await prisma.project.findMany({
       where: whereClause,
-      // We don't need codeSnippets for the card view, improves performance
       select: {
         id: true,
         title: true,
         image: true,
         description: true,
-        category: true, // Included for filtering if needed
+        technologies: true,
+        category: true,
         createdAt: true,
       },
       orderBy: { createdAt: "desc" },

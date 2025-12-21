@@ -6,13 +6,12 @@ import { useInView } from "react-intersection-observer";
 import { Loader2, SearchX } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
-// Components
 import SearchInput from "./_components/SearchInput";
 import ProjectCard from "./_components/ProjectCard";
 import Footer from "@/components/shared/Footer";
 import { getInfiniteProjects } from "@/actions/project";
+import { QUERY_KEYS } from "@/constants/query-keys";
 
-// Utility hook for debouncing (or install 'use-debounce')
 function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
@@ -24,13 +23,12 @@ function useDebounce<T>(value: T, delay: number): T {
 
 const PortfolioPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  // Debounce search by 500ms to avoid excessive API calls
   const debouncedSearch = useDebounce(searchTerm, 500);
   const { ref, inView } = useInView();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
-      queryKey: ["infinite-projects", debouncedSearch],
+      queryKey: [QUERY_KEYS.PROJECTS_INFINITE, debouncedSearch],
       queryFn: ({ pageParam = 0 }) =>
         getInfiniteProjects({ pageParam, search: debouncedSearch }),
       initialPageParam: 0,
@@ -53,9 +51,14 @@ const PortfolioPage = () => {
             <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-zinc-900 dark:text-white">
               Portfolio
             </h1>
-            <p className="mt-1 text-zinc-500 dark:text-zinc-400 text-sm font-medium">
-              Selected works 2023 — Present
-            </p>
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500/80 animate-pulse" />
+                <p className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                  System Online • 2023-Present
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="w-full md:w-72">
@@ -70,7 +73,6 @@ const PortfolioPage = () => {
       {/* 2. Main Grid */}
       <main className="max-w-[1400px] mx-auto py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 md:gap-y-16">
-          {/* Projects with Staggered Entry */}
           <AnimatePresence mode="popLayout">
             {projects.map((project, index) => (
               <ProjectCard key={project.id} project={project} index={index} />
@@ -83,7 +85,6 @@ const PortfolioPage = () => {
             ))}
         </div>
 
-        {/* Empty State */}
         {!isLoading && projects.length === 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -109,7 +110,6 @@ const PortfolioPage = () => {
           </motion.div>
         )}
 
-        {/* Infinite Scroll Trigger */}
         <div
           ref={ref}
           className="h-24 w-full flex items-center justify-center mt-8"
@@ -125,7 +125,6 @@ const PortfolioPage = () => {
   );
 };
 
-// Extracted Skeleton for cleanliness
 const ProjectSkeleton = () => (
   <div className="space-y-4 w-full">
     <div className="w-full aspect-[16/10] bg-zinc-100 dark:bg-zinc-900 rounded-lg animate-pulse" />

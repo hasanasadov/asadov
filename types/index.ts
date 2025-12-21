@@ -44,6 +44,7 @@ export type ProjectCardProps = {
     id: string;
     title: string;
     image: string;
+    technologies: string[];
     description: string;
   };
 };

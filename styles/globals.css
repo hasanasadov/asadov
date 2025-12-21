@@ -73,6 +73,17 @@ body {
   color: var(--foreground);
   font-family: "Open Sauce Sans", sans-serif;
 }
+
+::selection {
+  background-color: #18181b; /* zinc-900 */
+  color: #ffffff;
+}
+
+.dark ::selection {
+  background-color: #ffffff;
+  color: #000000;
+}
+
 .font-sauce {
   font-family: "Open Sauce Sans", sans-serif !important;
 }

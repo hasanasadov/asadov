@@ -3,6 +3,7 @@ export const QUERY_KEYS = {
   INTERNSHIPS: "internships",
   EDUCATION: "education",
   PROJECTS: "projects",
+  PROJECTS_INFINITE: "projectsInfinite",
   INTERNSHIP_DASHBOARD: "internshipDashboard",
   EDUCATION_DASHBOARD: "educationDashboard",
   PROJECT_DASHBOARD: "projectDashboard",
