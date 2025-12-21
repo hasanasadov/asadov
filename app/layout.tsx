@@ -6,7 +6,8 @@ import "@/styles/globals.css";
 
 export const metadata = {
   title: "Portfolio - Hasanali Asadov",
-  description: "Welcome to Hasanali personal website",
+  description:
+    "Welcome to Hasanali personal website showcasing projects and skills. Next.js developer portfolio. Student at Baku Higher Oil School. Graduated from Code Academy and Holberton school.",
   keywords: metaKeywords,
 };
 export default function RootLayout({

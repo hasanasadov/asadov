@@ -1,43 +1,79 @@
 "use client";
 
-import { ProjectCardProps } from "@/types";
-import { PATHS } from "@/constants/paths";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import { ProjectCardProps } from "@/types"; // Ensure this type matches your data
+import { PATHS } from "@/constants/paths";
 
-const ProjectCard = ({ project }: ProjectCardProps) => {
-  
+interface EnhancedProjectCardProps extends ProjectCardProps {
+  index?: number;
+}
+
+const ProjectCard = ({ project, index = 0 }: EnhancedProjectCardProps) => {
+
   return (
-    <Link
-      href={`${PATHS.PORTFOLIO}/${project.id}`}
-      className="group border-[1px] custom-border border-black/20 relative block rounded-xl overflow-hidden shadow-sm bg-gray-50 dark:bg-white/10 transition-transform transform hover:scale-[1.03] hover:shadow-lg cursor-pointer focus:outline-none "
-      aria-label={`Open project details: ${project.title}`}
-      tabIndex={0}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.4, delay: index * 0.05, ease: "easeOut" }}
+      className="group w-full flex flex-col h-full"
     >
-      <div className="relative h-52 md:h-48 w-full overflow-hidden ">
-        <Image
-          src={project.image}
-          alt={project.title}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-          priority={false}
-          loading="lazy"
-        />
-      </div>
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-white bg-black/50 rounded-xl pointer-events-none">
-        <h3 className="text-2xl font-semibold drop-shadow-lg">
-          {project.title}
-        </h3>
-        <p className="mt-2 text-sm drop-shadow-md">{project.description}</p>
-      </div>
-      <div className="p-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white truncate">
-          {project.title}
-        </h3>
-      </div>
-    </Link>
+      <Link
+        href={`${PATHS.PORTFOLIO}/${project.id}`}
+        className="block w-full h-full cursor-pointer"
+      >
+        {/* Image Container */}
+        <div className="relative w-full aspect-[16/10] overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800">
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            className="object-cover transition-all duration-500 ease-out group-hover:scale-105 group-hover:brightness-110"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            quality={90}
+          />
+
+          {/* Subtle Overlay on Hover */}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 dark:group-hover:bg-white/5 transition-colors duration-300" />
+        </div>
+
+        {/* Content Section */}
+        <div className="mt-5 flex flex-col flex-grow">
+          <div className="flex justify-between items-start gap-4">
+            <h3 className="text-lg font-medium text-zinc-900 dark:text-zinc-100 tracking-tight">
+              {project.title}
+            </h3>
+
+            {/* Animated Arrow Icon */}
+            <span className="text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors duration-300">
+              <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </span>
+          </div>
+
+          <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed">
+            {project.description}
+          </p>
+
+          {/* Tags / Meta Information (Optional but Professional) */}
+          {/* {tags.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {tags.slice(0, 3).map((tag: string) => (
+                <span
+                  key={tag}
+                  className="px-2 py-1 text-[11px] uppercase tracking-wider font-medium text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 rounded-sm"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )} */}
+        </div>
+      </Link>
+    </motion.div>
   );
 };
 

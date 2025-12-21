@@ -1,135 +1,142 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
-import Select, { MultiValue } from "react-select";
-import { findUniqueOptions } from "@/utils";
-import { SelectOptionType } from "@/types";
-import { ProjectGetItems } from "@/actions/project";
-import { ScrollToTop } from "@/components/shared/ScrollToTop";
-import { QUERY_KEYS } from "@/constants/query-keys";
-import { useQuery } from "@tanstack/react-query";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInView } from "react-intersection-observer";
+import { Loader2, SearchX } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+
+// Components
 import SearchInput from "./_components/SearchInput";
 import ProjectCard from "./_components/ProjectCard";
-import RenderIf from "@/utils/RenderIf";
 import Footer from "@/components/shared/Footer";
-import { toast } from "sonner";
+import { getInfiniteProjects } from "@/actions/project";
+
+// Utility hook for debouncing (or install 'use-debounce')
+function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedValue(value), delay);
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+  return debouncedValue;
+}
 
 const PortfolioPage = () => {
-  const [selectedCategories, setSelectedCategories] = useState<
-    SelectOptionType[]
-  >([]);
-  const PortfolioPageHeroText =
-    "Dive into my most fulfilling design experiences";
   const [searchTerm, setSearchTerm] = useState("");
+  // Debounce search by 500ms to avoid excessive API calls
+  const debouncedSearch = useDebounce(searchTerm, 500);
+  const { ref, inView } = useInView();
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: [QUERY_KEYS.PROJECTS],
-    queryFn: () => ProjectGetItems(),
-  });
-  if (!data && isError) {
-    toast.error("Failed to load.");
-  }
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteQuery({
+      queryKey: ["infinite-projects", debouncedSearch],
+      queryFn: ({ pageParam = 0 }) =>
+        getInfiniteProjects({ pageParam, search: debouncedSearch }),
+      initialPageParam: 0,
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    });
 
-  const categories = (!isLoading && !data?.length ? [] : data)?.map((d) => {
-    return {
-      value: String(d.id),
-      label: d.category,
-    };
-  });
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage, hasNextPage]);
 
-  findUniqueOptions(categories);
-
-  console.log("Unique Categories:", categories);
-
-  const toggleCategory = (option: MultiValue<SelectOptionType>) => {
-    const selectedIds = option.map((o) => o.value);
-    const selectedCategories = (categories || []).filter((s) =>
-      selectedIds.includes(s.value)
-    );
-    setSelectedCategories(selectedCategories);
-  };
-
-  const filteredProjects = useMemo(() => {
-    return (!isLoading && !isError && !!data?.length ? data : [])?.filter(
-      (p) => {
-        const matchesCategory =
-          selectedCategories.length === 0 ||
-          selectedCategories.filter((sC) => sC?.label === p.category).length;
-        const matchesSearch = p.title
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase());
-        return matchesCategory && matchesSearch;
-      }
-    );
-  }, [selectedCategories, searchTerm, isLoading, isError, data]);
+  const projects = data?.pages.flatMap((page) => page.data) || [];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: "easeInOut" }}
-      className="min-h-screen md:p-6 "
-    >
-      <ScrollToTop />
-      <h1 className="font-extrabold mb-10 leading-tight text-gray-900 dark:text-white text-[26px] md:text-[36px] lg:text-[48px]">
-        {PortfolioPageHeroText}
-      </h1>
+    <div className="min-h-screen md:p-8  text-zinc-900 dark:text-zinc-100 selection:bg-zinc-900 selection:text-white dark:selection:bg-white dark:selection:text-black">
+      <header className="sticky top-0 z-50 border-b border-zinc-100 dark:border-zinc-800  backdrop-blur-md transition-all duration-300">
+        <div className=" mx-auto py-6 md:py-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-zinc-900 dark:text-white">
+              Portfolio
+            </h1>
+            <p className="mt-1 text-zinc-500 dark:text-zinc-400 text-sm font-medium">
+              Selected works 2023 — Present
+            </p>
+          </div>
 
-      <div className="flex !sticky !top-4 md:!static z-40 rounded-3xl mb-8  flex-col md:flex-row md:!items-center md:justify-between gap-4">
-        <SearchInput searchTerm={searchTerm} onSearchChange={setSearchTerm} />
-
-        <Select<SelectOptionType, true>
-          isMulti
-          className="z-[999999] text-orange-800 custom-border md:w-2/5 w-full"
-          isDisabled={isLoading}
-          options={categories}
-          styles={{
-            control: (base) => ({
-              ...base,
-              backgroundColor: "transparent",
-              borderColor: "transparent",
-              boxShadow: "none",
-              "&:hover": {
-                borderColor: "transparent",
-              },
-            }),
-            multiValue: (base) => ({
-              ...base,
-              backgroundColor: "rgba(255, 165, 0, 0.2)",
-            }),
-            multiValueLabel: (base) => ({
-              ...base,
-              color: "#FFA500",
-            }),
-          }}
-          value={selectedCategories}
-          onChange={toggleCategory}
-        />
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {filteredProjects?.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
-        <RenderIf condition={isLoading}>
-          <div className="!bg-black/40 dark:!bg-white/40 custom-border animate-pulse h-[250px]"></div>
-          <div className="!bg-black/40 dark:!bg-white/40 custom-border animate-pulse h-[250px]"></div>
-          <div className="!bg-black/40 dark:!bg-white/40 custom-border animate-pulse h-[250px]"></div>
-          <div className="!bg-black/40 dark:!bg-white/40 custom-border animate-pulse h-[250px]"></div>
-        </RenderIf>
-      </div>
-      <RenderIf condition={!data?.length && !isLoading}>
-        <div className="min-h-[20vh] flex items-center justify-center text-center ">
-          <h1 className="text-3xl font-semibold text-red-600 dark:text-red-400">
-            Projects not found
-          </h1>
+          <div className="w-full md:w-72">
+            <SearchInput
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+            />
+          </div>
         </div>
-      </RenderIf>
+      </header>
+
+      {/* 2. Main Grid */}
+      <main className="max-w-[1400px] mx-auto py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 md:gap-y-16">
+          {/* Projects with Staggered Entry */}
+          <AnimatePresence mode="popLayout">
+            {projects.map((project, index) => (
+              <ProjectCard key={project.id} project={project} index={index} />
+            ))}
+          </AnimatePresence>
+
+          {(isLoading || isFetchingNextPage) &&
+            [...Array(3)].map((_, i) => (
+              <ProjectSkeleton key={`skeleton-${i}`} />
+            ))}
+        </div>
+
+        {/* Empty State */}
+        {!isLoading && projects.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col items-center justify-center py-32 text-center border-t border-dashed border-zinc-200 dark:border-zinc-800 mt-12"
+          >
+            <div className="bg-zinc-50 dark:bg-zinc-900 p-4 rounded-full mb-4">
+              <SearchX className="w-6 h-6 text-zinc-400" />
+            </div>
+            <p className="text-zinc-900 dark:text-zinc-100 font-medium text-lg">
+              No projects found
+            </p>
+            <p className="text-zinc-500 dark:text-zinc-400 text-sm mt-1 mb-6 max-w-xs mx-auto">
+              We couldnt find anything matching {searchTerm}. Try a different
+              keyword.
+            </p>
+            <button
+              onClick={() => setSearchTerm("")}
+              className="px-4 py-2 text-sm font-medium bg-zinc-900 dark:bg-zinc-100 text-white dark:text-black rounded-md hover:opacity-90 transition-opacity"
+            >
+              Clear filters
+            </button>
+          </motion.div>
+        )}
+
+        {/* Infinite Scroll Trigger */}
+        <div
+          ref={ref}
+          className="h-24 w-full flex items-center justify-center mt-8"
+        >
+          {isFetchingNextPage && (
+            <Loader2 className="w-5 h-5 animate-spin text-zinc-400" />
+          )}
+        </div>
+      </main>
 
       <Footer />
-    </motion.div>
+    </div>
   );
 };
+
+// Extracted Skeleton for cleanliness
+const ProjectSkeleton = () => (
+  <div className="space-y-4 w-full">
+    <div className="w-full aspect-[16/10] bg-zinc-100 dark:bg-zinc-900 rounded-lg animate-pulse" />
+    <div className="space-y-2">
+      <div className="flex justify-between items-start">
+        <div className="h-5 w-1/2 bg-zinc-100 dark:bg-zinc-900 rounded animate-pulse" />
+        <div className="h-5 w-5 bg-zinc-100 dark:bg-zinc-900 rounded animate-pulse" />
+      </div>
+      <div className="h-4 w-3/4 bg-zinc-50 dark:bg-zinc-800/50 rounded animate-pulse" />
+    </div>
+  </div>
+);
 
 export default PortfolioPage;

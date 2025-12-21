@@ -3,6 +3,6 @@ export const CONTACT = {
   GMAIL: "mailto:hasanaliasadov@gmail.com",
   WHATSAPP: "https://wa.me/+994502068605",
   PHONE: "tel:+994502068605",
-  LINKEDIN: "https://www.linkedin.com/in/hasanali-asadov/",
+  LINKEDIN: "https://www.linkedin.com/in/hasanaliasadov/",
   INSTAGRAM: "https://www.instagram.com/hasan.asadd/",
 };

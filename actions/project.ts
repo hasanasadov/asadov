@@ -20,7 +20,48 @@ export const ProjectGetItems = async (): Promise<ProjectWithSnippets[]> => {
     return [];
   }
 };
+export const getInfiniteProjects = async ({
+  pageParam = 0,
+  limit = 9, // Loads 9 items per scroll
+  search = "",
+}) => {
+  try {
+    const whereClause: { title?: { contains: string; mode: "insensitive" } } =
+      {};
 
+    if (search) {
+      whereClause.title = { contains: search, mode: "insensitive" };
+    }
+
+    // specific query for infinite scroll
+    const projects = await prisma.project.findMany({
+      where: whereClause,
+      // We don't need codeSnippets for the card view, improves performance
+      select: {
+        id: true,
+        title: true,
+        image: true,
+        description: true,
+        category: true, // Included for filtering if needed
+        createdAt: true,
+      },
+      orderBy: { createdAt: "desc" },
+      take: limit,
+      skip: pageParam * limit,
+    });
+
+    const totalCount = await prisma.project.count({ where: whereClause });
+    const hasNextPage = (pageParam + 1) * limit < totalCount;
+
+    return {
+      data: projects,
+      nextCursor: hasNextPage ? pageParam + 1 : undefined,
+    };
+  } catch (error) {
+    console.error("Error fetching infinite projects:", error);
+    return { data: [], nextCursor: undefined };
+  }
+};
 export const ProjectGetItem = async (id: string) => {
   try {
     return await prisma.project.findUnique({

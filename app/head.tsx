@@ -8,7 +8,7 @@ export default function Head() {
         name="google-site-verification"
         content="google-verification-code"
       />
-      <meta name="description" content="Next.js Developer Personal Website" />
+      <meta name="description" content="Next.js Developer Personal Website Hasanali Asadov" />
       <meta name="keywords" content={metaKeywords.join(", ")} />
       <link rel="canonical" href="https://asadov.site" />
       <link rel="icon" href="/favicon.ico" />
