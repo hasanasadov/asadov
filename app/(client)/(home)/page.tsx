@@ -117,10 +117,11 @@ const Card = ({
   setHeroText: (text: string) => void;
 }) => {
   const [hovered, setHovered] = useState(false);
-  const resumeLink = process.env.NEXT_PUBLIC_RESUME_LINK || "#";
+  // const resumeLink = process.env.NEXT_PUBLIC_RESUME_LINK || "#";
   return (
     <Link
-      href={title == "Resume" ? resumeLink : title?.toLowerCase() || "#"}
+      href={title?.toLowerCase() || "#"}
+      // href={title == "Resume" ? resumeLink : title?.toLowerCase() || "#"}
       className={`card  ${className}`}
       onMouseEnter={() => {
         setHovered(true);
@@ -130,9 +131,9 @@ const Card = ({
         setHovered(false);
         setHeroText("");
       }}
-      {...(title === "Resume"
-        ? { target: "_blank", rel: "noopener noreferrer" }
-        : {})}
+      // {...(title === "Resume"
+      //   ? { target: "_blank", rel: "noopener noreferrer" }
+      //   : {})}
     >
       <BlurryBG className="w-full h-full rounded-lg " />
       <RenderIf condition={!!title}>
