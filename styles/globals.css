@@ -253,3 +253,15 @@ body {
   display: inline-block;
   width: 100%;
 }
+
+/* In globals.css */
+.stroke-text {
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
+  color: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+  .stroke-text {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+  }
+}

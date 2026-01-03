@@ -81,7 +81,6 @@ const ResumePage = () => {
 
         {/* --- MAIN DOCUMENT CARD --- */}
         <div className="bg-white dark:bg-[#0A0A0A] border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-sm overflow-hidden mb-8">
-          
           {/* Top Section: Primary Action */}
           <div className="p-8 md:p-10 flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-zinc-100 dark:border-zinc-800/50">
             <div className="flex items-start gap-5">
@@ -93,13 +92,14 @@ const ResumePage = () => {
                   Full Stack Developer Resume
                 </h3>
                 <p className="text-sm text-zinc-500 max-w-sm leading-relaxed">
-                  Comprehensive overview of experience, stack, and education. Optimized for ATS and print.
+                  Comprehensive overview of experience, stack, and education.
+                  Optimized for ATS and print.
                 </p>
                 <div className="flex items-center gap-3 pt-2">
-                   <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-green-500/10 text-green-700 dark:text-green-400 text-xs font-medium">
-                     <Shield className="w-3 h-3" /> Verified
-                   </span>
-                   <span className="text-xs text-zinc-400">PDF • 2.4 MB</span>
+                  <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-green-500/10 text-green-700 dark:text-green-400 text-xs font-medium">
+                    <Shield className="w-3 h-3" /> Verified
+                  </span>
+                  <span className="text-xs text-zinc-400">PDF • 2.4 MB</span>
                 </div>
               </div>
             </div>
@@ -119,7 +119,6 @@ const ResumePage = () => {
           {/* Bottom Section: Metadata Table */}
           <div className="bg-zinc-50/50 dark:bg-white/[0.02]">
             <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-zinc-200 dark:divide-white/5">
-              
               <div className="p-6 flex flex-col gap-2">
                 <div className="flex items-center gap-2 text-zinc-400 text-xs font-mono uppercase">
                   <Calendar className="w-3 h-3" /> Last Updated
@@ -138,16 +137,16 @@ const ResumePage = () => {
                 <div className="flex items-center gap-2 text-zinc-400 text-xs font-mono uppercase">
                   <Hash className="w-3 h-3" /> Reference ID
                 </div>
-                <span className="text-sm font-mono text-zinc-500">HA-2024-CV-PDF</span>
+                <span className="text-sm font-mono text-zinc-500">
+                  HA-2024-CV-PDF
+                </span>
               </div>
-
             </div>
           </div>
         </div>
 
         {/* --- SECONDARY ACTIONS --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          
           {/* Print Action */}
           <button
             onClick={handlePrint}
@@ -173,8 +172,18 @@ const ResumePage = () => {
             className="group flex items-center justify-between p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-white/5 transition-colors text-left"
           >
             <div className="flex items-center gap-3">
-              <div className={`p-2 rounded-lg transition-colors ${copied ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' : 'bg-zinc-100 dark:bg-white/5 text-zinc-500'}`}>
-                {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              <div
+                className={`p-2 rounded-lg transition-colors ${
+                  copied
+                    ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
+                    : "bg-zinc-100 dark:bg-white/5 text-zinc-500"
+                }`}
+              >
+                {copied ? (
+                  <Check className="w-4 h-4" />
+                ) : (
+                  <Copy className="w-4 h-4" />
+                )}
               </div>
               <div className="flex flex-col">
                 <span className="text-sm font-medium text-zinc-900 dark:text-zinc-200">
@@ -185,9 +194,7 @@ const ResumePage = () => {
             </div>
             <ChevronRight className="w-4 h-4 text-zinc-300 group-hover:text-zinc-500" />
           </button>
-
         </div>
-
       </motion.main>
 
       <Footer />
