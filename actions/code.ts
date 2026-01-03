@@ -25,7 +25,9 @@ export const fetchGithubCode = async (
 
 export const CodeSnippetGetItems = async () => {
   try {
-    return await prisma.codeSnippet.findMany();
+    return await prisma.codeSnippet.findMany({
+      orderBy: { createdAt: "desc" },
+    });
   } catch (error) {
     console.error("An error accured : ", error);
     return [];
