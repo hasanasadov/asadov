@@ -13,6 +13,7 @@ import {
   HardDrive,
   Hash,
   ChevronRight,
+  Sparkles,
 } from "lucide-react";
 import Footer from "@/components/shared/Footer";
 
@@ -35,6 +36,18 @@ const NoiseOverlay = () => (
 const ResumePage = () => {
   const [copied, setCopied] = useState(false);
 
+  const skills = [
+    { label: "Framework", items: ["Next.js", "React", "Node.js", "Express"] },
+    { label: "Type Safety", items: ["TypeScript", "Zod", "Prisma"] },
+    { label: "Styling", items: ["Tailwind", "Framer Motion", "Radix UI"] },
+    {
+      label: "Data & Infra",
+      items: ["PostgreSQL", "MongoDB", "Redis", "Vercel"],
+    },
+    { label: "Tooling", items: ["Turborepo", "pnpm", "ESLint", "Prettier"] },
+    { label: "Testing", items: ["Vitest", "Playwright", "MSW"] },
+  ];
+
   // --- CONFIGURATION ---
   const RESUME_URL = "/resume.pdf";
   const EMAIL = "hasanaliasadov@gmail.com";
@@ -52,7 +65,7 @@ const ResumePage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-between  text-zinc-900 dark:text-zinc-200 font-sans selection:bg-zinc-900 selection:text-white dark:selection:bg-white dark:selection:text-black">
+    <div className="relative overflow-hidden min-h-screen flex flex-col justify-between  text-zinc-900 dark:text-zinc-200 font-sans selection:bg-zinc-900 selection:text-white dark:selection:bg-white dark:selection:text-black">
       <NoiseOverlay />
 
       <motion.main
@@ -80,7 +93,7 @@ const ResumePage = () => {
         </div>
 
         {/* --- MAIN DOCUMENT CARD --- */}
-        <div className="bg-white dark:bg-[#0A0A0A] border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-sm overflow-hidden mb-8">
+        <div className="bg-white/90 dark:bg-[#0A0A0A]/90 backdrop-blur border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-lg shadow-blue-500/5 overflow-hidden mb-8">
           {/* Top Section: Primary Action */}
           <div className="p-8 md:p-10 flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-zinc-100 dark:border-zinc-800/50">
             <div className="flex items-start gap-5">
@@ -96,8 +109,11 @@ const ResumePage = () => {
                   Optimized for ATS and print.
                 </p>
                 <div className="flex items-center gap-3 pt-2">
-                  <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-green-500/10 text-green-700 dark:text-green-400 text-xs font-medium">
+                  <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-green-500/15 text-green-800 dark:text-green-300 text-xs font-medium">
                     <Shield className="w-3 h-3" /> Verified
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-blue-500/10 text-blue-800 dark:text-blue-300 text-xs font-medium">
+                    <Sparkles className="w-3 h-3" /> ATS Ready
                   </span>
                   <span className="text-xs text-zinc-400">PDF • 2.4 MB</span>
                 </div>
@@ -144,6 +160,8 @@ const ResumePage = () => {
             </div>
           </div>
         </div>
+
+        {/* --- COLORFUL BANNERS --- */}
 
         {/* --- SECONDARY ACTIONS --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -195,6 +213,38 @@ const ResumePage = () => {
             <ChevronRight className="w-4 h-4 text-zinc-300 group-hover:text-zinc-500" />
           </button>
         </div>
+
+        {/* --- SKILLS --- */}
+        <div className="mt-10 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white/85 dark:bg-white/[0.02] backdrop-blur p-6 shadow-sm">
+          <div className="flex items-center gap-2 mb-4 text-xs font-mono uppercase tracking-[0.25em] text-zinc-500">
+            <HardDrive className="w-4 h-4" />
+            Tech Stack
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {skills.map((group) => (
+              <div
+                key={group.label}
+                className="rounded-xl border border-zinc-100 dark:border-white/10 bg-zinc-50/70 dark:bg-white/[0.02] p-4"
+              >
+                <p className="text-xs font-mono uppercase tracking-[0.2em] text-zinc-500 mb-3">
+                  {group.label}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {group.items.map((item) => (
+                    <span
+                      key={item}
+                      className="px-2 py-1 rounded-md text-[11px] bg-blue-500/10 text-blue-800 dark:text-blue-200 border border-blue-500/20"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* --- TIMELINE --- */}
       </motion.main>
 
       <Footer />

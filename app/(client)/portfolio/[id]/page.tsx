@@ -20,6 +20,7 @@ import {
   Calendar,
   ChevronRight,
   Command,
+  ExternalLink,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -82,7 +83,7 @@ const EditorWindow = ({ item }: { item: CodeSnippet }) => {
       fetchGithubCode(
         item?.repo || "",
         item?.filePath || "",
-        item?.branch || "main"
+        item?.branch || "main",
       ),
     enabled: isOpen,
   });
@@ -394,6 +395,40 @@ const ProjectDetailPage = (props: ProjectDetailPageProps) => {
                 </div>
               )}
             </motion.div>
+            {/* Impact CTA */}
+            <div className="mt-16 rounded-2xl border border-zinc-100 dark:border-white/5 bg-gradient-to-r from-blue-500/10 via-violet-500/10 to-emerald-400/10 p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+              <div>
+                <p className="text-xs font-mono uppercase tracking-[0.25em] text-zinc-500 mb-2">
+                  Next Steps
+                </p>
+                <h4 className="text-2xl md:text-3xl font-semibold text-zinc-900 dark:text-white">
+                  Want a similar build for your product?
+                </h4>
+                <p className="text-sm text-zinc-600 dark:text-zinc-300 mt-2 max-w-xl">
+                  I can adapt this stack to your roadmap, ship MVPs quickly, and
+                  document everything for easy handoff.
+                </p>
+              </div>
+              <div className="flex gap-3">
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    className="px-4 flex items-center !py-3 rounded-lg bg-zinc-900 text-white dark:bg-white dark:text-black text-sm font-semibold hover:opacity-90 transition"
+                  >
+                    <ExternalLink className="w-3 h-3 mr-2" />
+                    <p className="whitespace-nowrap">View Live</p>
+                  </a>
+                )}
+                <a
+                  href="/contact"
+                  className="px-4 !py-3 flex items-center rounded-lg border border-zinc-300 dark:border-white/20 text-sm font-semibold hover:bg-zinc-100 dark:hover:bg-white/10 transition"
+                >
+                  <Calendar className="w-3 h-3 mr-2" />
+                  <p className="whitespace-nowrap">Book a call</p>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </main>
