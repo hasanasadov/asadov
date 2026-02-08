@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Toaster } from "sonner";
 import CustomLayout from "@/layouts/CustomLayout";
 import Navbar from "@/components/shared/Navbar";
+import { Analytics } from "@vercel/analytics/next";
 import { siteConfig } from "@/constants/site";
 import "@/styles/globals.css";
 
@@ -73,6 +74,7 @@ export default function RootLayout({
           <Toaster richColors />
           {children}
         </CustomLayout>
+        <Analytics />
       </body>
     </html>
   );
