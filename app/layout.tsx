@@ -1,14 +1,64 @@
-import { metaKeywords } from "@/constants/metadata";
+import type { Metadata } from "next";
 import { Toaster } from "sonner";
 import CustomLayout from "@/layouts/CustomLayout";
 import Navbar from "@/components/shared/Navbar";
+import { siteConfig } from "@/constants/site";
 import "@/styles/globals.css";
 
-export const metadata = {
-  title: "Portfolio - Hasanali Asadov",
-  description:
-    "Welcome to Hasanali personal website showcasing projects and skills. Next.js developer portfolio. Student at Baku Higher Oil School. Graduated from Code Academy and Holberton school.",
-  keywords: metaKeywords,
+export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.title,
+    template: "%s | Hasanali Asadov",
+  },
+  description: siteConfig.description,
+  keywords: siteConfig.keywords,
+  category: "technology",
+  alternates: {
+    canonical: "/",
+  },
+  authors: [{ name: siteConfig.author }],
+  creator: siteConfig.author,
+  publisher: siteConfig.author,
+  openGraph: {
+    title: siteConfig.title,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    locale: siteConfig.locale,
+    type: "website",
+    images: [
+      {
+        url: `${siteConfig.url}${siteConfig.ogImage}`,
+        width: 1200,
+        height: 630,
+        alt: siteConfig.title,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [`${siteConfig.url}${siteConfig.ogImage}`],
+  },
+  verification: {
+    google: "google7469c81fff0046f0",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 export default function RootLayout({
   children,
